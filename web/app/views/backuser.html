@@ -1,0 +1,183 @@
+<section class="content-header">
+  <h1>
+    实验室资产管理系统
+    <small>管理员列表</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+    <li  class="active"><a href="#"> 管理员列表</a></li>
+  </ol>
+</section>
+<section class="content">
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Manager List Table-->
+    <div class="row" style="margin-top: 1%">
+      <div class="col-xs-12">
+        <div class="box box-primary">
+          <div class="box-header">
+            <div class="row">
+              <h3 class="box-title col-sm-12">管理员列表</h3>
+
+            </div>
+          </div>
+          <div class="box-body">
+            <table st-table="rowCollection" st-safe-src="userCollection" class="table table-bordered table-hover">
+              <thead>
+              <tr>
+                <th colspan="14" class="form-inline">
+                  <label class="pull-left">搜索：<input st-search placeholder="全局动态搜索" class="form-control" type="search"/></label>
+                  <button type="button" class="btn btn-primary pull-right" ng-click="showNewUserModal()">新建</button>
+                </th>
+              </tr>
+              <tr>
+                <th>ID</th>
+                <th>用户名</th>
+                <th>姓名</th>
+                <th>手机</th>
+                <th>操作</th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="item in rowCollection">
+                <td>{{item.id}}</td>
+                <td>{{item.username}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.phoneNumber}}</td>
+                <!--<td ng-if="item.lastCreate != 0">{{item.lastCreate *1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
+                <!--<td ng-if="item.lastCreate == 0">无记录</td>-->
+                <td>
+                  <span class="label label-primary" ng-click="editUser(item)" data-toggle="modal" data-target="#editUser"><i class="fa fa-edit"></i>修改</span>
+                  <span class="label label-danger" ng-click="deleteAdmin(item.id)" data-toggle="modal" data-target="#modifyDelete" ng-if="item.name!='admin'"><i class="fa fa-pencil"></i>删除</span>
+                </td>
+              </tr>
+
+
+
+              </tbody>
+
+              <tfoot>
+              <tr>
+                <td colspan=8>
+                  <div st-pagination="" st-items-by-page="itemsByPage" st-template="./views/custom-pagination.html"></div>
+                </td>
+              </tr>
+              </tfoot>
+
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+
+    </div>
+
+
+  </section>
+  <!-- /.content -->
+
+</section>
+
+
+<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUserLabel">
+  <div class="modal-dialog" role="document">
+    <div class="box box-info">
+      <form class="form-horizontal"  name="form">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="editUserLabel">{{modalName}}</h4>
+          </div>
+          <div class="modal-body">
+            <div>
+
+              <div class="form-group">
+                <label for="inputUserName" class="col-sm-2 control-label">用户名</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputUserName" placeholder="" ng-model="user.username" required name="inputUserName" ng-disabled="isDisabled">
+                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputName" class="col-sm-2 control-label">姓名</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputName" placeholder="" ng-model="user.name" required name="inputName">
+                  <div ng-messages="form['inputName'].$touched && form['inputName'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputPhone" class="col-sm-2 control-label">手机</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputPhone" placeholder="" ng-model="user.phoneNumber" required name="inputPhone">
+                  <div ng-messages="form['inputPhone'].$touched && form['inputPhone'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <label for="inputPWD" class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-10">
+                  <input type="password" required class="form-control" id="inputPWD" placeholder="" ng-model="user.password" >
+                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputCPWD" class="col-sm-2 control-label">确认密码</label>
+                <div class="col-sm-10">
+                  <input type="password" required class="form-control" id="inputCPWD" placeholder="" ng-model="user.cpassword" >
+                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button ng-disabled="!form.$valid" type="button" class="btn btn-primary" ng-click="user_submit()">保存</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="modal fade" id="modifyDelete" tabindex="-1" role="dialog" aria-labelledby="modifyProductLabel">
+  <div class="modal-dialog" role="document">
+    <div class="box box-info">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">提示！</h4>
+        </div>
+        <div class="modal-body">
+          <p>是否确认删除？&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-danger" ng-click="comfirmDelete()" >确认删除</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

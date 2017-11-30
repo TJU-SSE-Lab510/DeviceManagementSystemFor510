@@ -1,0 +1,15 @@
+spring:
+    datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://45.63.22.161:3306/LabSystem?useUnicode=true&characterEncoding=UTF-8
+        username: labsystem
+        password: Q1q2w3e!
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+    http:
+      encoding:
+        charset: UTF-8
+        enabled: true
+        force: true

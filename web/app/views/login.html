@@ -1,0 +1,53 @@
+<div class="login-box">
+  <div class="login-logo">
+    <a><b>Lab</b>Management</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">登录</p>
+
+    <form name="form">
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="用户名" ng-model="user.username" required id="inputUserName"  name="inputUserName" >
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
+          <div ng-message="required" class="required-warn">用户名不能为空</div>
+        </div>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="密码" ng-model="user.password" required id="inputPassword" name="inputPassword">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <div ng-messages="form['inputPassword'].$touched && form['inputPassword'].$error">
+          <div ng-message="required" class="required-warn">密码不能为空</div>
+        </div>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="验证码" ng-model="validateCode" required  id="inputvalidateCode" name="inputvalidateCode">
+        <span class="glyphicon glyphicon-picture form-control-feedback"></span>
+        <div ng-messages="form['inputvalidateCode'].$touched && form['inputvalidateCode'].$error">
+          <div ng-message="required" class="required-warn">验证码不能为空</div>
+        </div>
+      </div>
+      <div class="form-group has-feedback">
+
+        <div id="v_container" style="width: 100px;height: 40px;"></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="checkbox icheck" style="margin-left: 20px">
+            <label>
+              <input type="checkbox" ng-click="remember()"> Remember Me
+            </label>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" ng-disabled="!form.$valid" class="btn btn-primary btn-block btn-flat" ng-click="login()">登录</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+  </div>
+  <div class="lockscreen-footer text-center"> 由 <a href="" target="_blank">黄日辉</a> 提供技术支持 </div>
+  <!-- /.login-box-body -->
+</div>

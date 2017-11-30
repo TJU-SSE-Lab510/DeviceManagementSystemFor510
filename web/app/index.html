@@ -1,0 +1,92 @@
+<!doctype html>
+<html ng-app="BackWebApp" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css styles/vendor.css -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="../bower_components/AdminLTE/dist/css/skins/_all-skins.css">
+    <link rel="stylesheet" href="../bower_components/AdminLTE/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="../bower_components/cropper/dist/cropper.css">
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/AdminLTE/dist/css/AdminLTE.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- <link rel="stylesheet" href="sytles/login.css"> -->
+    <!-- endbuild -->
+  </head>
+  <body class="skin-blue  sidebar-mini login-page">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+
+      <div  ng-controller="MainCtrl">
+        <div ui-view></div>
+      </div>
+
+
+
+
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="../bower_components/angular-messages/angular-messages.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../bower_components/angular-smart-table/dist/smart-table.js"></script>
+    <script src="../bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/cropper/dist/cropper.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <!-- 全局服务 -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/services/token-service.js"></script>
+        <script src="scripts/services/interceptor.js"></script>
+        <script src="scripts/services/notice-service.js"></script>
+        <script src="scripts/services/error-service.js"></script>
+
+        <!-- <script src="scripts/services/reason-service.js"></script>
+        <script src="scripts/services/richtext-config.js"></script> -->
+        <script src="../bower_components/angular-i18n/angular-locale_zh.js"></script>
+        <script src="../bower_components/cryptojslib/rollups/sha256.js"></script>
+
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/sidebar.js"></script>
+        <script src="scripts/controllers/home.js"></script>
+        <script src="scripts/controllers/user-list.js"></script>
+        <script src="scripts/controllers/settlement.js"></script>
+        <script src="scripts/controllers/back-user.js"></script>
+        <!-- 模块服务 -->
+        <script src="scripts/services/sidebar-service.js"></script>
+        <script src="scripts/services/upload-service.js"></script>
+        <script src="scripts/services/util-service.js"></script>
+        <script src="scripts/services/user-service.js"></script>
+        <script src="scripts/services/back-service.js"></script>
+        <!-- 组件 -->
+        <script src="scripts/components/tic-toc.js"></script>
+    <script src="scripts/components/compare.js"></script>
+    <script src="scripts/components/gVerify.js"></script>
+
+           <!--filters -->
+        <script src="scripts/filters/decode.js"></script>
+        <!-- endbuild -->
+</body>
+</html>

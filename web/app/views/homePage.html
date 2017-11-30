@@ -1,0 +1,16 @@
+
+<h1>
+  test
+</h1>
+<button type="button" id="myButton" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">
+  Loading state
+</button>
+
+<script>
+  $('#myButton').on('click', function () {
+    var $btn = $(this).button('loading')
+    // business logic...
+    alert('123');
+    $btn.button('reset')
+  })
+</script>

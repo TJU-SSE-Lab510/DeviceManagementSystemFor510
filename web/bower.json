@@ -1,0 +1,44 @@
+{
+  "name": "shuapiao-back-web",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-animate": "^1.4.0",
+    "angular-cookies": "^1.4.0",
+    "angular-messages": "^1.4.0",
+    "angular-resource": "^1.4.0",
+    "angular-ui-router": "~0.3.2",
+    "angular-smart-table": "~2.1.6",
+    "ng-file-upload": "~12.0.4",
+    "cryptojslib": "~3.1.2",
+    "font-awesome": "~4.6.3",
+    "angular-i18n": "^1.5.8",
+    "angular-bootstrap": "^2.1.1",
+    "AdminLTE": "admin-lte#^2.3.11",
+    "bootstrap": "^3.3.5",
+    "cropper" : "*"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.0"
+  },
+  "appPath": "app",
+  "moduleName": "App",
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css"
+      ]
+    },
+    "cryptojslib": {
+      "main": [
+        "rollups/sha256.js"
+      ]
+    }
+  }
+}
