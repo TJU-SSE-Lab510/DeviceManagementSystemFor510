@@ -1,9 +1,9 @@
 spring:
     datasource:
         driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://45.63.22.161:3306/LabSystem?useUnicode=true&characterEncoding=UTF-8
-        username: labsystem
-        password: Q1q2w3e!
+        url: jdbc:mysql://100.64.208.218:3306/LabSystem?useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: 123456
     jpa:
       hibernate:
         ddl-auto: update
