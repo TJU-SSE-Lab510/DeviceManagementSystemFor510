@@ -17,7 +17,7 @@ import java.util.List;
  * Created by arlex on 2017/12/1.
  */
 @RestController
-@RequestMapping(value = "/item")
+@RequestMapping(value = "/facility")
 public class FacilityController {
 
     @Autowired

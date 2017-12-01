@@ -7,26 +7,26 @@ labsystem.service('ItemSrv', ['$resource','$http', 'baseURL' ,function ($resourc
 
   //查看所有用户。
   this.getUser = function(){
-    return $resource(baseURL + '/item/getAll');
+    return $resource(baseURL + '/facility/getAll');
   };
 
   //新建用户
   this.addUser = function(uid){
-    return $resource(baseURL + '/item/add',null,{'add':{method: 'POST'}});
+    return $resource(baseURL + '/facility/add',null,{'add':{method: 'POST'}});
   };
 
   //修改用户
   this.editUser = function(uid){
-    return $resource(baseURL + '/item/edit',null,{'add':{method: 'POST'}});
+    return $resource(baseURL + '/facility/edit',null,{'add':{method: 'POST'}});
   };
 
   //删除用户
   this.deleteUser = function(uid){
-    return $resource(baseURL + '/item/delete',null,{'add':{method: 'POST'}});
+    return $resource(baseURL + '/facility/delete',null,{'add':{method: 'POST'}});
   };
 
   //删除用户
   this.upload = function(uid){
-    return $resource(baseURL + '/item/upload',null,{'add':{method: 'POST'}});
+    return $resource(baseURL + '/facility/upload',null,{'add':{method: 'POST'}});
   };
 }]);

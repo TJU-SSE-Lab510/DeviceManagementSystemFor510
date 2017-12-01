@@ -15,7 +15,7 @@ import java.util.List;
  * Created by arlex on 2017/12/1.
  */
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/record")
 public class RecordController {
 
     @Autowired
