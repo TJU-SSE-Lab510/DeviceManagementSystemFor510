@@ -6,7 +6,7 @@ labsystem.controller('ItemListCtrl',
 
       $scope.item = {
         itemName: '',
-        itemQty:'',
+        itemQTY:'',
         url:'../images/defautPicture.png'
       } ;
 
@@ -20,7 +20,7 @@ labsystem.controller('ItemListCtrl',
         $scope.isDisabled = false;
         $scope.item = {
           itemName: '',
-          itemQty:'',
+          itemQTY:'',
           url:'../images/defautPicture.png'
         } ;
         $scope.modalName = "新建设备";
@@ -31,7 +31,7 @@ labsystem.controller('ItemListCtrl',
         $scope.isDisabled = true;
         $scope.item = {
           itemName: item.itemName,
-          itemQty:item.itemQTY,
+          itemQTY:item.itemQTY,
           url:item.url
         } ;
         editid = item.id;
@@ -42,7 +42,6 @@ labsystem.controller('ItemListCtrl',
         if($scope.modalName == "新建设备"){
           var item = Object.assign({},$scope.item);
           item.date =  Date.parse(new Date())/1000;
-          item.url = '123123';
           console.log(Date.parse(new Date()));
           ItemSrv.addUser().add(item)
             .$promise.then(function(response){
@@ -175,20 +174,8 @@ labsystem.controller('ItemListCtrl',
 
         var dataurl = $('#avatarImg').cropper('getCroppedCanvas').toDataURL('image/png');
         console.log(dataurl);
-        var data = {};
-        data.base64 = dataurl.replace("data:image/png;base64,","");
-        console.log(dataurl);
-        ItemSrv.upload().add(data)
-          .$promise.then(function(response){
-          if(response.errCode === 0){
-            getUser();
-            console.log(response.data);
-            NoticeSrv.success("上传成功");
-            $('#avatar-modal').modal('hide');
-          }
-        },function (response) {
-          NoticeSrv.error("上传错误,http状态码:"+response.status);
-        });
+        $scope.item.url = dataurl;
+        $('#avatar-modal').modal('hide');
       };
 
 
