@@ -1,8 +1,8 @@
 'use strict';
 
-labsystem.controller('UserListCtrl',
-  ['$scope', 'UserSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv',
-    function($scope,UserSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv) {
+labsystem.controller('BorrowListCtrl',
+  ['$scope', 'BorrowSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv',
+    function($scope,BorrowSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv) {
 
       $scope.record = {
         name: '',
@@ -44,7 +44,7 @@ labsystem.controller('UserListCtrl',
           record.borrowedTime =  Date.parse(new Date())/1000;
           record.borrowOperator = TokenSrv.getToken();
           console.log(Date.parse(new Date()));
-          UserSrv.addUser().add(record)
+          BorrowSrv.addUser().add(record)
             .$promise.then(function(response){
               console.log(response);
               if(response.errCode === 0){
@@ -58,7 +58,7 @@ labsystem.controller('UserListCtrl',
         }else {
           var record = Object.assign({},$scope.record);
           record.id = editid;
-          UserSrv.editUser().add(record)
+          BorrowSrv.editUser().add(record)
             .$promise.then(function(response){
               console.log(response);
               if(response.errCode === 0){
@@ -80,7 +80,7 @@ labsystem.controller('UserListCtrl',
         data.id = id;
         data.returnTime =  Date.parse(new Date())/1000;
         data.returnOperator = TokenSrv.getToken();
-        UserSrv.returnItem().add(data)
+        BorrowSrv.returnItem().add(data)
           .$promise.then(function(response){
           console.log(response);
           if(response.errCode === 0){
@@ -99,7 +99,7 @@ labsystem.controller('UserListCtrl',
        *@return:
        */
       var getUser = function () {
-        UserSrv.getUser().get()
+        BorrowSrv.getUser().get()
           .$promise.then(function(response){
           if(response.errCode === 0){
             $scope.userCollection = response.data;
@@ -127,7 +127,7 @@ labsystem.controller('UserListCtrl',
       };
 
       $scope.comfirmDelete = function () {
-        UserSrv.deleteUser().add(deleteData)
+        BorrowSrv.deleteUser().add(deleteData)
           .$promise.then(function(response){
           if(response.errCode === 0){
             getUser();

@@ -3,7 +3,7 @@
  */
 'use strict';
 
-labsystem.service('UserSrv', ['$resource','$http', 'baseURL' ,function ($resource, $http, baseURL) {
+labsystem.service('BorrowSrv', ['$resource','$http', 'baseURL' ,function ($resource, $http, baseURL) {
 
   //查看所有用户。
   this.getUser = function(){
