@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('ItemListCtrl',
-  ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv',
-    function($scope,ItemSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv) {
+  ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv','UserSrv',
+    function($scope,ItemSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv,UserSrv) {
 
       $scope.item = {
         itemName: '',
@@ -188,6 +188,30 @@ labsystem.controller('ItemListCtrl',
       };
 
 
+      $scope.newBorrow = function(item){
+        $scope.isDisabled = true;
+        $scope.record = {
+          itemName: item.itemName
+        } ;
+      };
+
+      $scope.borrow_submit = function () {
+          var record = Object.assign({},$scope.record);
+          record.borrowedTime =  Date.parse(new Date())/1000;
+          record.borrowOperator = TokenSrv.getToken();
+          console.log(Date.parse(new Date()));
+          UserSrv.addUser().add(record)
+            .$promise.then(function(response){
+            console.log(response);
+            if(response.errCode === 0){
+              NoticeSrv.success("新建成功");
+              getUser();
+              $('#newBorrow').modal('hide');
+            }
+          },function (response) {
+            NoticeSrv.error("新建用户错误,http状态码:"+response.status);
+          });
+      };
 
 
     }]);
