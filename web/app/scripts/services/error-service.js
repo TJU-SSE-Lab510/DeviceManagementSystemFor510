@@ -1,5 +1,5 @@
 'use strict';
-mrmedia.factory('ErrorSrv', [function() {
+labsystem.factory('ErrorSrv', [function() {
   var error, getError;
 
   error = {

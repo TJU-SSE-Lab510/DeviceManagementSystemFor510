@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-var mrmedia = angular.module('BackWebApp', [
+var labsystem = angular.module('BackWebApp', [
     'ngAnimate',
     'ngMessages',
     'ngResource',
@@ -18,18 +18,18 @@ var mrmedia = angular.module('BackWebApp', [
     'ngFileUpload',
     'ui.bootstrap'
 ]);
-mrmedia.config(function($httpProvider) {
+labsystem.config(function($httpProvider) {
   $httpProvider.interceptors.push('myInterceptor');
 });
-mrmedia.value('baseURL', 'http://127.0.0.1:8080');
+labsystem.value('baseURL', 'http://127.0.0.1:8080/labsystem');
 
-mrmedia.controller('MainCtrl', function ($state) {
+labsystem.controller('MainCtrl', function ($state) {
   // $state.go('app.back.home');
 
 });
 
 
-mrmedia.config(function ($stateProvider, $urlRouterProvider) {
+labsystem.config(function ($stateProvider, $urlRouterProvider) {
 
 
   $urlRouterProvider.otherwise("/itemList");
@@ -41,9 +41,15 @@ mrmedia.config(function ($stateProvider, $urlRouterProvider) {
 
 
     .state('app.userlist', {
-      url: 'itemList',
-      templateUrl: 'views/user-list.html',
+      url: 'borrowedList',
+      templateUrl: 'views/borrowed-list.html',
       controller: 'UserListCtrl'
+    })
+
+    .state('app.itemlist', {
+      url: 'itemList',
+      templateUrl: 'views/item-list.html',
+      controller: 'ItemListCtrl'
     })
 
     .state('app.backuser', {

@@ -1,8 +1,8 @@
 'use strict';
 
-mrmedia.controller('UserListCtrl',
-  ['$scope', 'UserSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http',
-    function($scope,UserSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http) {
+labsystem.controller('UserListCtrl',
+  ['$scope', 'UserSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv',
+    function($scope,UserSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv) {
 
       $scope.record = {
         name: '',
@@ -42,6 +42,7 @@ mrmedia.controller('UserListCtrl',
         if($scope.modalName == "新建记录"){
           var record = Object.assign({},$scope.record);
           record.borrowedTime =  Date.parse(new Date())/1000;
+          record.borrowOperator = TokenSrv.getToken();
           console.log(Date.parse(new Date()));
           UserSrv.addUser().add(record)
             .$promise.then(function(response){
@@ -78,6 +79,7 @@ mrmedia.controller('UserListCtrl',
         var data = {};
         data.id = id;
         data.returnTime =  Date.parse(new Date())/1000;
+        data.returnOperator = TokenSrv.getToken();
         UserSrv.returnItem().add(data)
           .$promise.then(function(response){
           console.log(response);

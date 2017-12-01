@@ -1,5 +1,5 @@
 'use strict';
-mrmedia.directive("compareTo", function() {
+labsystem.directive("compareTo", function() {
  	return {
      	require: "ngModel",
      	scope: {

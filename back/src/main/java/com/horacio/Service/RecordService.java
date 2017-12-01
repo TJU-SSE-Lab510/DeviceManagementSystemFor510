@@ -29,6 +29,7 @@ public class RecordService {
             record.setBorrowedTime(data.get("borrowedTime").intValue());
             record.setName(data.get("name").textValue());
             record.setPhone(data.get("phone").textValue());
+            record.setBorrowOperator(data.get("borrowOperator").textValue());
             recordRepository.save(record);
             return true;
     }
@@ -47,6 +48,7 @@ public class RecordService {
     public Boolean returnItem(JsonNode data){
         Record record =recordRepository.findOne(data.get("id").intValue());
         record.setReturnTime(data.get("returnTime").intValue());
+        record.setReturnOperator(data.get("returnOperator").textValue());
         recordRepository.save(record);
         return true;
 

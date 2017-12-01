@@ -1,5 +1,5 @@
 'use strict';
-mrmedia.service('UploadSrv',[
+labsystem.service('UploadSrv',[
         'Upload',
         'baseURL',
         function (Upload, baseURL) {

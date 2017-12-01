@@ -18,6 +18,24 @@ public class Record {
     private String itemName;
     private int borrowedTime ;
     private int returnTime ;
+    private String borrowOperator;
+    private String returnOperator;
+
+    public String getBorrowOperator() {
+        return borrowOperator;
+    }
+
+    public void setBorrowOperator(String borrowOperator) {
+        this.borrowOperator = borrowOperator;
+    }
+
+    public String getReturnOperator() {
+        return returnOperator;
+    }
+
+    public void setReturnOperator(String returnOperator) {
+        this.returnOperator = returnOperator;
+    }
 
     public Record() {
     }

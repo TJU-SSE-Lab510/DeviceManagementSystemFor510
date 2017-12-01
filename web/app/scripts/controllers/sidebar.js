@@ -1,6 +1,6 @@
 'use strict';
 
-mrmedia.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state','TokenSrv',
+labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state','TokenSrv',
  function($scope, SidebarSrv, NoticeSrv,$state,TokenSrv) {
 
   $scope.userIcon = "../images/icon.jpg";
@@ -9,7 +9,13 @@ mrmedia.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state',
      {
        active: '',
        icon: 'fa fa-circle-o',
-       name: '用户列表',
+       name: '设备列表',
+       url: "app.itemlist"
+     },
+     {
+       active: '',
+       icon: 'fa fa-circle-o',
+       name: '借出列表',
        url: "app.userlist"
      },
      {

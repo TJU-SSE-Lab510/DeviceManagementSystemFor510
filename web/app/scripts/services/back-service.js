@@ -1,6 +1,6 @@
 'use strict';
 
-mrmedia.service('BackUserSrv', ['$resource','$http', 'baseURL' ,function ($resource, $http, baseURL) {
+labsystem.service('BackUserSrv', ['$resource','$http', 'baseURL' ,function ($resource, $http, baseURL) {
 
 
   //查看所有管理员。

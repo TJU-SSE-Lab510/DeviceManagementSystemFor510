@@ -3,7 +3,7 @@
  */
 'use strict';
 
-mrmedia.controller('HomePageCtrl',[
+labsystem.controller('HomePageCtrl',[
   function(){
 
   }

@@ -1,5 +1,5 @@
 'use strict';
-mrmedia.factory('NoticeSrv', ['$compile', '$timeout', '$rootScope', function($compile, $timeout, $rootScope) {
+labsystem.factory('NoticeSrv', ['$compile', '$timeout', '$rootScope', function($compile, $timeout, $rootScope) {
   var notification = {};
 
   notification.timer = null;

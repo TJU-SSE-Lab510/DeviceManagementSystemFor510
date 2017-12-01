@@ -1,5 +1,5 @@
 'use strict';
-mrmedia.factory('TokenSrv', function () {
+labsystem.factory('TokenSrv', function () {
         return {
 
           token: '',

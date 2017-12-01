@@ -1,6 +1,6 @@
 'use strict';
 
-mrmedia.controller('SettlementCtrl',
+labsystem.controller('SettlementCtrl',
   ['$scope', 'AManagerSrv','NoticeSrv', '$uibModal','$state','UtilSrv',
     function($scope,AManagerSrv,NoticeSrv, $uibModal, $state, UtilSrv) {
       $scope.anchorCollection = AManagerSrv.managerList;

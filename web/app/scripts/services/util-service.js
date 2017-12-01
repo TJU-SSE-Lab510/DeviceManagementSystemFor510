@@ -2,7 +2,7 @@
 /**
  * Created by Horac on 2016/11/17.
  */
-mrmedia.service('UtilSrv', ['$resource', 'baseURL', function($resource, baseURL) {
+labsystem.service('UtilSrv', ['$resource', 'baseURL', function($resource, baseURL) {
 
   var baseUrl = "http://139.224.41.121:8090/";
 

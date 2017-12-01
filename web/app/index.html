@@ -12,9 +12,18 @@
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="../bower_components/AdminLTE/dist/css/skins/_all-skins.css">
-    <link rel="stylesheet" href="../bower_components/AdminLTE/plugins/datepicker/datepicker3.css">
     <link rel="stylesheet" href="../bower_components/cropper/dist/cropper.css">
     <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/bootstrap-slider/slider.css" />
+    <link rel="stylesheet" href="../bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css" />
+    <link rel="stylesheet" href="../bower_components/datatables.net-bs/css/dataTables.bootstrap.css" />
+    <link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="../bower_components/fullcalendar/dist/fullcalendar.css" />
+    <link rel="stylesheet" href="../bower_components/ion.rangeSlider/css/ion.rangeSlider.css" />
+    <link rel="stylesheet" href="../bower_components/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" />
+    <link rel="stylesheet" href="../bower_components/morris.js/morris.css" />
+    <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.css" />
     <link rel="stylesheet" href="../bower_components/AdminLTE/dist/css/AdminLTE.css" />
     <!-- endbower -->
     <!-- endbuild -->
@@ -50,8 +59,49 @@
     <script src="../bower_components/angular-smart-table/dist/smart-table.js"></script>
     <script src="../bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../bower_components/bootstrap-slider/bootstrap-slider.js"></script>
+    <script src="../bower_components/chart.js/Chart.js"></script>
+    <script src="../bower_components/ckeditor/ckeditor.js"></script>
+    <script src="../bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../bower_components/cropper/dist/cropper.js"></script>
+    <script src="../bower_components/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="../bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="../bower_components/moment/moment.js"></script>
+    <script src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="../bower_components/fastclick/lib/fastclick.js"></script>
+    <script src="../bower_components/Flot/jquery.flot.js"></script>
+    <script src="../bower_components/fullcalendar/dist/fullcalendar.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/inputmask.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/inputmask.extensions.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/inputmask.date.extensions.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/inputmask.numeric.extensions.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/inputmask.phone.extensions.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/jquery.inputmask.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/global/document.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/global/window.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/phone-codes/phone.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/phone-codes/phone-be.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/phone-codes/phone-nl.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/phone-codes/phone-ru.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/phone-codes/phone-uk.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/dependencyLibs/inputmask.dependencyLib.jqlite.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/dependencyLibs/inputmask.dependencyLib.jquery.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/dependencyLibs/inputmask.dependencyLib.js"></script>
+    <script src="../bower_components/inputmask/dist/inputmask/bindings/inputmask.binding.js"></script>
+    <script src="../bower_components/ion.rangeSlider/js/ion.rangeSlider.js"></script>
+    <script src="../bower_components/jquery-knob/js/jquery.knob.js"></script>
+    <script src="../bower_components/eve-raphael/eve.js"></script>
+    <script src="../bower_components/raphael/raphael.min.js"></script>
+    <script src="../bower_components/mocha/mocha.js"></script>
+    <script src="../bower_components/morris.js/morris.js"></script>
+    <script src="../bower_components/PACE/pace.js"></script>
+    <script src="../bower_components/select2/dist/js/select2.js"></script>
+    <script src="../bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="../bower_components/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+    <script src="../bower_components/jquery-sparkline/dist/jquery.sparkline.js"></script>
+    <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -67,18 +117,21 @@
         <script src="scripts/services/richtext-config.js"></script> -->
         <script src="../bower_components/angular-i18n/angular-locale_zh.js"></script>
         <script src="../bower_components/cryptojslib/rollups/sha256.js"></script>
+    <script src="../bower_components/cropper/dist/cropper.js"></script>
 
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/controllers/sidebar.js"></script>
         <script src="scripts/controllers/home.js"></script>
-        <script src="scripts/controllers/user-list.js"></script>
+        <script src="scripts/controllers/borrowed-list.js"></script>
+    <script src="scripts/controllers/item-list.js"></script>
         <script src="scripts/controllers/settlement.js"></script>
         <script src="scripts/controllers/back-user.js"></script>
         <!-- 模块服务 -->
         <script src="scripts/services/sidebar-service.js"></script>
         <script src="scripts/services/upload-service.js"></script>
         <script src="scripts/services/util-service.js"></script>
-        <script src="scripts/services/user-service.js"></script>
+        <script src="scripts/services/borrowed-service.js"></script>
+    <script src="scripts/services/item-service.js"></script>
         <script src="scripts/services/back-service.js"></script>
         <!-- 组件 -->
         <script src="scripts/components/tic-toc.js"></script>

@@ -1,5 +1,5 @@
 'use strict';
-mrmedia.factory('myInterceptor',
+labsystem.factory('myInterceptor',
         ['$rootScope', '$injector', 'TokenSrv', 'baseURL',
          function($rootScope, $injector, token, baseURL) {
             var myInterceptor = {

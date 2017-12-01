@@ -1,5 +1,5 @@
 'use strict';
-mrmedia.directive("ticToc", function() {
+labsystem.directive("ticToc", function() {
  	return {
     restrict: 'E',
     bindToController: {

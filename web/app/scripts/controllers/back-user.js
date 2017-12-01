@@ -1,6 +1,6 @@
 'use strict';
 
-mrmedia.controller('BackuserCtrl',
+labsystem.controller('BackuserCtrl',
   ['$scope', 'BackUserSrv','NoticeSrv', '$uibModal','$state','UtilSrv',
     function($scope,BackUserSrv,NoticeSrv, $uibModal, $state, UtilSrv) {
 

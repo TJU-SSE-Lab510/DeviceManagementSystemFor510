@@ -1,5 +1,5 @@
 'use strict';
-mrmedia.controller('LoginCtrl', ['$scope', 'NoticeSrv', 'TokenSrv', '$state','BackUserSrv',
+labsystem.controller('LoginCtrl', ['$scope', 'NoticeSrv', 'TokenSrv', '$state','BackUserSrv',
 function($scope, NoticeSrv, TokenSrv, $state,BackUserSrv) {
   $scope.user = {
     "username": '',
@@ -27,6 +27,7 @@ function($scope, NoticeSrv, TokenSrv, $state,BackUserSrv) {
         if (response.errCode === 0) {
           TokenSrv.setToken(response.data.token);
           sessionStorage.setItem("token", response.data.token);
+          console.log(response.data);
           if(remember)
           {
             localStorage.setItem("token", response.data.token);
