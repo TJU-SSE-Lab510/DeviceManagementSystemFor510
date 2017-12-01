@@ -1,6 +1,8 @@
 package com.horacio.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.horacio.Enum.ResultEnum;
+import com.horacio.Exception.LabsException;
 import com.horacio.Model.Admin;
 import com.horacio.Repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,26 +22,26 @@ public class AdminService {
     private AdminRepository adminRepository;
 
     @Transactional
-    public String login(JsonNode data){
+    public String login(JsonNode data) throws Exception{
         Admin user = adminRepository.findByUsername(data.get("username").textValue());
         if (user == null){
-            return "-1";
+            throw new LabsException(ResultEnum.USER_NOT_FOUND.getCode(),ResultEnum.USER_NOT_FOUND.getMsg());
         }else {
             if(user.getPassword().equals(data.get("password").textValue())){
                 return user.getName();
             }
             else{
-                return "-1";
+                throw new LabsException(ResultEnum.USER_PASSWORD_ERROR.getCode(),ResultEnum.USER_PASSWORD_ERROR.getMsg());
             }
         }
 
     }
 
     @Transactional
-    public Boolean register(JsonNode data){
+    public Boolean register(JsonNode data) throws Exception{
         Admin user = adminRepository.findByUsername(data.get("username").textValue());
         if (user != null){
-            return false;
+            throw new LabsException(ResultEnum.USER_ALREADY_EXIST.getCode(),ResultEnum.USER_ALREADY_EXIST.getMsg());
         }else {
             user = new Admin();
             user.setUsername(data.get("username").textValue());
@@ -54,10 +56,10 @@ public class AdminService {
     }
 
     @Transactional
-    public Boolean edit(JsonNode data){
+    public Boolean edit(JsonNode data) throws Exception{
         Admin user = adminRepository.findByUsername(data.get("username").textValue());
         if (user == null){
-            return false;
+            throw new LabsException(ResultEnum.USER_NOT_FOUND.getCode(),ResultEnum.USER_NOT_FOUND.getMsg());
         }else {
             user.setPassword(data.get("password").textValue());
             user.setName(data.get("name").textValue());
@@ -70,10 +72,10 @@ public class AdminService {
     }
 
     @Transactional
-    public Boolean delete(JsonNode data){
+    public Boolean delete(JsonNode data) throws Exception{
         Admin user = adminRepository.findOne(data.get("id").intValue());
         if (user == null){
-            return false;
+            throw new LabsException(ResultEnum.USER_NOT_FOUND.getCode(),ResultEnum.USER_NOT_FOUND.getMsg());
         }else {
             adminRepository.delete(user);
             return true;
@@ -83,7 +85,7 @@ public class AdminService {
 
 
     @Transactional
-    public List<Admin> getAll(){
+    public List<Admin> getAll() throws Exception{
         List<Admin> admins = adminRepository.findAll();
         return  admins;
     }

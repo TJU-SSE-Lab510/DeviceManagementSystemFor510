@@ -1,20 +1,21 @@
 package com.horacio.Model;
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 @Entity
-public class Item {
+public class Facility {
     @Id
     @GeneratedValue
     private int id;
     private String itemName;
     private int itemQTY;
-    @Column( length = 100000 )
+    private int remainNum;
     private String url;
     private int date;
 
-    public Item() {
+    public Facility() {
     }
 
     public int getId() {
@@ -39,6 +40,14 @@ public class Item {
 
     public void setItemQTY(int itemQTY) {
         this.itemQTY = itemQTY;
+    }
+
+    public int getRemainNum() {
+        return remainNum;
+    }
+
+    public void setRemainNum(int remainNum) {
+        this.remainNum = remainNum;
     }
 
     public String getUrl() {

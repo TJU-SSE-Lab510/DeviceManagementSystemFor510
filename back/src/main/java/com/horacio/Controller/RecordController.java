@@ -2,21 +2,17 @@ package com.horacio.Controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.horacio.Model.Record;
-import com.horacio.Response.BaseResp;
 import com.horacio.Service.RecordService;
-import jdk.nashorn.internal.runtime.Debug;
+import com.horacio.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by Horac on 2017/5/15.
+ * Created by arlex on 2017/12/1.
  */
 @RestController
 @RequestMapping(value = "/user")
@@ -26,45 +22,38 @@ public class RecordController {
     RecordService recordService;
 
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public BaseResp register(@RequestBody JsonNode body){
-        if(recordService.register(body)){
-            return new BaseResp(BaseResp.SUCCESS, null);
-        }
-        else return new BaseResp(BaseResp.DUPLICATEUSERNAME, null);
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public Object register(@RequestBody JsonNode body) throws Exception{
+        recordService.add(body);
+        return ResultUtil.success();
 
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public BaseResp edit(@RequestBody JsonNode body){
-        if(recordService.edit(body)){
-            return new BaseResp(BaseResp.SUCCESS, null);
-        }
-        else return new BaseResp(BaseResp.NOUSER, null);
+    public Object edit(@RequestBody JsonNode body) throws Exception{
+        recordService.edit(body);
+        return ResultUtil.success();
 
     }
 
     @RequestMapping(value = "/returnItem", method = RequestMethod.POST)
-    public BaseResp returnItem(@RequestBody JsonNode body){
-        if(recordService.returnItem(body)){
-            return new BaseResp(BaseResp.SUCCESS, null);
-        }
-        else return new BaseResp(BaseResp.NOUSER, null);
+    public Object returnItem(@RequestBody JsonNode body) throws Exception{
+        recordService.returnItem(body);
+        return ResultUtil.success();
 
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public BaseResp register(){
-        return new BaseResp(BaseResp.SUCCESS,recordService.getAll());
+    public Object register() throws Exception{
+        List<Record> records = recordService.getAll();
+        return ResultUtil.success(records);
 
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public BaseResp delete(@RequestBody JsonNode body){
-        if(recordService.delete(body)){
-            return new BaseResp(BaseResp.SUCCESS, null);
-        }
-        else return new BaseResp(BaseResp.NOUSER, null);
+    public Object delete(@RequestBody JsonNode body) throws Exception{
+        recordService.delete(body);
+        return ResultUtil.success();
 
     }
 

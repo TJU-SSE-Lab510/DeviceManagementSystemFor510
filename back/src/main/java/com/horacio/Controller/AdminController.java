@@ -1,8 +1,9 @@
 package com.horacio.Controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.horacio.Response.BaseResp;
+import com.horacio.Model.Admin;
 import com.horacio.Service.AdminService;
+import com.horacio.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,47 +26,35 @@ public class AdminController {
 
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public BaseResp login(@RequestBody JsonNode body){
+    public Object login(@RequestBody JsonNode body) throws Exception{
         String name = adminService.login(body);
-        if(!name.equals(-1+"")) {
-            Map<String, Object> data = new HashMap<>();
-            data.put("token", name);
-            return new BaseResp(BaseResp.SUCCESS, data);
-        }
-        else return new BaseResp(BaseResp.USERNAMEORPASSWORDERROR, null);
-
+        Map<String, Object> data = new HashMap<>();
+        data.put("token", name);
+        return ResultUtil.success();
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public BaseResp register(@RequestBody JsonNode body){
-        if(adminService.register(body)){
-            return new BaseResp(BaseResp.SUCCESS, null);
-        }
-        else return new BaseResp(BaseResp.DUPLICATEUSERNAME, null);
-
+    public Object register(@RequestBody JsonNode body) throws Exception{
+        adminService.register(body);
+        return ResultUtil.success();
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public BaseResp edit(@RequestBody JsonNode body){
-        if(adminService.edit(body)){
-            return new BaseResp(BaseResp.SUCCESS, null);
-        }
-        else return new BaseResp(BaseResp.NOUSER, null);
-
+    public Object edit(@RequestBody JsonNode body) throws Exception{
+        adminService.edit(body);
+        return ResultUtil.success();
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public BaseResp register(){
-        return new BaseResp(BaseResp.SUCCESS,adminService.getAll());
-
+    public Object register()throws Exception {
+        List<Admin> list = adminService.getAll();
+        return ResultUtil.success(list);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public BaseResp delete(@RequestBody JsonNode body){
-        if(adminService.delete(body)){
-            return new BaseResp(BaseResp.SUCCESS, null);
-        }
-        else return new BaseResp(BaseResp.NOUSER, null);
+    public Object delete(@RequestBody JsonNode body)throws Exception{
+        adminService.delete(body);
+        return ResultUtil.success();
 
     }
 

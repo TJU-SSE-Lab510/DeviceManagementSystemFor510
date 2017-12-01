@@ -13,3 +13,5 @@ spring:
         charset: UTF-8
         enabled: true
         force: true
+file:
+  ImagePath: /var/www/images
