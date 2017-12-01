@@ -31,7 +31,7 @@ public class ItemService {
 
             Item item = new Item();
             item.setItemName(data.get("itemName").textValue());
-            item.setDate(data.get("itemName").intValue());
+            item.setDate(data.get("date").intValue());
             item.setItemQTY(data.get("itemQTY").intValue());
             item.setUrl(data.get("url").textValue());
             itemrepository.save(item);
@@ -41,7 +41,6 @@ public class ItemService {
     @Transactional
     public Boolean edit(JsonNode data){
         Item item =itemrepository.findOne(data.get("id").intValue());
-        item.setDate(data.get("itemName").intValue());
         item.setItemQTY(data.get("itemQTY").intValue());
         item.setUrl(data.get("url").textValue());
         itemrepository.save(item);
