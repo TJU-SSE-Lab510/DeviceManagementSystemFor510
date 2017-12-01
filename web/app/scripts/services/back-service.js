@@ -1,6 +1,6 @@
 'use strict';
 
-labsystem.service('BackUserSrv', ['$resource','$http', 'baseURL' ,function ($resource, $http, baseURL) {
+labsystem.service('BackBorrowSrv', ['$resource','$http', 'baseURL' ,function ($resource, $http, baseURL) {
 
 
   //查看所有管理员。

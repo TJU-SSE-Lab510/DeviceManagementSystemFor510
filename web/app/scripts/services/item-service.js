@@ -12,7 +12,7 @@ labsystem.service('ItemSrv', ['$resource','$http', 'baseURL' ,function ($resourc
 
   //新建用户
   this.addUser = function(uid){
-    return $resource(baseURL + '/item/register',null,{'add':{method: 'POST'}});
+    return $resource(baseURL + '/item/add',null,{'add':{method: 'POST'}});
   };
 
   //修改用户

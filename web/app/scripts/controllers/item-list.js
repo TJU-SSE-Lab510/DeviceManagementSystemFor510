@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('ItemListCtrl',
-  ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv','UserSrv',
-    function($scope,ItemSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv,UserSrv) {
+  ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv','BorrowSrv',
+    function($scope,ItemSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv,BorrowSrv) {
 
       $scope.item = {
         itemName: '',
@@ -200,7 +200,7 @@ labsystem.controller('ItemListCtrl',
           record.borrowedTime =  Date.parse(new Date())/1000;
           record.borrowOperator = TokenSrv.getToken();
           console.log(Date.parse(new Date()));
-          UserSrv.addUser().add(record)
+          BorrowSrv.addUser().add(record)
             .$promise.then(function(response){
             console.log(response);
             if(response.errCode === 0){

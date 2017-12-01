@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('BackuserCtrl',
-  ['$scope', 'BackUserSrv','NoticeSrv', '$uibModal','$state','UtilSrv',
-    function($scope,BackUserSrv,NoticeSrv, $uibModal, $state, UtilSrv) {
+  ['$scope', 'BackBorrowSrv','NoticeSrv', '$uibModal','$state','UtilSrv',
+    function($scope,BackBorrowSrv,NoticeSrv, $uibModal, $state, UtilSrv) {
 
       $scope.user = {
         username: '',
@@ -47,7 +47,7 @@ labsystem.controller('BackuserCtrl',
           var user = Object.assign({},$scope.user);
           if(user.password == user.cpassword)
           {
-            BackUserSrv.addUser().add(user)
+            BackBorrowSrv.addUser().add(user)
               .$promise.then(function(response){
               console.log(response);
               if(response.errCode === 0){
@@ -66,7 +66,7 @@ labsystem.controller('BackuserCtrl',
           var user = Object.assign({},$scope.user);
           if(user.password == user.cpassword)
           {
-            BackUserSrv.editUser().add(user)
+            BackBorrowSrv.editUser().add(user)
               .$promise.then(function(response){
               console.log(response);
               if(response.errCode === 0){
@@ -92,7 +92,7 @@ labsystem.controller('BackuserCtrl',
        *@return:
        */
       var getUser = function () {
-        BackUserSrv.getUser().get()
+        BackBorrowSrv.getUser().get()
           .$promise.then(function(response){
           if(response.errCode === 0){
             $scope.userCollection = response.data;
@@ -111,7 +111,7 @@ labsystem.controller('BackuserCtrl',
        *@return:
        */
       $scope.getScore = function(id){
-        BackUserSrv.getUserScore(id).get()
+        BackBorrowSrv.getUserScore(id).get()
           .$promise.then(function(response){
           console.log(response);
           if(response.errCode === 0){
@@ -136,7 +136,7 @@ labsystem.controller('BackuserCtrl',
       };
 
       $scope.comfirmDelete = function () {
-          BackUserSrv.deleteUser().add(deleteData)
+          BackBorrowSrv.deleteUser().add(deleteData)
             .$promise.then(function(response){
             if(response.errCode === 0){
               getUser();

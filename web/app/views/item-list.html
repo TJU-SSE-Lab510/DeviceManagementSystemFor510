@@ -36,6 +36,7 @@
                 <th>ID</th>
                 <th>设备名称</th>
                 <th>设备数量</th>
+                <th>设备库存</th>
                 <th>入库时间</th>
 
 
@@ -46,6 +47,7 @@
                 <td>{{item.id}}</td>
                 <td>{{item.itemName}}</td>
                 <td>{{item.itemQTY}}</td>
+                <td>{{item.remainNum}}</td>
                 <td  ng-if="item.date != 0">{{item.date *1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td  ng-if="item.date == 0">无记录</td>
                 <td>

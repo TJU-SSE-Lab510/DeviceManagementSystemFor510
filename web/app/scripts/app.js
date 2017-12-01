@@ -43,7 +43,7 @@ labsystem.config(function ($stateProvider, $urlRouterProvider) {
     .state('app.userlist', {
       url: 'borrowedList',
       templateUrl: 'views/borrowed-list.html',
-      controller: 'UserListCtrl'
+      controller: 'BorrowListCtrl'
     })
 
     .state('app.itemlist', {

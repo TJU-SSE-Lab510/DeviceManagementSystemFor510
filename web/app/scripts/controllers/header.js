@@ -1,6 +1,6 @@
 'use strict';
 
-labsystem.controller('HeaderCtrl', ['$scope', 'BackuserSrv', function($scope, BackuserSrv) {
-  $scope.admin = BackuserSrv.getUser();
+labsystem.controller('HeaderCtrl', ['$scope', 'BackBorrowSrv', function($scope, BackBorrowSrv) {
+  $scope.admin = BackBorrowSrv.getUser();
 
 }]);
