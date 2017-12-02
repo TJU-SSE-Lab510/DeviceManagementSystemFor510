@@ -1,15 +1,17 @@
 package com.horacio.Controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.horacio.Enum.ResultEnum;
 import com.horacio.Exception.LabsException;
-import com.horacio.Model.Facility;
 import com.horacio.Service.FacilityService;
 import com.horacio.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.InputStream;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class FacilityController {
     FacilityService facilityService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Object register(@RequestBody JsonNode body) throws Exception{
+    public Object add(@RequestBody JsonNode body) throws Exception{
         facilityService.add(body);
         return ResultUtil.success();
     }
@@ -35,10 +37,9 @@ public class FacilityController {
         return ResultUtil.success();
     }
 
-
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public Object getall() throws Exception{
-        List<Facility> facilities = facilityService.getAll();
+        ArrayNode facilities = facilityService.getAll();
         return ResultUtil.success(facilities);
     }
 
@@ -65,8 +66,26 @@ public class FacilityController {
         InputStream file = picture.getInputStream();
         String contentType = picture.getContentType().split("/")[1];
         String filePath = facilityService.uploadImage(file,contentType);
-
         return ResultUtil.success(filePath);
     }
 
+    /**
+     * 删除冗余的图片
+     * @throws Exception
+     */
+    @GetMapping(value = "/slim")
+    public Object slim() throws Exception{
+        facilityService.clean();
+        return ResultUtil.success();
+    }
+
+    /**
+     * 发送邮件
+     * @throws Exception
+     */
+    @GetMapping(value = "/send")
+    public Object send() throws Exception{
+        facilityService.send();
+        return ResultUtil.success();
+    }
 }

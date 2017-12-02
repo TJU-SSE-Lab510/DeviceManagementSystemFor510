@@ -1,15 +1,23 @@
 package com.horacio.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.horacio.Enum.ResultEnum;
+import com.horacio.Exception.LabsException;
+import com.horacio.Model.Admin;
 import com.horacio.Model.Facility;
 import com.horacio.Properties.FileProperties;
 import com.horacio.Repository.FacilityRepository;
+import com.horacio.utils.EmailUtil;
 import com.horacio.utils.UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -20,10 +28,14 @@ import java.util.List;
 public class FacilityService {
 
     @Autowired
-    private FacilityRepository facilityRrepository;
+    private FacilityRepository facilityRepository;
 
     @Autowired
     private FileProperties fileProperties;
+
+
+    @Autowired
+    private ObjectMapper mapper;
 
 
 
@@ -35,33 +47,62 @@ public class FacilityService {
         item.setItemQTY(data.get("itemQTY").intValue());
         item.setUrl(data.get("url").textValue());
         item.setRemainNum(data.get("itemQTY").intValue());
-        facilityRrepository.save(item);
+        facilityRepository.save(item);
         return true;
     }
 
     @Transactional
     public Boolean edit(JsonNode data) throws Exception{
-        Facility item =facilityRrepository.findOne(data.get("id").intValue());
-        item.setItemQTY(data.get("itemQTY").intValue());
+        Facility item =facilityRepository.findOne(data.get("id").intValue());
+        if(item == null){
+            throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
+        }
+        int newNum = data.get("itemQTY").intValue();
+        int origin  = item.getItemQTY();
+        int change_num = newNum - origin;
+        int remain_num = item.getRemainNum()+change_num;
+        if(remain_num < 0){
+            throw new LabsException(ResultEnum.FACILITY_NOT_ENOUGH.getCode(),ResultEnum.FACILITY_NOT_ENOUGH.getMsg());
+        }
+        item.setItemQTY(newNum);
+        item.setRemainNum(remain_num);
         item.setUrl(data.get("url").textValue());
-        facilityRrepository.save(item);
+        facilityRepository.save(item);
         return true;
     }
 
 
     @Transactional
-    public List<Facility> getAll() throws Exception{
-        List<Facility> items = facilityRrepository.findAll();
-        return  items;
+    public ArrayNode getAll() throws Exception{
+        List<Facility> items = facilityRepository.findAll();
+        ArrayNode array = mapper.createArrayNode();
+        for(Facility item: items){
+            ObjectNode node = mapper.createObjectNode();
+            node.put("id",item.getId());
+            node.put("itemName",item.getItemName());
+            node.put("itemQTY",item.getItemQTY());
+            node.put("remainNum",item.getRemainNum());
+            node.put("url",fileProperties.getImageUrl()+item.getUrl());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String time = String.valueOf(sdf.parse(item.getDate().toString()).getTime());
+            node.put("date",time);
+            array.addPOJO(node);
+        }
+        return array;
     }
 
     @Transactional
     public Boolean delete(JsonNode data) throws Exception{
-        Facility item = facilityRrepository.findOne(data.get("id").intValue());
+        Facility item = facilityRepository.findOne(data.get("id").intValue());
         if (item == null){
-            return false;
+            throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
         }else {
-            facilityRrepository.delete(item);
+            facilityRepository.delete(item);
+            String url = fileProperties.getImagePath()+UploadUtil.separatar+item.getUrl();
+            File image = new File(url);
+            if(image != null){
+                image.delete();
+            }
             return true;
         }
 
@@ -81,6 +122,36 @@ public class FacilityService {
         UploadUtil.upload(stream,out);
         String link = fileProperties.getImageUrl()+name+"."+contentType;
         return link;
+    }
+
+    /**
+     * 清理冗余文件
+     * @throws Exception
+     */
+    public void clean() throws Exception{
+        String imagePath = fileProperties.getImagePath();
+        File folder = new File(imagePath);
+        if(!folder.exists()){
+            throw new LabsException(ResultEnum.FILE_FOLDER_NOT_FOUND.getCode(),ResultEnum.FILE_FOLDER_NOT_FOUND.getMsg());
+        }
+        File images[] = folder.listFiles();
+        Facility facility = null;
+        for(int i=0;i<images.length;i++){
+            File image = images[i];
+            String name = image.getName();
+            facility= facilityRepository.findOneByUrl(name);
+            if(facility == null){
+                image.delete();
+            }
+        }
+    }
+
+    /**
+     * 发送邮件
+     * @throws Exception
+     */
+    public void send() throws Exception{
+        EmailUtil.send("772773671@qq.com");
     }
 
 }

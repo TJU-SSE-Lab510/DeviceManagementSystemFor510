@@ -1,6 +1,9 @@
 package com.horacio.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.horacio.Enum.ResultEnum;
 import com.horacio.Exception.LabsException;
 import com.horacio.Model.Admin;
@@ -20,6 +23,9 @@ public class AdminService {
 
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    private ObjectMapper mapper;
 
     @Transactional
     public String login(JsonNode data) throws Exception{
@@ -63,7 +69,6 @@ public class AdminService {
         }else {
             user.setPassword(data.get("password").textValue());
             user.setName(data.get("name").textValue());
-
             user.setPhoneNumber(data.get("phoneNumber").textValue());
             adminRepository.save(user);
             return true;
@@ -85,8 +90,17 @@ public class AdminService {
 
 
     @Transactional
-    public List<Admin> getAll() throws Exception{
+    public ArrayNode getAll() throws Exception{
         List<Admin> admins = adminRepository.findAll();
-        return  admins;
+        ArrayNode array = mapper.createArrayNode();
+        for(Admin user: admins){
+            ObjectNode node = mapper.createObjectNode();
+            node.put("id",user.getId());
+            node.put("username",user.getUsername());
+            node.put("name",user.getName());
+            node.put("phoneNumber",user.getPhoneNumber());
+            array.addPOJO(node);
+        }
+        return array;
     }
 }

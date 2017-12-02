@@ -23,7 +23,7 @@ public class RecordController {
 
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Object register(@RequestBody JsonNode body) throws Exception{
+    public Object add(@RequestBody JsonNode body) throws Exception{
         recordService.add(body);
         return ResultUtil.success();
 
@@ -56,7 +56,5 @@ public class RecordController {
         return ResultUtil.success();
 
     }
-
-
 
 }
