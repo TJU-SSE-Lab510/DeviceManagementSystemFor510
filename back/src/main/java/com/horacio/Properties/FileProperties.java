@@ -9,11 +9,21 @@ public class FileProperties {
 
     private String ImagePath;
 
+    private String ImageUrl;
+
     public String getImagePath() {
         return ImagePath;
     }
 
     public void setImagePath(String imagePath) {
         ImagePath = imagePath;
+    }
+
+    public String getImageUrl() {
+        return ImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
     }
 }

@@ -15,3 +15,4 @@ spring:
         force: true
 file:
   ImagePath: /var/www/images
+  ImageUrl: http://100.64.208.218:82/

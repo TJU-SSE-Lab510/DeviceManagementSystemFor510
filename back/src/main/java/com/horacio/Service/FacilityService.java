@@ -78,7 +78,7 @@ public class FacilityService {
         String name = UploadUtil.generatorName();
         String out = fileProperties.getImagePath()+UploadUtil.separatar+name+"."+contentType;
         UploadUtil.upload(stream,out);
-        String link = name+"."+contentType;
+        String link = fileProperties.getImageUrl()+name+"."+contentType;
         return link;
     }
 

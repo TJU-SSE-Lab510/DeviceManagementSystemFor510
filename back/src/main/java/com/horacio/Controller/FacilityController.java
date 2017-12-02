@@ -27,7 +27,6 @@ public class FacilityController {
     public Object register(@RequestBody JsonNode body) throws Exception{
         facilityService.add(body);
         return ResultUtil.success();
-
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
