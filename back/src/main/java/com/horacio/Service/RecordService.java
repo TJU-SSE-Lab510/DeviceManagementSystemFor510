@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,46 +29,51 @@ public class RecordService {
 
 
     @Transactional
-    public Boolean add(JsonNode data) throws Exception{
-            Record record = new Record();
-            record.setItemName(data.get("itemName").textValue());
-            record.setBorrowedTime(data.get("borrowedTime").intValue());
-            record.setName(data.get("name").textValue());
-            record.setPhone(data.get("phone").textValue());
-            record.setBorrowOperator(data.get("borrowOperator").textValue());
-            record.setNumber(data.get("number").intValue());
-            recordRepository.save(record);
-            Facility item =facilityRepository.findOneByItemName(data.get("itemName").textValue());
+    public void add(JsonNode data) throws Exception{
+            String itemName =  data.get("itemName").textValue();
+            Facility item =facilityRepository.findOneByItemName(itemName);
             if(item == null){
                 throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
             }
             int remianNum = item.getRemainNum();
             remianNum = remianNum - data.get("number").intValue();
+            if(remianNum < 0){
+                throw new LabsException(ResultEnum.FACILITY_NOT_ENOUGH.getCode(),ResultEnum.FACILITY_NOT_ENOUGH.getMsg());
+            }
             item.setRemainNum(remianNum);
             facilityRepository.save(item);
-            return true;
+            Record record = new Record();
+            record.setItemName(data.get("itemName").textValue());
+            record.setBorrowedTime(new Date(Long.valueOf(data.get("borrowedTime").textValue())));
+            record.setName(data.get("name").textValue());
+            record.setPhone(data.get("phone").textValue());
+            record.setBorrowOperator(data.get("borrowOperator").textValue());
+            record.setNumber(data.get("number").intValue());
+            recordRepository.save(record);
     }
 
     @Transactional
     public Boolean edit(JsonNode data) throws Exception{
         Record record =recordRepository.findOne(data.get("id").intValue());
+        if(record == null){
+            throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
+        }
         record.setName(data.get("name").textValue());
         record.setPhone(data.get("phone").textValue());
         recordRepository.save(record);
         return true;
-
     }
 
     @Transactional
     public Boolean returnItem(JsonNode data) throws Exception{
         Record record =recordRepository.findOne(data.get("id").intValue());
-        record.setReturnTime(data.get("returnTime").intValue());
-        record.setReturnOperator(data.get("returnOperator").textValue());
-        recordRepository.save(record);
         Facility item =facilityRepository.findOneByItemName(record.getItemName());
         if(item == null){
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
         }
+        record.setReturnTime(new Date(Long.valueOf(data.get("returnTime").intValue())));
+        record.setReturnOperator(data.get("returnOperator").textValue());
+        recordRepository.save(record);
         int remianNum = item.getRemainNum();
         remianNum = remianNum + record.getNumber();
         item.setRemainNum(remianNum);

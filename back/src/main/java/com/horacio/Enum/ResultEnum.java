@@ -14,7 +14,7 @@ public enum ResultEnum {
 
     OBJECT_NOT_FOUND(501,"对象不存在"),
     PARAM_NOT_FOUND(502,"参数缺失"),
-    BARCODE_ALREADY_EXIST(503,"一维码已存在"),
+    FACILITY_NOT_ENOUGH(503,"设备库存不足"),
 
     FILE_NOT_FOUND(601,"文件不存在"),
     FILE_TYPE_ERROR(602,"文件格式错误"),

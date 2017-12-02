@@ -1,7 +1,8 @@
 package com.horacio.Controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.horacio.Model.Admin;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.horacio.Service.AdminService;
 import com.horacio.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class AdminController {
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public Object register()throws Exception {
-        List<Admin> list = adminService.getAll();
+        ArrayNode list = adminService.getAll();
         return ResultUtil.success(list);
     }
 
@@ -55,7 +56,6 @@ public class AdminController {
     public Object delete(@RequestBody JsonNode body)throws Exception{
         adminService.delete(body);
         return ResultUtil.success();
-
     }
 
 }

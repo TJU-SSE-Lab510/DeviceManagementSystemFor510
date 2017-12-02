@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface FacilityRepository extends JpaRepository<Facility, Integer> {
 
     public Facility findOneByItemName(String itemName);
+
+    public Facility findOneByUrl(String Url);
 }

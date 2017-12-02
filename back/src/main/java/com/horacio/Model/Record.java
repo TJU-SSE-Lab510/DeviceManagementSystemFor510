@@ -3,6 +3,7 @@ package com.horacio.Model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 
 /**
@@ -16,8 +17,8 @@ public class Record {
     private String name;
     private String phone;
     private String itemName;
-    private int borrowedTime ;
-    private int returnTime ;
+    private Date borrowedTime ;
+    private Date returnTime ;
     private String borrowOperator;
     private String returnOperator;
     private int number;
@@ -73,19 +74,19 @@ public class Record {
         this.itemName = itemName;
     }
 
-    public int getBorrowedTime() {
+    public Date getBorrowedTime() {
         return borrowedTime;
     }
 
-    public void setBorrowedTime(int borrowedTime) {
+    public void setBorrowedTime(Date borrowedTime) {
         this.borrowedTime = borrowedTime;
     }
 
-    public int getReturnTime() {
+    public Date getReturnTime() {
         return returnTime;
     }
 
-    public void setReturnTime(int returnTime) {
+    public void setReturnTime(Date returnTime) {
         this.returnTime = returnTime;
     }
 
