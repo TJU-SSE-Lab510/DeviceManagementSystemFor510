@@ -42,9 +42,8 @@ gulp
 使用以下命令可以模拟运行项目
 
 ```
-gulp serve
+npm run server
 ```
-
 
 
 ## 项目目录

@@ -107,7 +107,7 @@ gulp.task('bower', function () {
 ///////////
 
 gulp.task('clean:dist', function () {
-  del(['dist']);
+  return del(['dist']);
 });
 
 gulp.task('copy:views', function () {

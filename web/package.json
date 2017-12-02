@@ -1,5 +1,5 @@
 {
-  "name": "shuapiaobackweb",
+  "name": "510labs",
   "private": true,
   "devDependencies": {
     "browser-sync": "^2.10.0",
