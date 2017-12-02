@@ -17,7 +17,7 @@ labsystem.service('BorrowSrv', ['$resource','$http', 'baseURL' ,function ($resou
 
   //新建记录
   this.addRecord = function(data){
-    return $resource(baseURL + '/record/register',null,{'add':{method: 'POST',}});
+    return $resource(baseURL + '/record/add',null,{'add':{method: 'POST',}});
   };
 
   //修改

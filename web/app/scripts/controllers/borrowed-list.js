@@ -7,7 +7,8 @@ labsystem.controller('BorrowListCtrl',
       $scope.record = {
         name: '',
         itemName: '',
-        phone:''
+        phone:'',
+        email:''
       } ;
 
       var editid;
@@ -21,7 +22,8 @@ labsystem.controller('BorrowListCtrl',
         $scope.record = {
           name: '',
           itemName: '',
-          phone:''
+          phone:'',
+          email:''
         } ;
         $scope.modalName = "新建记录";
       };
@@ -32,7 +34,8 @@ labsystem.controller('BorrowListCtrl',
         $scope.record = {
           name: item.name,
           itemName: item.itemName,
-          phone:item.phone
+          phone:item.phone,
+          email:item.email
         } ;
         editid = item.id;
         $scope.modalName = "修改记录";
@@ -50,9 +53,11 @@ labsystem.controller('BorrowListCtrl',
                 NoticeSrv.success("新建成功");
                 getRecord();
                 $('#editRecord').modal('hide');
+                $scope.form.$setUntouched()
               }
             },function (response) {
               NoticeSrv.error("新建用户错误,http状态码:"+response.status);
+            $scope.form.$setUntouched()
             });
         }else {
           var record = Object.assign({},$scope.record);
@@ -64,9 +69,11 @@ labsystem.controller('BorrowListCtrl',
                 NoticeSrv.success("修改成功");
                 getRecord();
                 $('#editRecord').modal('hide');
+              $scope.form.$setUntouched()
               }
             },function (response) {
               NoticeSrv.error("修改记录错误,http状态码:"+response.status);
+            $scope.form.$setUntouched()
             });
 
 
@@ -82,7 +89,7 @@ labsystem.controller('BorrowListCtrl',
         BorrowSrv.returnItem().add(data)
           .$promise.then(function(response){
           console.log(response);
-          if(response.errCode === 0){
+          if(response.errCode === 0){userrName
             NoticeSrv.success("归还成功");
             getRecord();
             $('#editRecord').modal('hide');

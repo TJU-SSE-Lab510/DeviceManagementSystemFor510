@@ -24,6 +24,7 @@ labsystem.controller('ItemListCtrl',
           url:'../images/defautPicture.png'
         } ;
         $scope.modalName = "新建设备";
+        $scope.form.$setUntouched()
       };
 
 
@@ -36,6 +37,7 @@ labsystem.controller('ItemListCtrl',
         } ;
         editid = item.id;
         $scope.modalName = "修改设备";
+        $scope.form.$setUntouched()
       };
 
       $scope.item_submit = function () {
@@ -51,6 +53,7 @@ labsystem.controller('ItemListCtrl',
                 NoticeSrv.success("新建成功");
                 getItem();
                 $('#editItem').modal('hide');
+                $scope.form.$setUntouched()
               }
             },function (response) {
               NoticeSrv.error("新建设备错误,http状态码:"+response.status);
@@ -68,6 +71,7 @@ labsystem.controller('ItemListCtrl',
                 NoticeSrv.success("修改成功");
                 getItem();
                 $('#editItem').modal('hide');
+                $scope.form.$setUntouched()
               }
             },function (response) {
               NoticeSrv.error("修改设备错误,http状态码:"+response.status);
@@ -226,8 +230,12 @@ labsystem.controller('ItemListCtrl',
       $scope.newBorrow = function(item){
         $scope.isDisabled = true;
         $scope.record = {
-          itemName: item.itemName
+          itemName: item.itemName,
+          name: '',
+          phone:'',
+          email:''
         } ;
+        $scope.form2.$setUntouched()
       };
 
       $scope.borrow_submit = function () {
@@ -242,9 +250,10 @@ labsystem.controller('ItemListCtrl',
               NoticeSrv.success("新建成功");
               getItem();
               $('#newBorrow').modal('hide');
+              $scope.form2.$setUntouched()
             }
           },function (response) {
-            NoticeSrv.error("新建用户错误,http状态码:"+response.status);
+            NoticeSrv.error("新建借出错误,http状态码:"+response.status);
           });
       };
 
