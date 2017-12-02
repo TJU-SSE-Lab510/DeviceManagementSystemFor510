@@ -30,7 +30,7 @@ public class AdminController {
         String name = adminService.login(body);
         Map<String, Object> data = new HashMap<>();
         data.put("token", name);
-        return ResultUtil.success();
+        return ResultUtil.success(data);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

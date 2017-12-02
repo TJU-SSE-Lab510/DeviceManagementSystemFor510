@@ -3,6 +3,7 @@ package com.horacio.Model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Facility {
@@ -13,7 +14,7 @@ public class Facility {
     private int itemQTY;
     private int remainNum;
     private String url;
-    private int date;
+    private Date date;
 
     public Facility() {
     }
@@ -58,11 +59,11 @@ public class Facility {
         this.url = url;
     }
 
-    public int getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class FacilityService {
     public Boolean add(JsonNode data) throws Exception{
         Facility item = new Facility();
         item.setItemName(data.get("itemName").textValue());
-        item.setDate(data.get("date").intValue());
+        item.setDate(new Date(Long.valueOf(data.get("date").textValue())));
         item.setItemQTY(data.get("itemQTY").intValue());
         item.setUrl(data.get("url").textValue());
         item.setRemainNum(data.get("itemQTY").intValue());
