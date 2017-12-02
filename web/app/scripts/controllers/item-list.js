@@ -15,8 +15,8 @@ labsystem.controller('ItemListCtrl',
       /**
        *@description:　新建或修改设备
        */
-      $scope.showNewUserModal = function(){
-        $('#editUser').modal('show');
+      $scope.showNewItemModal = function(){
+        $('#editItem').modal('show');
         $scope.isDisabled = false;
         $scope.item = {
           itemName: '',
@@ -27,7 +27,7 @@ labsystem.controller('ItemListCtrl',
       };
 
 
-      $scope.editUser = function(item){
+      $scope.editItem = function(item){
         $scope.isDisabled = true;
         $scope.item = {
           itemName: item.itemName,
@@ -38,32 +38,36 @@ labsystem.controller('ItemListCtrl',
         $scope.modalName = "修改设备";
       };
 
-      $scope.user_submit = function () {
-        if($scope.modalName == "新建设备"){
+      $scope.item_submit = function () {
+        if($scope.modalName === "新建设备"){
           var item = Object.assign({},$scope.item);
-          item.date =  Date.parse(new Date())/1000;
-          console.log(Date.parse(new Date()));
+          item.date =  Date.parse(new Date())+"";
+          var temp = item.url.split('/');
+          item.url = temp[temp.length-1];
           ItemSrv.addFacility().add(item)
             .$promise.then(function(response){
               console.log(response);
               if(response.errCode === 0){
                 NoticeSrv.success("新建成功");
-                getUser();
-                $('#editUser').modal('hide');
+                getItem();
+                $('#editItem').modal('hide');
               }
             },function (response) {
-              NoticeSrv.error("新建用户错误,http状态码:"+response.status);
+              NoticeSrv.error("新建设备错误,http状态码:"+response.status);
             });
         }else {
           var item = Object.assign({},$scope.item);
+          item.date =  Date.parse(new Date())+"";
+          var temp = item.url.split('/');
+          item.url = temp[temp.length-1];
           item.id = editid;
-          ItemSrv.editUser().add(item)
+          ItemSrv.editItem().add(item)
             .$promise.then(function(response){
               console.log(response);
               if(response.errCode === 0){
                 NoticeSrv.success("修改成功");
-                getUser();
-                $('#editUser').modal('hide');
+                getItem();
+                $('#editItem').modal('hide');
               }
             },function (response) {
               NoticeSrv.error("修改设备错误,http状态码:"+response.status);
@@ -80,11 +84,11 @@ labsystem.controller('ItemListCtrl',
        *@param:
        *@return:
        */
-      var getUser = function () {
-        ItemSrv.getUser().get()
+      var getItem = function () {
+        ItemSrv.getItem().get()
           .$promise.then(function(response){
           if(response.errCode === 0){
-            $scope.userCollection = response.data;
+            $scope.itemCollection = response.data;
           }
         },function (response) {
           NoticeSrv.error("获取设备列表错误,http状态码:"+response.status);
@@ -92,7 +96,7 @@ labsystem.controller('ItemListCtrl',
 
       };
 
-      getUser();
+      getItem();
 
 
       /**
@@ -103,16 +107,16 @@ labsystem.controller('ItemListCtrl',
 
       var deleteData ={id:''};
 
-      $scope.deleteUser = function (id) {
+      $scope.deleteItem = function (id) {
         deleteData ={id:''};
         deleteData.id = id;
       };
 
       $scope.comfirmDelete = function () {
-        ItemSrv.deleteUser().add(deleteData)
+        ItemSrv.deleteItem().add(deleteData)
           .$promise.then(function(response){
           if(response.errCode === 0){
-            getUser();
+            getItem();
             NoticeSrv.success("删除成功");
             $('#modifyDelete').modal('hide');
           }
@@ -170,11 +174,42 @@ labsystem.controller('ItemListCtrl',
 
       };
 
+      /**
+       * 将以base64的图片url数据转换为Blob
+       * @param urlData
+       *            用url方式表示的base64图片数据
+       */
+      function convertBase64UrlToBlob(urlData){
+
+        var bytes=window.atob(urlData.split(',')[1]);        //去掉url的头，并转换为byte
+
+        //处理异常,将ascii码小于0的转换为大于0
+        var ab = new ArrayBuffer(bytes.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < bytes.length; i++) {
+          ia[i] = bytes.charCodeAt(i);
+        }
+
+        return new Blob( [ab] , {type : 'image/png'});
+      }
+
       $scope.save = function(){
 
-        var dataurl = $('#avatarImg').cropper('getCroppedCanvas').toDataURL('image/png');
-        console.log(dataurl);
-        $scope.item.url = dataurl;
+        var dataurl = $('#avatarImg').cropper('getCroppedCanvas').toBlob(function (blob) {
+          var formData = new FormData();
+          formData.append('file', blob);
+            ItemSrv.upload().add(formData)
+              .$promise.then(function(response){
+              console.log(response);
+              if(response.errCode === 0){
+                $scope.item.url = response.data;
+                console.log($scope.item.url);
+              }
+            },function (response) {
+              NoticeSrv.error("上传图片错误,http状态码:"+response.status);
+            });
+          });
+
         $('#avatar-modal').modal('hide');
       };
 
@@ -197,15 +232,15 @@ labsystem.controller('ItemListCtrl',
 
       $scope.borrow_submit = function () {
           var record = Object.assign({},$scope.record);
-          record.borrowedTime =  Date.parse(new Date())/1000;
+          record.borrowedTime =  Date.parse(new Date()) +"";
           record.borrowOperator = TokenSrv.getToken();
           console.log(Date.parse(new Date()));
-          BorrowSrv.addUser().add(record)
+          BorrowSrv.addRecord().add(record)
             .$promise.then(function(response){
             console.log(response);
             if(response.errCode === 0){
               NoticeSrv.success("新建成功");
-              getUser();
+              getItem();
               $('#newBorrow').modal('hide');
             }
           },function (response) {

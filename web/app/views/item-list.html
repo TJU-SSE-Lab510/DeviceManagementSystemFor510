@@ -24,12 +24,12 @@
             </div>
           </div>
           <div class="box-body">
-            <table st-table="rowCollection" st-safe-src="userCollection" class="table table-bordered table-hover">
+            <table st-table="rowCollection" st-safe-src="itemCollection" class="table table-bordered table-hover">
               <thead>
               <tr>
                 <th colspan="14" class="form-inline">
                   <label class="pull-left">搜索：<input st-search placeholder="全局动态搜索" class="form-control" type="search"/></label>
-                  <button type="button" class="btn btn-primary pull-right" ng-click="showNewUserModal()">新建</button>
+                  <button type="button" class="btn btn-primary pull-right" ng-click="showNewItemModal()">新建</button>
                 </th>
               </tr>
               <tr>
@@ -48,11 +48,11 @@
                 <td>{{item.itemName}}</td>
                 <td>{{item.itemQTY}}</td>
                 <td>{{item.remainNum}}</td>
-                <td  ng-if="item.date != 0">{{item.date *1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td  ng-if="item.date != 0">{{item.date | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td  ng-if="item.date == 0">无记录</td>
                 <td>
-                  <span class="label label-primary" ng-click="editUser(item)" data-toggle="modal" data-target="#editUser"><i class="fa fa-edit"></i>详情</span>
-                  <span class="label label-danger" ng-click="deleteUser(item.id)" data-toggle="modal" data-target="#modifyDelete"><i class="fa fa-pencil"></i>删除</span>
+                  <span class="label label-primary" ng-click="editItem(item)" data-toggle="modal" data-target="#editItem"><i class="fa fa-edit"></i>详情</span>
+                  <span class="label label-danger" ng-click="deleteItem(item.id)" data-toggle="modal" data-target="#modifyDelete"><i class="fa fa-pencil"></i>删除</span>
                   <span class="label label-info" ng-click="newBorrow(item)" data-toggle="modal" data-target="#newBorrow"><i class="fa fa-pencil"></i>借出</span>
                 </td>
               </tr>
@@ -86,14 +86,14 @@
 </section>
 
 
-<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUserLabel">
+<div class="modal fade" id="editItem" tabindex="-1" role="dialog" aria-labelledby="editItemLabel">
   <div class="modal-dialog" role="document">
     <div class="box box-info">
       <form class="form-horizontal"  name="form">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="editUserLabel">{{modalName}}</h4>
+            <h4 class="modal-title" id="editItemLabel">{{modalName}}</h4>
           </div>
           <div class="modal-body">
             <div>
@@ -120,7 +120,7 @@
               </div>
 
               <div id="crop-avatar">
-                <div class="avatar-view" title="点击更换头图片">
+                <div class="avatar-view" title="点击更换图片">
                   <img class="profile-user-img img-responsive" style="width: 300px" ng-src="{{item.url}}" alt="点击更换图片" ng-click="showModal()">
                 </div>
               </div>
@@ -128,7 +128,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button ng-disabled="!form.$valid" type="button" class="btn btn-primary" ng-click="user_submit()">保存</button>
+            <button ng-disabled="!form.$valid" type="button" class="btn btn-primary" ng-click="item_submit()">保存</button>
           </div>
         </div>
       </form>
@@ -164,7 +164,7 @@
       <form class="avatar-form"  method="post">
         <div class="modal-header">
           <button class="close" data-dismiss="modal" type="button">&times;</button>
-          <h4 class="modal-title" id="avatar-modal-label">更换头像</h4>
+          <h4 class="modal-title" id="avatar-modal-label">更换图片</h4>
         </div>
         <div class="modal-body">
           <div class="avatar-body">
@@ -228,6 +228,15 @@
                 </div>
               </div>
 
+              <div class="form-group">
+                <label for="inputrItemNumber" class="col-sm-2 control-label">借用数量</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" id="inputrItemNumber" placeholder="" ng-model="record.number" required name="inputrItemNumber" min="1" step="1">
+                  <div ng-messages="form2['inputrItemNumber'].$touched && form2['inputrItemNumber'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
 
               <div class="form-group">
                 <label for="userrName" class="col-sm-2 control-label">姓名</label>
