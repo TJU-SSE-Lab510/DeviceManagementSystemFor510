@@ -41,7 +41,7 @@ labsystem.controller('ItemListCtrl',
       $scope.user_submit = function () {
         if($scope.modalName == "新建设备"){
           var item = Object.assign({},$scope.item);
-          item.date =  Date.parse(new Date())/1000;
+          item.date =  Date.parse(new Date());
           console.log(Date.parse(new Date()));
           ItemSrv.addFacility().add(item)
             .$promise.then(function(response){
@@ -197,7 +197,7 @@ labsystem.controller('ItemListCtrl',
 
       $scope.borrow_submit = function () {
           var record = Object.assign({},$scope.record);
-          record.borrowedTime =  Date.parse(new Date())/1000;
+          record.borrowedTime =  Date.parse(new Date());
           record.borrowOperator = TokenSrv.getToken();
           console.log(Date.parse(new Date()));
           BorrowSrv.addUser().add(record)

@@ -49,9 +49,9 @@
                 <tr ng-repeat="item in rowCollection">
                   <td>{{item.id}}</td>
                   <td>{{item.itemName}}</td>
-                  <td  ng-if="item.borrowedTime != 0">{{item.borrowedTime *1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td  ng-if="item.borrowedTime != 0">{{item.borrowedTime  | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   <td  ng-if="item.borrowedTime == 0">无记录</td>
-                  <td  ng-if="item.returnTime != 0">{{item.returnTime *1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td  ng-if="item.returnTime != 0">{{item.returnTime  | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   <td  ng-if="item.returnTime == 0">无记录</td>
                   <td>{{item.name}}</td>
                   <td>{{item.phone}}</td>

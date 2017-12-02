@@ -41,7 +41,7 @@ labsystem.controller('BorrowListCtrl',
       $scope.user_submit = function () {
         if($scope.modalName == "新建记录"){
           var record = Object.assign({},$scope.record);
-          record.borrowedTime =  Date.parse(new Date())/1000;
+          record.borrowedTime =  Date.parse(new Date());
           record.borrowOperator = TokenSrv.getToken();
           console.log(Date.parse(new Date()));
           BorrowSrv.addUser().add(record)
@@ -78,7 +78,7 @@ labsystem.controller('BorrowListCtrl',
       $scope.return = function (id) {
         var data = {};
         data.id = id;
-        data.returnTime =  Date.parse(new Date())/1000;
+        data.returnTime =  Date.parse(new Date());
         data.returnOperator = TokenSrv.getToken();
         BorrowSrv.returnItem().add(data)
           .$promise.then(function(response){

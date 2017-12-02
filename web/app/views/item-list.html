@@ -48,7 +48,7 @@
                 <td>{{item.itemName}}</td>
                 <td>{{item.itemQTY}}</td>
                 <td>{{item.remainNum}}</td>
-                <td  ng-if="item.date != 0">{{item.date *1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td  ng-if="item.date != 0">{{item.date | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td  ng-if="item.date == 0">无记录</td>
                 <td>
                   <span class="label label-primary" ng-click="editUser(item)" data-toggle="modal" data-target="#editUser"><i class="fa fa-edit"></i>详情</span>
