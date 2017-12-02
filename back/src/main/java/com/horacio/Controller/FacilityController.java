@@ -41,7 +41,6 @@ public class FacilityController {
     public Object getall() throws Exception{
         List<Facility> facilities = facilityService.getAll();
         return ResultUtil.success(facilities);
-
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)

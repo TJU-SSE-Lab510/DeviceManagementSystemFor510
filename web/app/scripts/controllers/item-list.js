@@ -43,7 +43,7 @@ labsystem.controller('ItemListCtrl',
           var item = Object.assign({},$scope.item);
           item.date =  Date.parse(new Date())/1000;
           console.log(Date.parse(new Date()));
-          ItemSrv.addUser().add(item)
+          ItemSrv.addFacility().add(item)
             .$promise.then(function(response){
               console.log(response);
               if(response.errCode === 0){

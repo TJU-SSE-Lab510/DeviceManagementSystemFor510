@@ -3,7 +3,9 @@ package com.horacio.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.horacio.Enum.ResultEnum;
 import com.horacio.Exception.LabsException;
+import com.horacio.Model.Facility;
 import com.horacio.Model.Record;
+import com.horacio.Repository.FacilityRepository;
 import com.horacio.Repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class RecordService {
     @Autowired
     private RecordRepository recordRepository;
 
+    @Autowired
+    private FacilityRepository facilityRepository;
 
 
 
@@ -31,7 +35,16 @@ public class RecordService {
             record.setName(data.get("name").textValue());
             record.setPhone(data.get("phone").textValue());
             record.setBorrowOperator(data.get("borrowOperator").textValue());
+            record.setNumber(data.get("number").intValue());
             recordRepository.save(record);
+            Facility item =facilityRepository.findOneByItemName(data.get("itemName").textValue());
+            if(item == null){
+                throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
+            }
+            int remianNum = item.getRemainNum();
+            remianNum = remianNum - data.get("number").intValue();
+            item.setRemainNum(remianNum);
+            facilityRepository.save(item);
             return true;
     }
 
@@ -51,8 +64,15 @@ public class RecordService {
         record.setReturnTime(data.get("returnTime").intValue());
         record.setReturnOperator(data.get("returnOperator").textValue());
         recordRepository.save(record);
+        Facility item =facilityRepository.findOneByItemName(record.getItemName());
+        if(item == null){
+            throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
+        }
+        int remianNum = item.getRemainNum();
+        remianNum = remianNum + record.getNumber();
+        item.setRemainNum(remianNum);
+        facilityRepository.save(item);
         return true;
-
     }
 
 

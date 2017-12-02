@@ -20,6 +20,7 @@ public class Record {
     private int returnTime ;
     private String borrowOperator;
     private String returnOperator;
+    private int number;
 
     public String getBorrowOperator() {
         return borrowOperator;
@@ -86,5 +87,13 @@ public class Record {
 
     public void setReturnTime(int returnTime) {
         this.returnTime = returnTime;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }

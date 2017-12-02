@@ -33,6 +33,7 @@ public class FacilityService {
         item.setDate(data.get("date").intValue());
         item.setItemQTY(data.get("itemQTY").intValue());
         item.setUrl(data.get("url").textValue());
+        item.setRemainNum(data.get("itemQTY").intValue());
         facilityRrepository.save(item);
         return true;
     }

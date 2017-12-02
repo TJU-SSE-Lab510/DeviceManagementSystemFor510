@@ -11,7 +11,7 @@ labsystem.service('ItemSrv', ['$resource','$http', 'baseURL' ,function ($resourc
   };
 
   //新建用户
-  this.addUser = function(uid){
+  this.addFacility = function(uid){
     return $resource(baseURL + '/facility/add',null,{'add':{method: 'POST'}});
   };
 
