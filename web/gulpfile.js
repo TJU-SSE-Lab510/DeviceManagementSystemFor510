@@ -7,30 +7,31 @@ var del = require('del');
 var wiredep = require('wiredep').stream;
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
+var vinylPaths = require('vinyl-paths');
 
-var mrmedia = {
+var app = {
   app: require('./bower.json').appPath || 'app',
   dist: 'dist'
 };
 
 var paths = {
-  scripts: [mrmedia.app + '/scripts/**/*.js'],
-  styles: [mrmedia.app + '/styles/**/*.css'],
+  scripts: [app.app + '/scripts/**/*.js'],
+  styles: [app.app + '/styles/**/*.css'],
   test: ['test/spec/**/*.js'],
   testRequire: [
-    mrmedia.app + '/bower_components/angular/angular.js',
-    mrmedia.app + '/bower_components/angular-mocks/angular-mocks.js',
-    mrmedia.app + '/bower_components/angular-resource/angular-resource.js',
-    mrmedia.app + '/bower_components/angular-cookies/angular-cookies.js',
-    mrmedia.app + '/bower_components/angular-sanitize/angular-sanitize.js',
-    mrmedia.app + '/bower_components/angular-route/angular-route.js',
+    app.app + '/bower_components/angular/angular.js',
+    app.app + '/bower_components/angular-mocks/angular-mocks.js',
+    app.app + '/bower_components/angular-resource/angular-resource.js',
+    app.app + '/bower_components/angular-cookies/angular-cookies.js',
+    app.app + '/bower_components/angular-sanitize/angular-sanitize.js',
+    app.app + '/bower_components/angular-route/angular-route.js',
     'test/mock/**/*.js',
     'test/spec/**/*.js'
   ],
   karma: 'karma.conf.js',
   views: {
-    main: mrmedia.app + '/index.html',
-    files: [mrmedia.app + '/views/**/*.html']
+    main: app.app + '/index.html',
+    files: [app.app + '/views/**/*.html']
   }
 };
 
@@ -70,7 +71,7 @@ gulp.task('client:build', ['lint:scripts', 'styles', 'copy:views'], function () 
   var cssFilter = $.filter('**/*.css', {restore: true});
 
   return gulp.src(paths.views.main)
-    .pipe($.useref({searchPath: [mrmedia.app, '.tmp']}))
+    .pipe($.useref({searchPath: [app.app, '.tmp']}))
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
     .pipe($.uglify())
@@ -80,17 +81,24 @@ gulp.task('client:build', ['lint:scripts', 'styles', 'copy:views'], function () 
     .pipe(cssFilter.restore)
     .pipe($.rev())
     .pipe($.revReplace())
-    .pipe(gulp.dest(mrmedia.dist));
+    .pipe(gulp.dest(app.dist));
 });
 
-  // gulp.task('client:dev', ['styles', 'copy:views'], function () {
-  gulp.task('client:dev', ['lint:scripts', 'styles', 'copy:views'], function () {
+gulp.task('rename',['client:build'], function () {
+  return gulp.src(app.dist + '/index-*.html')
+    .pipe(vinylPaths(del))
+    .pipe($.rename('index.html',{deleteOrigin:true}))
+    .pipe(gulp.dest(app.dist));
+});
+
+// gulp.task('client:dev', ['styles', 'copy:views'], function () {
+gulp.task('client:dev', ['lint:scripts', 'styles', 'copy:views'], function () {
   // var jsFilter = $.filter('**/*.js', {restore: true});
   // var cssFilter = $.filter('**/*.css', {restore: true});
 
   return gulp.src(paths.views.main)
-    .pipe($.useref({searchPath: [mrmedia.app, '.tmp']}))
-    .pipe(gulp.dest(mrmedia.dist));
+    .pipe($.useref({searchPath: [app.app, '.tmp']}))
+    .pipe(gulp.dest(app.dist));
 });
 
 // inject bower components
@@ -99,7 +107,7 @@ gulp.task('bower', function () {
     .pipe(wiredep({
       directory: 'bower_components'
     }))
-  .pipe(gulp.dest(mrmedia.app));
+    .pipe(gulp.dest(app.app));
 });
 
 ///////////
@@ -111,37 +119,37 @@ gulp.task('clean:dist', function () {
 });
 
 gulp.task('copy:views', function () {
-  return gulp.src(mrmedia.app + '/views/**/*')
-    .pipe(gulp.dest(mrmedia.dist + '/views'));
+  return gulp.src(app.app + '/views/**/*')
+    .pipe(gulp.dest(app.dist + '/views'));
 });
 
 gulp.task('images', function () {
-  return gulp.src(mrmedia.app + '/images/**/*')
-    // .pipe($.cache($.imagemin({
-    //     optimizationLevel: 5,
-    //     progressive: true,
-    //     interlaced: true
-    // })))
-    .pipe(gulp.dest(mrmedia.dist + '/images'));
+  return gulp.src(app.app + '/images/**/*')
+  // .pipe($.cache($.imagemin({
+  //     optimizationLevel: 5,
+  //     progressive: true,
+  //     interlaced: true
+  // })))
+    .pipe(gulp.dest(app.dist + '/images'));
 });
 
 gulp.task('copy:extras', function () {
-  return gulp.src(mrmedia.app + '/*/.*', { dot: true })
-    .pipe(gulp.dest(mrmedia.dist));
+  return gulp.src(app.app + '/*/.*', { dot: true })
+    .pipe(gulp.dest(app.dist));
 });
 
 gulp.task('copy:fonts', function () {
-    gulp.src(mrmedia.app + '/fonts/**/*')
-        .pipe(gulp.dest(mrmedia.dist + '/fonts'));
-    gulp.src('./bower_components/font-awesome/fonts/**/*.{ttf,woff,eof,svg}*')
-        .pipe(gulp.dest('./dist/fonts'));
-    gulp.src('./bower_components/bootstrap/fonts/**/*.{ttf,woff,eof,svg}*')
-        .pipe(gulp.dest('./dist/fonts'));
+  gulp.src(app.app + '/fonts/**/*')
+    .pipe(gulp.dest(app.dist + '/fonts'));
+  gulp.src('./bower_components/font-awesome/fonts/**/*.{ttf,woff,eof,svg}*')
+    .pipe(gulp.dest('./dist/fonts'));
+  gulp.src('./bower_components/bootstrap/dist/fonts/**/*.{ttf,woff,eof,svg}*')
+    .pipe(gulp.dest('./dist/fonts'));
 
 });
 
 gulp.task('build', ['clean:dist'], function () {
-  runSequence(['images', 'copy:extras', 'copy:fonts', 'client:build']);
+  runSequence(['images', 'copy:extras', 'copy:fonts', 'rename']);
 });
 
 gulp.task('dev', ['clean:dist'], function () {
@@ -153,29 +161,29 @@ gulp.task('default', ['build']);
 // Watch
 gulp.task('serve', ['browser-sync'], function () {
   $.watch(paths.styles)
-        .pipe($.plumber())
-        .pipe(styles());
+    .pipe($.plumber())
+    .pipe(styles());
   gulp.watch(paths.views.files, ['copy:views']);
-
-  gulp.watch('{app/index.html,app/scripts/**/*.js,.tmp/styles/**/*.css}', ['client:dev']);
+  gulp.watch('app/images/**/*', ['images']);
+  gulp.watch('{app/index.html,app/scripts/**/*.js,app/styles/**/*.css}', ['client:dev']);
   gulp.watch('bower.json', ['bower']);
 });
 
 gulp.task('browser-sync', ['dev'], function () {
-     var files = [
-          'app/index.html',
-          'app/views/*.html',
-          'app/styles/**/*.css',
-          'app/images/**/*.png',
-          'app/scripts/**/*.js',
-          'dist/**/*'
-     ];
+  var files = [
+    'app/index.html',
+    'app/views/*.html',
+    'app/styles/**/*.css',
+    'app/images/**/*.*',
+    'app/scripts/**/*.js',
+    'dist/**/*'
+  ];
 
-   browserSync.init(files, {
-      server: {
-         baseDir: "./dist"
-      }
-   });
-   // Watch any files in dist/, reload on change
-   gulp.watch(['dist/**/*']).on('change', browserSync.reload);
+  browserSync.init(files, {
+    server: {
+      baseDir: "./dist"
+    }
+  });
+  // Watch any files in dist/, reload on change
+  gulp.watch(['dist/**/*','.tmp/**/*']).on('change', browserSync.reload);
 });
