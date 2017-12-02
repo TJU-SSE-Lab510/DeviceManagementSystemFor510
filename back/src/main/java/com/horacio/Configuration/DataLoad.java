@@ -1,6 +1,7 @@
 package com.horacio.Configuration;
 
 import com.horacio.Properties.FileProperties;
+import com.horacio.utils.EmailUtil;
 import com.horacio.utils.UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,5 +29,6 @@ public class DataLoad implements CommandLineRunner {
         if(!folder.exists()&&!folder.isDirectory()){
             folder.mkdir();
         }
+        EmailUtil.emailConfiguration();
     }
 }

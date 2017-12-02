@@ -16,6 +16,7 @@ public class Record {
     private int id;
     private String name;
     private String phone;
+    private String email;
     private String itemName;
     private Date borrowedTime ;
     private Date returnTime ;
@@ -96,5 +97,13 @@ public class Record {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -47,6 +47,7 @@ public class RecordService {
             record.setBorrowedTime(new Date(Long.valueOf(data.get("borrowedTime").textValue())));
             record.setName(data.get("name").textValue());
             record.setPhone(data.get("phone").textValue());
+            record.setEmail(data.get("email").textValue());
             record.setBorrowOperator(data.get("borrowOperator").textValue());
             record.setNumber(data.get("number").intValue());
             recordRepository.save(record);
@@ -60,6 +61,7 @@ public class RecordService {
         }
         record.setName(data.get("name").textValue());
         record.setPhone(data.get("phone").textValue());
+        record.setEmail(data.get("email").textValue());
         recordRepository.save(record);
         return true;
     }

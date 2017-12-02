@@ -69,7 +69,6 @@ public class AdminService {
         }else {
             user.setPassword(data.get("password").textValue());
             user.setName(data.get("name").textValue());
-
             user.setPhoneNumber(data.get("phoneNumber").textValue());
             adminRepository.save(user);
             return true;
@@ -99,7 +98,7 @@ public class AdminService {
             node.put("id",user.getId());
             node.put("username",user.getUsername());
             node.put("name",user.getName());
-            node.put("phone",user.getPhoneNumber());
+            node.put("phoneNumber",user.getPhoneNumber());
             array.addPOJO(node);
         }
         return array;

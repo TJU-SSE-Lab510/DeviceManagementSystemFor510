@@ -10,6 +10,7 @@ import com.horacio.Model.Admin;
 import com.horacio.Model.Facility;
 import com.horacio.Properties.FileProperties;
 import com.horacio.Repository.FacilityRepository;
+import com.horacio.utils.EmailUtil;
 import com.horacio.utils.UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,9 @@ public class FacilityService {
         int origin  = item.getItemQTY();
         int change_num = newNum - origin;
         int remain_num = item.getRemainNum()+change_num;
+        if(remain_num < 0){
+            throw new LabsException(ResultEnum.FACILITY_NOT_ENOUGH.getCode(),ResultEnum.FACILITY_NOT_ENOUGH.getMsg());
+        }
         item.setItemQTY(newNum);
         item.setRemainNum(remain_num);
         item.setUrl(data.get("url").textValue());
@@ -94,6 +98,11 @@ public class FacilityService {
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
         }else {
             facilityRepository.delete(item);
+            String url = fileProperties.getImagePath()+UploadUtil.separatar+item.getUrl();
+            File image = new File(url);
+            if(image != null){
+                image.delete();
+            }
             return true;
         }
 
@@ -135,6 +144,14 @@ public class FacilityService {
                 image.delete();
             }
         }
+    }
+
+    /**
+     * 发送邮件
+     * @throws Exception
+     */
+    public void send() throws Exception{
+        EmailUtil.send("772773671@qq.com");
     }
 
 }

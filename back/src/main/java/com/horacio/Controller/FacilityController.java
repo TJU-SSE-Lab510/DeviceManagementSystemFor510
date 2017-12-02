@@ -74,9 +74,18 @@ public class FacilityController {
      * @throws Exception
      */
     @GetMapping(value = "/slim")
-    public Object showFrame() throws Exception{
+    public Object slim() throws Exception{
         facilityService.clean();
         return ResultUtil.success();
     }
 
+    /**
+     * 发送邮件
+     * @throws Exception
+     */
+    @GetMapping(value = "/send")
+    public Object send() throws Exception{
+        facilityService.send();
+        return ResultUtil.success();
+    }
 }
