@@ -41,8 +41,9 @@ labsystem.controller('ItemListCtrl',
       $scope.item_submit = function () {
         if($scope.modalName === "新建设备"){
           var item = Object.assign({},$scope.item);
-          item.date =  Date.parse(new Date())/1000;
-          console.log(Date.parse(new Date()));
+          item.date =  Date.parse(new Date())+"";
+          var temp = item.url.split('/');
+          item.url = temp[temp.length-1];
           ItemSrv.addFacility().add(item)
             .$promise.then(function(response){
               console.log(response);
@@ -52,10 +53,13 @@ labsystem.controller('ItemListCtrl',
                 $('#editItem').modal('hide');
               }
             },function (response) {
-              NoticeSrv.error("新建用户错误,http状态码:"+response.status);
+              NoticeSrv.error("新建设备错误,http状态码:"+response.status);
             });
         }else {
           var item = Object.assign({},$scope.item);
+          item.date =  Date.parse(new Date())+"";
+          var temp = item.url.split('/');
+          item.url = temp[temp.length-1];
           item.id = editid;
           ItemSrv.editItem().add(item)
             .$promise.then(function(response){
@@ -228,7 +232,7 @@ labsystem.controller('ItemListCtrl',
 
       $scope.borrow_submit = function () {
           var record = Object.assign({},$scope.record);
-          record.borrowedTime =  Date.parse(new Date())/1000;
+          record.borrowedTime =  Date.parse(new Date()) +"";
           record.borrowOperator = TokenSrv.getToken();
           console.log(Date.parse(new Date()));
           BorrowSrv.addRecord().add(record)

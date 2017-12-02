@@ -35,6 +35,7 @@
                 <tr>
                   <th>ID</th>
                   <th>设备名称</th>
+                  <th>借用数量</th>
                   <th>借出时间</th>
                   <th>归还日期</th>
                   <th>姓名</th>
@@ -49,6 +50,7 @@
                 <tr ng-repeat="item in rowCollection">
                   <td>{{item.id}}</td>
                   <td>{{item.itemName}}</td>
+                  <td>{{item.number}}</td>
                   <td  ng-if="item.borrowedTime != 0">{{item.borrowedTime  | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   <td  ng-if="item.borrowedTime == 0">无记录</td>
                   <td  ng-if="item.returnTime != 0">{{item.returnTime  | date:'yyyy-MM-dd HH:mm:ss'}}</td>
