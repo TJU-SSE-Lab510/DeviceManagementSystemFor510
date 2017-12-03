@@ -11,11 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduleJob {
 
-
     @Autowired
     private RecordService recordService;
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(cron = "0 0 20 * * *")
     public void execute(){
         try{
             recordService.getSendItem();

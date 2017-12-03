@@ -17,8 +17,8 @@ spring:
         enabled: true
         force: true
 file:
-#  ImagePath: /var/www/images
-  ImagePath: /Users/arlex/Desktop
+  ImagePath: /var/www/images
+#  ImagePath: /Users/arlex/Desktop
   ImageUrl: http://100.64.208.218:82/
 email:
   host: smtp.163.com
