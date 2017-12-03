@@ -8,11 +8,19 @@ spring:
       hibernate:
         ddl-auto: update
       show-sql: true
+      properties:
+        hibernate:
+          current_session_context_class: org.springframework.orm.hibernate4.SpringSessionContext
     http:
       encoding:
         charset: UTF-8
         enabled: true
         force: true
 file:
-  ImagePath: /var/www/images
+#  ImagePath: /var/www/images
+  ImagePath: /Users/arlex/Desktop
   ImageUrl: http://100.64.208.218:82/
+email:
+  host: smtp.163.com
+  username: tjsse510@163.com
+  password: 510015abcd

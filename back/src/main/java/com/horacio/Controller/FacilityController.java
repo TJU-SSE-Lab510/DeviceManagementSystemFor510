@@ -79,13 +79,4 @@ public class FacilityController {
         return ResultUtil.success();
     }
 
-    /**
-     * 发送邮件
-     * @throws Exception
-     */
-    @GetMapping(value = "/send")
-    public Object send() throws Exception{
-        facilityService.send();
-        return ResultUtil.success();
-    }
 }

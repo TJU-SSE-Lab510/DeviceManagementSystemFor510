@@ -6,11 +6,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.horacio.Enum.ResultEnum;
 import com.horacio.Exception.LabsException;
-import com.horacio.Model.Admin;
 import com.horacio.Model.Facility;
 import com.horacio.Properties.FileProperties;
 import com.horacio.Repository.FacilityRepository;
-import com.horacio.utils.EmailUtil;
 import com.horacio.utils.UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -144,14 +142,6 @@ public class FacilityService {
                 image.delete();
             }
         }
-    }
-
-    /**
-     * 发送邮件
-     * @throws Exception
-     */
-    public void send() throws Exception{
-        EmailUtil.send("772773671@qq.com");
     }
 
 }

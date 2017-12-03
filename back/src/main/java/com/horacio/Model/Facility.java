@@ -1,5 +1,6 @@
 package com.horacio.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +11,10 @@ public class Facility {
     @Id
     @GeneratedValue
     private int id;
+
+    @Column(unique = true)
     private String itemName;
+
     private int itemQTY;
     private int remainNum;
     private String url;
