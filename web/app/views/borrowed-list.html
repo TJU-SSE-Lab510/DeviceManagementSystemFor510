@@ -36,13 +36,13 @@
                   <th>ID</th>
                   <th>设备名称</th>
                   <th>借用数量</th>
-                  <th>借出时间</th>
-                  <th>归还日期</th>
                   <th>姓名</th>
                   <th>联系电话</th>
                   <th>邮箱</th>
                   <th>借出操作人</th>
+                  <th>借出时间</th>
                   <th>归还操作人</th>
+                  <th>归还日期</th>
 
 
                 </tr>
@@ -52,19 +52,19 @@
                   <td>{{item.id}}</td>
                   <td>{{item.itemName}}</td>
                   <td>{{item.number}}</td>
-                  <td  ng-if="item.borrowedTime != 0 && item.borrowedTime != null">{{item.borrowedTime  | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                  <td  ng-if="item.borrowedTime == 0 || item.borrowedTime === null">无记录</td>
-                  <td  ng-if="item.returnTime != 0 && item.returnTime != null">{{item.returnTime  | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                  <td  ng-if="item.returnTime == 0 || item.returnTime === null">无记录</td>
                   <td>{{item.name}}</td>
                   <td>{{item.phone}}</td>
                   <td>{{item.email}}</td>
                   <td>{{item.borrowOperator}}</td>
+                  <td  ng-if="item.borrowedTime != 0 && item.borrowedTime != null">{{item.borrowedTime  | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td  ng-if="item.borrowedTime == 0 || item.borrowedTime === null">无记录</td>
                   <td>{{item.returnOperator}}</td>
+                  <td  ng-if="item.returnTime != 0 && item.returnTime != null">{{item.returnTime  | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td  ng-if="item.returnTime == 0 || item.returnTime === null">未归还</td>
                   <td>
                     <span class="label label-primary" ng-click="editRecord(item)" data-toggle="modal" data-target="#editRecord"><i class="fa fa-edit"></i>修改</span>
                     <span class="label label-danger" ng-click="deleteRecord(item.id)" data-toggle="modal" data-target="#modifyDelete"><i class="fa fa-pencil"></i>删除</span>
-                    <span class="label label-info"  ng-if="item.returnTime == 0" ng-click="return(item.id)"><i class="fa fa-pencil"></i>归还</span>
+                    <span class="label label-info"  ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="return(item.id)"><i class="fa fa-pencil"></i>归还</span>
                   </td>
                 </tr>
 
