@@ -4,11 +4,14 @@ labsystem.controller('ItemListCtrl',
   ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv','BorrowSrv',
     function($scope,ItemSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv,BorrowSrv) {
 
+      $scope.isDisabled = function () {
+        return !TokenSrv.getAuth() == '1';
+      }  ;
+      $scope.isDisabled = false;
       if(TokenSrv.getAuth() == '1'){
         $scope.isSuperUser = true;
         $scope.modalBtn = '保存';
       }else {
-        $scope.isDisabled = true;
         $scope.modalBtn = '关闭';
       }
 

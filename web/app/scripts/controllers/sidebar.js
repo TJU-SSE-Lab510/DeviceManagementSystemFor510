@@ -84,6 +84,106 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
 
 
 
+
+
+   $('.avatar-input').change(function(event) {
+     // 根据这个 <input> 获取文件的 HTML5 js 对象
+     var files = event.target.files, file;
+     if (files && files.length > 0) {
+       // 获取目前上传的文件
+       file = files[0];
+       // 来在控制台看看到底这个对象是什么
+       console.log(file);
+       // 那么我们可以做一下诸如文件大小校验的动作
+       if(file.size > 1024 * 1024 * 2) {
+         alert('图片大小不能超过 2MB!');
+         return false;
+       }
+       console.log(file);
+       // !!!!!!
+       // 下面是关键的关键，通过这个 file 对象生成一个可用的图像 URL
+       // 获取 window 的 URL 工具
+       var URL = window.URL || window.webkitURL;
+       // 通过 file 生成目标 url
+       var imgURL = URL.createObjectURL(file);
+       // 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
+       // URL.revokeObjectURL(imgURL);
+       $('#avatarImg').cropper('replace',imgURL);
+     }
+   });
+
+
+
+   $scope.showModal = function(){
+     if(TokenSrv.getAuth() == '1') {
+       $('#avatar-modal').modal('show');
+
+       var option = {
+
+         preview: '.avatar-preview',
+         aspectRatio: 1,
+         strict: false,
+         crop: function (data) {
+         }
+       };
+
+       $('#avatarImg').cropper(option);
+     }
+
+
+
+
+   };
+
+   /**
+    * 将以base64的图片url数据转换为Blob
+    * @param urlData
+    *            用url方式表示的base64图片数据
+    */
+   function convertBase64UrlToBlob(urlData){
+
+     var bytes=window.atob(urlData.split(',')[1]);        //去掉url的头，并转换为byte
+
+     //处理异常,将ascii码小于0的转换为大于0
+     var ab = new ArrayBuffer(bytes.length);
+     var ia = new Uint8Array(ab);
+     for (var i = 0; i < bytes.length; i++) {
+       ia[i] = bytes.charCodeAt(i);
+     }
+
+     return new Blob( [ab] , {type : 'image/png'});
+   }
+
+   $scope.save = function(){
+     var dataurl = $('#avatarImg').cropper('getCroppedCanvas').toBlob(function (blob) {
+       var formData = new FormData();
+       formData.append('file', blob);
+       ItemSrv.upload().add(formData)
+         .$promise.then(function(response){
+         console.log(response);
+         if(response.errCode === 0){
+           $scope.item.url = response.data;
+           console.log($scope.item.url);
+         }
+       },function (response) {
+         NoticeSrv.error("上传图片错误,http状态码:"+response.status);
+       });
+     });
+
+     $('#avatar-modal').modal('hide');
+   };
+
+
+   $scope.rotate_left =function () {
+     $('#avatarImg').cropper("rotate",-90);
+   };
+
+   $scope.rotate_right =function () {
+     $('#avatarImg').cropper("rotate",90);
+   };
+
+
+
    /*! AdminLTE app.js
     * ================
     * Main JS application file for AdminLTE v2. This file
