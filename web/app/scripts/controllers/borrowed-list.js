@@ -92,7 +92,7 @@ labsystem.controller('BorrowListCtrl',
         BorrowSrv.returnItem().add(data)
           .$promise.then(function(response){
           console.log(response);
-          if(response.errCode === 0){userrName
+          if(response.errCode === 0){
             NoticeSrv.success("归还成功");
             getRecord();
             $('#editRecord').modal('hide');
