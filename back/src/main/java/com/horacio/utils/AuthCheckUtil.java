@@ -1,14 +1,9 @@
 package com.horacio.utils;
 
-import com.altynai.checkcar.enums.CarEnum;
-import com.altynai.checkcar.enums.ResultEnum;
-import com.altynai.checkcar.exception.CheckCarException;
 import com.horacio.Enum.ResultEnum;
 import com.horacio.Exception.LabsException;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AuthCheckUtil {
 

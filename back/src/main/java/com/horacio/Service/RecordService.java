@@ -3,8 +3,10 @@ package com.horacio.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.horacio.Enum.ResultEnum;
 import com.horacio.Exception.LabsException;
+import com.horacio.Model.Admin;
 import com.horacio.Model.Facility;
 import com.horacio.Model.Record;
+import com.horacio.Repository.AdminRepository;
 import com.horacio.Repository.FacilityRepository;
 import com.horacio.Repository.RecordRepository;
 import com.horacio.utils.SendThread;
@@ -35,6 +37,9 @@ public class RecordService {
     private FacilityRepository facilityRepository;
 
     @Autowired
+    private AdminRepository adminRepository;
+
+    @Autowired
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -42,7 +47,7 @@ public class RecordService {
 
 
 
-    public void add(JsonNode data) throws Exception{
+    public void add(JsonNode data,String userid) throws Exception{
             String itemName =  data.get("itemName").textValue();
             Facility item =facilityRepository.findOneByItemName(itemName);
             if(item == null){
@@ -55,13 +60,14 @@ public class RecordService {
             }
             item.setRemainNum(remianNum);
             facilityRepository.save(item);
+            Admin user = adminRepository.findOne(Integer.valueOf(userid));
             Record record = new Record();
             record.setItemName(data.get("itemName").textValue());
             record.setBorrowedTime(new Date(Long.valueOf(data.get("borrowedTime").textValue())));
             record.setName(data.get("name").textValue());
             record.setPhone(data.get("phone").textValue());
             record.setEmail(data.get("email").textValue());
-            record.setBorrowOperator(data.get("borrowOperator").textValue());
+            record.setBorrowOperator(user.getName());
             record.setNumber(data.get("number").intValue());
             recordRepository.save(record);
     }
@@ -78,14 +84,15 @@ public class RecordService {
         return true;
     }
 
-    public Boolean returnItem(JsonNode data) throws Exception{
+    public Boolean returnItem(JsonNode data,String userid) throws Exception{
         Record record =recordRepository.findOne(data.get("id").intValue());
         Facility item =facilityRepository.findOneByItemName(record.getItemName());
         if(item == null){
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
         }
+        Admin user = adminRepository.findOne(Integer.valueOf(userid));
         record.setReturnTime(new Date(Long.valueOf(data.get("returnTime").intValue())));
-        record.setReturnOperator(data.get("returnOperator").textValue());
+        record.setReturnOperator(user.getName());
         recordRepository.save(record);
         int remianNum = item.getRemainNum();
         remianNum = remianNum + record.getNumber();

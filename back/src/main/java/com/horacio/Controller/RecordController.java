@@ -26,10 +26,10 @@ public class RecordController {
 
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Object add(@RequestBody JsonNode body) throws Exception{
-        recordService.add(body);
+    public Object add(@RequestBody JsonNode body,HttpSession session) throws Exception{
+        String userid = (String)session.getAttribute("userid");
+        recordService.add(body,userid);
         return ResultUtil.success();
-
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
@@ -40,7 +40,7 @@ public class RecordController {
     }
 
     @RequestMapping(value = "/returnItem", method = RequestMethod.POST)
-    public Object returnItem(@RequestBody JsonNode body) throws Exception{
+    public Object returnItem(@RequestBody JsonNode body,HttpSession session) throws Exception{
         recordService.returnItem(body);
         return ResultUtil.success();
 
