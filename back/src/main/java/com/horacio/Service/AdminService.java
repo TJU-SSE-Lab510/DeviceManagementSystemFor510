@@ -37,6 +37,7 @@ public class AdminService {
             if(user.getPassword().equals((String)data.get("password"))){
                 ObjectNode node = mapper.createObjectNode();
                 node.put("userid",user.getId());
+                node.put("token",user.getName());
                 node.put("superuser",user.getSuperuser());
                 return node;
             }
