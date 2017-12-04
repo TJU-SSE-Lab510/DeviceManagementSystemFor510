@@ -75,6 +75,7 @@ public class AdminService {
             user.setPassword(data.get("password").textValue());
             user.setName(data.get("name").textValue());
             user.setPhoneNumber(data.get("phoneNumber").textValue());
+            user.setSuperuser(data.get("superuser").intValue());
             adminRepository.save(user);
             return true;
         }
