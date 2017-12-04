@@ -43,7 +43,7 @@
                   <th>借出时间</th>
                   <th>归还操作人</th>
                   <th>归还日期</th>
-
+                  <th>操作</th>
 
                 </tr>
                 </thead>
@@ -62,9 +62,10 @@
                   <td  ng-if="item.returnTime != 0 && item.returnTime != null">{{item.returnTime  | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   <td  ng-if="item.returnTime == 0 || item.returnTime === null">未归还</td>
                   <td>
-                    <span class="label label-primary" ng-click="editRecord(item)" data-toggle="modal" data-target="#editRecord"><i class="fa fa-edit"></i>修改</span>
-                    <span class="label label-danger" ng-click="deleteRecord(item.id)" data-toggle="modal" data-target="#modifyDelete"><i class="fa fa-pencil"></i>删除</span>
-                    <span class="label label-info"  ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="return(item.id)"><i class="fa fa-pencil"></i>归还</span>
+                    <span class="label label-primary" ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="editRecord(item)" data-toggle="modal" data-target="#editRecord"><i class="fa fa-edit"></i>&nbsp;修改</span>
+                    <span class="label label-default" ng-if="item.returnTime != 0 && item.returnTime != null"><i class="fa fa-check"></i>&nbsp;已归还</span>
+                    <span class="label label-danger" ng-click="deleteRecord(item.id)" data-toggle="modal" data-target="#modifyDelete" ng-show="isSuperUser"><i class="fa fa-trash"></i>&nbsp;删除</span>
+                    <span class="label label-info"  ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="return(item.id)"><i class="fa fa-check-square-o"></i>&nbsp;归还</span>
                   </td>
                 </tr>
 

@@ -3,7 +3,9 @@
 labsystem.controller('BorrowListCtrl',
   ['$scope', 'BorrowSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv',
     function($scope,BorrowSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv) {
-
+      if(TokenSrv.getAuth() == '1'){
+        $scope.isSuperUser = true;
+      }
       $scope.record = {
         name: '',
         itemName: '',
@@ -40,6 +42,7 @@ labsystem.controller('BorrowListCtrl',
         editid = item.id;
         $scope.modalName = "修改记录";
       };
+
 
       $scope.record_submit = function () {
         if($scope.modalName === "新建记录"){

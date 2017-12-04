@@ -4,6 +4,14 @@ labsystem.controller('ItemListCtrl',
   ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv','BorrowSrv',
     function($scope,ItemSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv,BorrowSrv) {
 
+      if(TokenSrv.getAuth() == '1'){
+        $scope.isSuperUser = true;
+        $scope.modalBtn = '保存';
+      }else {
+        $scope.isDisabled = true;
+        $scope.modalBtn = '关闭';
+      }
+
       $scope.item = {
         itemName: '',
         itemQTY:'',
@@ -41,6 +49,7 @@ labsystem.controller('ItemListCtrl',
       };
 
       $scope.item_submit = function () {
+        if(TokenSrv.getAuth() == '1') {
         if($scope.modalName === "新建设备"){
           var item = Object.assign({},$scope.item);
           item.date =  Date.parse(new Date())+"";
@@ -79,6 +88,10 @@ labsystem.controller('ItemListCtrl',
 
 
         }
+        }else {
+          $('#editItem').modal('hide');
+        }
+
 
       };
 
@@ -160,18 +173,20 @@ labsystem.controller('ItemListCtrl',
 
 
       $scope.showModal = function(){
-        $('#avatar-modal').modal('show');
+        if(TokenSrv.getAuth() == '1') {
+          $('#avatar-modal').modal('show');
 
-        var option = {
+          var option = {
 
-          preview: '.avatar-preview',
-          aspectRatio: 1,
-          strict: false,
-          crop: function(data) {
-          }
-        };
+            preview: '.avatar-preview',
+            aspectRatio: 1,
+            strict: false,
+            crop: function (data) {
+            }
+          };
 
-        $('#avatarImg').cropper(option);
+          $('#avatarImg').cropper(option);
+        }
 
 
 
@@ -198,7 +213,6 @@ labsystem.controller('ItemListCtrl',
       }
 
       $scope.save = function(){
-
         var dataurl = $('#avatarImg').cropper('getCroppedCanvas').toBlob(function (blob) {
           var formData = new FormData();
           formData.append('file', blob);
@@ -242,6 +256,8 @@ labsystem.controller('ItemListCtrl',
           var record = Object.assign({},$scope.record);
           record.borrowedTime =  Date.parse(new Date()) +"";
           record.borrowOperator = TokenSrv.getToken();
+
+
           console.log(Date.parse(new Date()));
           BorrowSrv.addRecord().add(record)
             .$promise.then(function(response){

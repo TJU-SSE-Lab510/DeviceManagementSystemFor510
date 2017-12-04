@@ -20,6 +20,7 @@ var labsystem = angular.module('BackWebApp', [
 ]);
 labsystem.config(function($httpProvider) {
   $httpProvider.interceptors.push('myInterceptor');
+  $httpProvider.defaults.withCredentials = true;
 });
 labsystem.value('baseURL', 'http://100.64.208.218:8080/labsystem');
 

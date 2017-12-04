@@ -3,6 +3,17 @@
 labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state','TokenSrv',
  function($scope, SidebarSrv, NoticeSrv,$state,TokenSrv) {
 
+   if(sessionStorage.getItem("token")!=null)
+   {
+     TokenSrv.setToken(sessionStorage.getItem("token"));
+     TokenSrv.setAuth(sessionStorage.getItem("superuser"));
+   }
+   if(localStorage.getItem("token")!=null)
+   {
+     TokenSrv.setToken(localStorage.getItem("token"));
+     TokenSrv.setAuth(localStorage.getItem("superuser"));
+   }
+
   $scope.userIcon = "../images/icon.jpg";
 
    $scope.adminMenu = [
@@ -46,10 +57,12 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
      if(sessionStorage.getItem("token")!=null)
      {
        TokenSrv.setToken(sessionStorage.getItem("token"));
+       TokenSrv.setAuth(sessionStorage.getItem("superuser"));
      }
      if(localStorage.getItem("token")!=null)
      {
        TokenSrv.setToken(localStorage.getItem("token"));
+       TokenSrv.setAuth(localStorage.getItem("superuser"));
      }
 
        if(TokenSrv.getToken()!= ''){

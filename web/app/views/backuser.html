@@ -29,7 +29,7 @@
               <tr>
                 <th colspan="14" class="form-inline">
                   <label class="pull-left">搜索：<input st-search placeholder="全局动态搜索" class="form-control" type="search"/></label>
-                  <button type="button" class="btn btn-primary pull-right" ng-click="showNewUserModal()">新建</button>
+                  <button type="button" class="btn btn-primary pull-right" ng-click="showNewUserModal()" ng-show="isSuperUser">新建</button>
                 </th>
               </tr>
               <tr>
@@ -37,7 +37,7 @@
                 <th>用户名</th>
                 <th>姓名</th>
                 <th>手机</th>
-                <th>操作</th>
+                <th ng-show="isSuperUser">操作</th>
 
               </tr>
               </thead>
@@ -50,8 +50,8 @@
                 <!--<td ng-if="item.lastCreate != 0">{{item.lastCreate *1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
                 <!--<td ng-if="item.lastCreate == 0">无记录</td>-->
                 <td>
-                  <span class="label label-primary" ng-click="editUser(item)" data-toggle="modal" data-target="#editUser"><i class="fa fa-edit"></i>修改</span>
-                  <span class="label label-danger" ng-click="deleteAdmin(item.id)" data-toggle="modal" data-target="#modifyDelete" ng-if="item.name!='admin'"><i class="fa fa-pencil"></i>删除</span>
+                  <span class="label label-primary" ng-click="editUser(item)" data-toggle="modal" data-target="#editUser" ng-show="isSuperUser"><i class="fa fa-edit"></i>&nbsp;修改</span>
+                  <span class="label label-danger" ng-click="deleteAdmin(item.id)" data-toggle="modal" data-target="#modifyDelete" ng-if="item.name!='admin'" ng-show="isSuperUser"><i class="fa fa-trash"></i>&nbsp;删除</span>
                 </td>
               </tr>
 
@@ -147,7 +147,16 @@
                 </div>
               </div>
 
-
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">超級管理</label>
+                <div class="col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input ng-checked="isSuper" type="checkbox">
+                    </label>
+                  </div>
+                </div>
+              </div>
 
             </div>
           </div>

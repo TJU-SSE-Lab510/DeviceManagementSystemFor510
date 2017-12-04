@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('BackuserCtrl',
-  ['$scope', 'BackBorrowSrv','NoticeSrv', '$uibModal','$state','UtilSrv',
-    function($scope,BackBorrowSrv,NoticeSrv, $uibModal, $state, UtilSrv) {
+  ['$scope', 'BackBorrowSrv','NoticeSrv', '$uibModal','$state','UtilSrv','TokenSrv',
+    function($scope,BackBorrowSrv,NoticeSrv, $uibModal, $state, UtilSrv,TokenSrv) {
 
       $scope.user = {
         username: '',
@@ -11,6 +11,8 @@ labsystem.controller('BackuserCtrl',
         password: '',
         cpassword:''
       } ;
+
+
 
       /**
        *@description:　新建或修改用户
@@ -29,8 +31,13 @@ labsystem.controller('BackuserCtrl',
       };
 
 
+
       $scope.editUser = function(item){
         $scope.isDisabled = true;
+        console.log(item);
+        if(item.superuser == '1'){
+          $scope.isSuper = true;
+        }
         $scope.user = {
           id: item.id,
           username: item.username,
@@ -45,6 +52,13 @@ labsystem.controller('BackuserCtrl',
       $scope.user_submit = function () {
         if($scope.modalName == "新建用户"){
           var user = Object.assign({},$scope.user);
+          if($scope.isSuper){
+            user.superuser = 0;
+          }else
+          {
+            user.superuser = 1;
+          }
+
           if(user.password == user.cpassword)
           {
             BackBorrowSrv.addUser().add(user)
@@ -64,6 +78,12 @@ labsystem.controller('BackuserCtrl',
           }
         }else {
           var user = Object.assign({},$scope.user);
+          if($scope.isSuper){
+            user.superuser = 0;
+          }else
+          {
+            user.superuser = 1;
+          }
           if(user.password == user.cpassword)
           {
             BackBorrowSrv.editUser().add(user)
@@ -86,16 +106,23 @@ labsystem.controller('BackuserCtrl',
 
       };
 
+      if(TokenSrv.getAuth() == '1'){
+        $scope.isSuperUser = true;
+      }
+
+
       /**
        *@description:　获取用户
        *@param:
        *@return:
        */
       var getUser = function () {
+
         BackBorrowSrv.getUser().get()
           .$promise.then(function(response){
           if(response.errCode === 0){
             $scope.userCollection = response.data;
+
           }
         },function (response) {
           NoticeSrv.error("获取用户列表错误,http状态码:"+response.status);

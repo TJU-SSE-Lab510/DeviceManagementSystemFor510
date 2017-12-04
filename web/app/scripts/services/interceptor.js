@@ -20,9 +20,11 @@ labsystem.factory('myInterceptor',
                 },
                 response: function (response) {
                     if (response.data.errCode && response.data.errCode !== 0) {
-                        $injector.get('NoticeSrv').error(response.data.errMsg+"");
+                      $injector.get('NoticeSrv').error(response.data.errMsg+"");
+                      if(response.data.errCode === 402){
+                        $state.go('login');
+                      }
                     }
-
 
                     return response;
                 }

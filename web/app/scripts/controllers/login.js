@@ -26,13 +26,14 @@ function($scope, NoticeSrv, TokenSrv, $state,BackBorrowSrv) {
         .$promise.then(function(response) {
         if (response.errCode === 0) {
           TokenSrv.setToken(response.data.token);
+          TokenSrv.setAuth(response.data.superuser);
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("superuser", response.data.superuser);
           console.log(response.data);
           if(remember)
           {
             localStorage.setItem("token", response.data.token);
-            sessionStorage.setItem("superuser", response.data.superuser);
+            localStorage.setItem("superuser", response.data.superuser);
           }
           NoticeSrv.success("登录成功！");
           $state.go('app.userlist');
