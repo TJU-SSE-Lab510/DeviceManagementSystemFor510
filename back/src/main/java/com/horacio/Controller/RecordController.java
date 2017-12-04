@@ -41,7 +41,8 @@ public class RecordController {
 
     @RequestMapping(value = "/returnItem", method = RequestMethod.POST)
     public Object returnItem(@RequestBody JsonNode body,HttpSession session) throws Exception{
-        recordService.returnItem(body);
+        String userid = (String)session.getAttribute("userid");
+        recordService.returnItem(body,userid);
         return ResultUtil.success();
 
     }
