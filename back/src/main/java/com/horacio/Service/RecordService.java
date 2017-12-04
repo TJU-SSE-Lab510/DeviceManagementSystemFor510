@@ -72,10 +72,19 @@ public class RecordService {
             recordRepository.save(record);
     }
 
-    public Boolean edit(JsonNode data) throws Exception{
+    public Boolean edit(JsonNode data,String userid) throws Exception{
         Record record =recordRepository.findOne(data.get("id").intValue());
         if(record == null){
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
+        }
+        //不允许修改已经完成的借用记录
+        if(record.getReturnTime()!=null){
+            throw new LabsException(ResultEnum.OPERATE_NOT_ALLOW.getCode(),ResultEnum.OPERATE_NOT_ALLOW.getMsg());
+        }
+        //不允许修改其他操作人的借用记录
+        Admin user = adminRepository.findOne(Integer.valueOf(userid));
+        if(!record.getBorrowOperator().equals(user.getName())){
+            throw new LabsException(ResultEnum.AUTH_NOT_FOUND.getCode(),ResultEnum.AUTH_NOT_FOUND.getMsg());
         }
         record.setName(data.get("name").textValue());
         record.setPhone(data.get("phone").textValue());

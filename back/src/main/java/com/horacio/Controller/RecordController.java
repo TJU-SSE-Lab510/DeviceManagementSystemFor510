@@ -33,8 +33,9 @@ public class RecordController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public Object edit(@RequestBody JsonNode body) throws Exception{
-        recordService.edit(body);
+    public Object edit(@RequestBody JsonNode body,HttpSession session) throws Exception{
+        String userid = (String)session.getAttribute("userid");
+        recordService.edit(body,userid);
         return ResultUtil.success();
 
     }

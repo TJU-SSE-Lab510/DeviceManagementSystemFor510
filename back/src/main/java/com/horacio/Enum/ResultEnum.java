@@ -5,10 +5,10 @@ public enum ResultEnum {
     SUCCESS(0,"成功"),
 
     USER_NOT_FOUND(401,"用户名不存在"),
-    USER_VERFIY_ERROR(402,"用户认证失败"),
+    USER_VERFIY_ERROR(402,"用户认证失败，请重新登录"),
     USER_PASSWORD_ERROR(403,"密码错误"),
     EMAIL_FORMAT_ERROR(405,"邮箱格式错误"),
-    AUTHCAR_NOT_FOUND(405,"您的权限不足"),
+    AUTH_NOT_FOUND(405,"您的权限不足"),
     USER_ALREADY_EXIST(406,"用户ID已存在"),
 
 
@@ -22,7 +22,7 @@ public enum ResultEnum {
     FILE_UPLOAD_FAILED(604,"文件上传失败"),
     FILE_FOLDER_NOT_FOUND(606,"文件夹不存在"),
 
-    STATUS_NOT_ALLOW(701,"业务状态请求不合法"),
+    OPERATE_NOT_ALLOW(701,"操作请求不合法"),
     STATUS_NOT_AVAILABLE(702,"操作业务状态不合法")
     ;
 

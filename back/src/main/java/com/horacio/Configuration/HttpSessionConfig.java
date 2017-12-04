@@ -15,7 +15,7 @@ public class HttpSessionConfig {
     public CookieSerializer cookieSerializer() {
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
         serializer.setCookiePath("/");
-        serializer.setUseHttpOnlyCookie(false);
+        serializer.setUseHttpOnlyCookie(true);
         serializer.setCookieMaxAge(259200);
         return serializer;
     }

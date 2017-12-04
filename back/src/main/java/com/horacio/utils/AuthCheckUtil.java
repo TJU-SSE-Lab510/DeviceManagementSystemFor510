@@ -15,7 +15,7 @@ public class AuthCheckUtil {
     public static void check(HttpSession session) throws Exception{
         String superuser = (String)session.getAttribute("superuser");
         if(!superuser.equals("1")){
-            throw new LabsException(ResultEnum.AUTHCAR_NOT_FOUND.getCode(),ResultEnum.AUTHCAR_NOT_FOUND.getMsg());
+            throw new LabsException(ResultEnum.AUTH_NOT_FOUND.getCode(),ResultEnum.AUTH_NOT_FOUND.getMsg());
         }
     }
 
