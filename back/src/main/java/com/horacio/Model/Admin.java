@@ -16,6 +16,7 @@ public class Admin {
     private String name;
     private String password;
     private String phoneNumber;
+    private int superuser;
 
     public Admin() {
     }
@@ -58,5 +59,13 @@ public class Admin {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getSuperuser() {
+        return superuser;
+    }
+
+    public void setSuperuser(int superuser) {
+        this.superuser = superuser;
     }
 }

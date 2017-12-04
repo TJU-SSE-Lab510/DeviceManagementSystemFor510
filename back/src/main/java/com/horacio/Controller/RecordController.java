@@ -3,12 +3,15 @@ package com.horacio.Controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.horacio.Model.Record;
 import com.horacio.Service.RecordService;
+import com.horacio.utils.AuthCheckUtil;
 import com.horacio.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -51,7 +54,8 @@ public class RecordController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public Object delete(@RequestBody JsonNode body) throws Exception{
+    public Object delete(@RequestBody JsonNode body,HttpSession session) throws Exception{
+        AuthCheckUtil.check(session);
         recordService.delete(body);
         return ResultUtil.success();
 

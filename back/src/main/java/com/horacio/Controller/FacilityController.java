@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.horacio.Enum.ResultEnum;
 import com.horacio.Exception.LabsException;
 import com.horacio.Service.FacilityService;
+import com.horacio.utils.AuthCheckUtil;
 import com.horacio.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +27,15 @@ public class FacilityController {
     FacilityService facilityService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Object add(@RequestBody JsonNode body) throws Exception{
+    public Object add(@RequestBody JsonNode body,HttpSession session) throws Exception{
+        AuthCheckUtil.check(session);
         facilityService.add(body);
         return ResultUtil.success();
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public Object edit(@RequestBody JsonNode body) throws Exception{
+    public Object edit(@RequestBody JsonNode body,HttpSession session) throws Exception{
+        AuthCheckUtil.check(session);
         facilityService.edit(body);
         return ResultUtil.success();
     }
@@ -44,14 +47,16 @@ public class FacilityController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public Object delete(@RequestBody JsonNode body)throws Exception{
+    public Object delete(@RequestBody JsonNode body,HttpSession session)throws Exception{
+        AuthCheckUtil.check(session);
         facilityService.delete(body);
         return ResultUtil.success();
 
     }
 
     @PostMapping(value = "/upload")
-    public Object upload(@RequestParam("file") MultipartFile picture) throws Exception{
+    public Object upload(@RequestParam("file") MultipartFile picture,HttpSession session) throws Exception{
+        AuthCheckUtil.check(session);
         if(picture.isEmpty()){
             throw new LabsException(ResultEnum.PARAM_NOT_FOUND.getCode(),ResultEnum.PARAM_NOT_FOUND.getMsg());
         }

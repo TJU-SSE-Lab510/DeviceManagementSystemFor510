@@ -5,9 +5,10 @@ public enum ResultEnum {
     SUCCESS(0,"成功"),
 
     USER_NOT_FOUND(401,"用户名不存在"),
+    USER_VERFIY_ERROR(402,"用户认证失败"),
     USER_PASSWORD_ERROR(403,"密码错误"),
     EMAIL_FORMAT_ERROR(405,"邮箱格式错误"),
-    AUTHCAR_NOT_FOUND(405,"您的权限范围不足"),
+    AUTHCAR_NOT_FOUND(405,"您的权限不足"),
     USER_ALREADY_EXIST(406,"用户ID已存在"),
 
 

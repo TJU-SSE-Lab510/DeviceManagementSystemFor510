@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Horac on 2017/5/15.
@@ -28,13 +29,16 @@ public class AdminService {
     private ObjectMapper mapper;
 
     @Transactional
-    public String login(JsonNode data) throws Exception{
-        Admin user = adminRepository.findByUsername(data.get("username").textValue());
+    public ObjectNode login( Map<String,Object> data) throws Exception{
+        Admin user = adminRepository.findByUsername((String)data.get("username"));
         if (user == null){
             throw new LabsException(ResultEnum.USER_NOT_FOUND.getCode(),ResultEnum.USER_NOT_FOUND.getMsg());
         }else {
-            if(user.getPassword().equals(data.get("password").textValue())){
-                return user.getName();
+            if(user.getPassword().equals((String)data.get("password"))){
+                ObjectNode node = mapper.createObjectNode();
+                node.put("userid",user.getId());
+                node.put("superuser",user.getSuperuser());
+                return node;
             }
             else{
                 throw new LabsException(ResultEnum.USER_PASSWORD_ERROR.getCode(),ResultEnum.USER_PASSWORD_ERROR.getMsg());
@@ -85,7 +89,6 @@ public class AdminService {
             adminRepository.delete(user);
             return true;
         }
-
     }
 
 
