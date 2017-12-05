@@ -102,7 +102,7 @@
               <div class="form-group">
                 <label for="inputItemName" class="col-sm-2 control-label">设备名</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputItemName" placeholder="" ng-model="item.itemName" required name="inputItemName"  ng-disabled="isDisabled()">
+                  <input type="text" class="form-control" id="inputItemName" placeholder="" ng-model="item.itemName" required name="inputItemName"  ng-disabled="isInputDisabled">
                   <div ng-messages="form['inputItemName'].$touched && form['inputItemName'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
                   </div>
@@ -113,7 +113,7 @@
               <div class="form-group">
                 <label for="userName" class="col-sm-2 control-label">设备数量</label>
                 <div class="col-sm-10">
-                  <input type="number" required class="form-control" id="userName" placeholder="" ng-model="item.itemQTY" name="userName" min="1" step="1" ng-disabled="isDisabled()">
+                  <input type="number" required class="form-control" id="userName" placeholder="" ng-model="item.itemQTY" name="userName" min="1" step="1" ng-disabled="isInputDisabled">
                   <div ng-messages="form['userName'].$touched && form['userName'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
                   </div>

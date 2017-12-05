@@ -4,14 +4,14 @@ labsystem.controller('ItemListCtrl',
   ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv','BorrowSrv',
     function($scope,ItemSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv,BorrowSrv) {
 
-      $scope.isDisabled = function () {
-        return !TokenSrv.getAuth() == '1';
-      }  ;
+
       $scope.isDisabled = false;
       if(TokenSrv.getAuth() == '1'){
         $scope.isSuperUser = true;
         $scope.modalBtn = '保存';
+        $scope.isInputDisabled = false;
       }else {
+        $scope.isInputDisabled = true;
         $scope.modalBtn = '关闭';
       }
 
@@ -60,7 +60,6 @@ labsystem.controller('ItemListCtrl',
           item.url = temp[temp.length-1];
           ItemSrv.addFacility().add(item)
             .$promise.then(function(response){
-              console.log(response);
               if(response.errCode === 0){
                 NoticeSrv.success("新建成功");
                 getItem();
@@ -78,7 +77,6 @@ labsystem.controller('ItemListCtrl',
           item.id = editid;
           ItemSrv.editItem().add(item)
             .$promise.then(function(response){
-              console.log(response);
               if(response.errCode === 0){
                 NoticeSrv.success("修改成功");
                 getItem();
@@ -154,13 +152,11 @@ labsystem.controller('ItemListCtrl',
           // 获取目前上传的文件
           file = files[0];
           // 来在控制台看看到底这个对象是什么
-          console.log(file);
           // 那么我们可以做一下诸如文件大小校验的动作
           if(file.size > 1024 * 1024 * 2) {
             alert('图片大小不能超过 2MB!');
             return false;
           }
-          console.log(file);
           // !!!!!!
           // 下面是关键的关键，通过这个 file 对象生成一个可用的图像 URL
           // 获取 window 的 URL 工具
@@ -221,10 +217,8 @@ labsystem.controller('ItemListCtrl',
           formData.append('file', blob);
             ItemSrv.upload().add(formData)
               .$promise.then(function(response){
-              console.log(response);
               if(response.errCode === 0){
                 $scope.item.url = response.data;
-                console.log($scope.item.url);
               }
             },function (response) {
               NoticeSrv.error("上传图片错误,http状态码:"+response.status);
@@ -260,11 +254,8 @@ labsystem.controller('ItemListCtrl',
           record.borrowedTime =  Date.parse(new Date()) +"";
           record.borrowOperator = TokenSrv.getToken();
 
-
-          console.log(Date.parse(new Date()));
           BorrowSrv.addRecord().add(record)
             .$promise.then(function(response){
-            console.log(response);
             if(response.errCode === 0){
               NoticeSrv.success("新建成功");
               getItem();
