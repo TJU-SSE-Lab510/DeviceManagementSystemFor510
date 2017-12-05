@@ -3,18 +3,38 @@
 labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state','TokenSrv',
  function($scope, SidebarSrv, NoticeSrv,$state,TokenSrv) {
 
+   $scope.editUser = function(){
+     $scope.isDisabled = true;
+
+     SidebarSrv.getUser().get()
+       .$promise.then(function(response){
+       if(response.errCode === 0){
+         $scope.user = response.data;
+
+       }
+     },function (response) {
+       NoticeSrv.error("获取用户列表错误,http状态码:"+response.status);
+     });
+     $scope.modalName = "修改用户";
+   };
+
+
+
    if(sessionStorage.getItem("token")!=null)
    {
      TokenSrv.setToken(sessionStorage.getItem("token"));
      TokenSrv.setAuth(sessionStorage.getItem("superuser"));
+     TokenSrv.setUrl(sessionStorage.getItem("url"));
    }
    if(localStorage.getItem("token")!=null)
    {
      TokenSrv.setToken(localStorage.getItem("token"));
      TokenSrv.setAuth(localStorage.getItem("superuser"));
+     TokenSrv.setUrl(localStorage.getItem("url"));
    }
 
-  $scope.userIcon = "../images/icon.jpg";
+   console.log(TokenSrv.getUrl());
+  $scope.userIcon = TokenSrv.getUrl();
 
    $scope.adminMenu = [
      {
@@ -58,11 +78,13 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
      {
        TokenSrv.setToken(sessionStorage.getItem("token"));
        TokenSrv.setAuth(sessionStorage.getItem("superuser"));
+       TokenSrv.setUrl(sessionStorage.getItem("url"));
      }
      if(localStorage.getItem("token")!=null)
      {
        TokenSrv.setToken(localStorage.getItem("token"));
        TokenSrv.setAuth(localStorage.getItem("superuser"));
+       TokenSrv.setUrl(localStorage.getItem("url"));
      }
 
        if(TokenSrv.getToken()!= ''){
@@ -79,7 +101,6 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
          $state.go('login');
        }
 
-     console.log(newValue);
    });
 
 
@@ -92,14 +113,11 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
      if (files && files.length > 0) {
        // 获取目前上传的文件
        file = files[0];
-       // 来在控制台看看到底这个对象是什么
-       console.log(file);
        // 那么我们可以做一下诸如文件大小校验的动作
        if(file.size > 1024 * 1024 * 2) {
          alert('图片大小不能超过 2MB!');
          return false;
        }
-       console.log(file);
        // !!!!!!
        // 下面是关键的关键，通过这个 file 对象生成一个可用的图像 URL
        // 获取 window 的 URL 工具

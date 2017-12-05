@@ -4,6 +4,7 @@ labsystem.factory('TokenSrv', function () {
 
           token: '',
           auth:'',
+          url:'',
           setToken: function (token) {
             this.token = token;
           },
@@ -15,6 +16,12 @@ labsystem.factory('TokenSrv', function () {
           },
           getAuth: function () {
             return this.auth;
+          },
+          setUrl: function (url) {
+            this.url = url;
+          },
+          getUrl: function () {
+            return this.url;
           }
         };
     });

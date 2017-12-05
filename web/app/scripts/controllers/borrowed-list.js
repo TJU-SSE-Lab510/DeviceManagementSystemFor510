@@ -51,7 +51,6 @@ labsystem.controller('BorrowListCtrl',
           record.borrowOperator = TokenSrv.getToken();
           BorrowSrv.addRecord().add(record)
             .$promise.then(function(response){
-              console.log(response);
               if(response.errCode === 0){
                 NoticeSrv.success("新建成功");
                 getRecord();
@@ -67,7 +66,6 @@ labsystem.controller('BorrowListCtrl',
           record.id = editid;
           BorrowSrv.editRecord().add(record)
             .$promise.then(function(response){
-              console.log(response);
               if(response.errCode === 0){
                 NoticeSrv.success("修改成功");
                 getRecord();
@@ -91,7 +89,6 @@ labsystem.controller('BorrowListCtrl',
         data.returnOperator = TokenSrv.getToken();
         BorrowSrv.returnItem().add(data)
           .$promise.then(function(response){
-          console.log(response);
           if(response.errCode === 0){
             NoticeSrv.success("归还成功");
             getRecord();

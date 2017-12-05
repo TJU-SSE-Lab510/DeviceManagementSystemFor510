@@ -130,9 +130,8 @@
               <div class="form-group">
                 <label for="inputPWD" class="col-sm-2 control-label">密码</label>
                 <div class="col-sm-10">
-                  <input type="password" required class="form-control" id="inputPWD" placeholder="" ng-model="user.password" >
+                  <input type="password"  class="form-control" id="inputPWD" placeholder="" ng-model="user.password" >
                   <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
-                    <div ng-message="required" class="required-warn">必填项</div>
                   </div>
                 </div>
               </div>
@@ -140,9 +139,8 @@
               <div class="form-group">
                 <label for="inputCPWD" class="col-sm-2 control-label">确认密码</label>
                 <div class="col-sm-10">
-                  <input type="password" required class="form-control" id="inputCPWD" placeholder="" ng-model="user.cpassword" >
+                  <input type="password"  class="form-control" id="inputCPWD" placeholder="" ng-model="user.cpassword" >
                   <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
-                    <div ng-message="required" class="required-warn">必填项</div>
                   </div>
                 </div>
               </div>

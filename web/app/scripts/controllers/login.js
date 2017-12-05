@@ -19,7 +19,6 @@ function($scope, NoticeSrv, TokenSrv, $state,BackBorrowSrv) {
   $("body").css("height","auto");
 
   $scope.login = function () {
-    console.log(remember);
     var res = verifyCode.validate($scope.validateCode);
     if(res){
       BackBorrowSrv.login().add($scope.user)
@@ -27,13 +26,15 @@ function($scope, NoticeSrv, TokenSrv, $state,BackBorrowSrv) {
         if (response.errCode === 0) {
           TokenSrv.setToken(response.data.token);
           TokenSrv.setAuth(response.data.superuser);
+          TokenSrv.setUrl(response.data.url);
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("superuser", response.data.superuser);
-          console.log(response.data);
+          sessionStorage.setItem("url", response.data.url);
           if(remember)
           {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("superuser", response.data.superuser);
+            localStorage.setItem("url", response.data.url);
           }
           NoticeSrv.success("登录成功！");
           $state.go('app.userlist');

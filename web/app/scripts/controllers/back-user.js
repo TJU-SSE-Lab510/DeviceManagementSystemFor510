@@ -34,7 +34,6 @@ labsystem.controller('BackuserCtrl',
 
       $scope.editUser = function(item){
         $scope.isDisabled = true;
-        console.log(item);
         if(item.superuser == '1'){
           $scope.isSuper = true;
         }
@@ -63,7 +62,6 @@ labsystem.controller('BackuserCtrl',
           {
             BackBorrowSrv.addUser().add(user)
               .$promise.then(function(response){
-              console.log(response);
               if(response.errCode === 0){
                 NoticeSrv.success("新建成功");
                 getUser();
@@ -88,7 +86,6 @@ labsystem.controller('BackuserCtrl',
           {
             BackBorrowSrv.editUser().add(user)
               .$promise.then(function(response){
-              console.log(response);
               if(response.errCode === 0){
                 NoticeSrv.success("修改成功");
                 getUser();
@@ -140,10 +137,8 @@ labsystem.controller('BackuserCtrl',
       $scope.getScore = function(id){
         BackBorrowSrv.getUserScore(id).get()
           .$promise.then(function(response){
-          console.log(response);
           if(response.errCode === 0){
             $scope.scoreCollection = response.data;
-            console.log($scope.scoreCollection);
           }
         });
       };
@@ -159,7 +154,6 @@ labsystem.controller('BackuserCtrl',
       $scope.deleteAdmin = function (id) {
         deleteData ={id:''};
         deleteData.id = id;
-        console.log(deleteData);
       };
 
       $scope.comfirmDelete = function () {
