@@ -80,7 +80,7 @@ public class FacilityService {
             node.put("itemName",item.getItemName());
             node.put("itemQTY",item.getItemQTY());
             node.put("remainNum",item.getRemainNum());
-            node.put("url",fileProperties.getImageUrl()+item.getUrl());
+            node.put("url",fileProperties.getFacilityUrl()+"/"+item.getUrl());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String time = String.valueOf(sdf.parse(item.getDate().toString()).getTime());
             node.put("date",time);
@@ -114,34 +114,12 @@ public class FacilityService {
      * @return
      * @throws Exception
      */
-    public String uploadImage(InputStream stream, String contentType) throws Exception{
+    public String uploadFacilityImage(InputStream stream, String contentType) throws Exception{
         String name = UploadUtil.generatorName();
-        String out = fileProperties.getImagePath()+UploadUtil.separatar+name+"."+contentType;
+        String out = fileProperties.getFacilityPath()+UploadUtil.separatar+name+"."+contentType;
         UploadUtil.upload(stream,out);
-        String link = fileProperties.getImageUrl()+name+"."+contentType;
+        String link = fileProperties.getFacilityUrl()+"/"+name+"."+contentType;
         return link;
-    }
-
-    /**
-     * 清理冗余文件
-     * @throws Exception
-     */
-    public void clean() throws Exception{
-        String imagePath = fileProperties.getImagePath();
-        File folder = new File(imagePath);
-        if(!folder.exists()){
-            throw new LabsException(ResultEnum.FILE_FOLDER_NOT_FOUND.getCode(),ResultEnum.FILE_FOLDER_NOT_FOUND.getMsg());
-        }
-        File images[] = folder.listFiles();
-        Facility facility = null;
-        for(int i=0;i<images.length;i++){
-            File image = images[i];
-            String name = image.getName();
-            facility= facilityRepository.findOneByUrl(name);
-            if(facility == null){
-                image.delete();
-            }
-        }
     }
 
 }

@@ -20,9 +20,11 @@ spring:
     session:
       store-type: jdbc
 file:
-  ImagePath: /var/www/images
-#  ImagePath: /Users/arlex/Desktop
-  ImageUrl: http://100.64.208.218:82/
+#  imagePath: /Users/arlex/Desktop
+  imagePath: /var/www/images
+  facility: facility
+  user: user
+  imageUrl: http://100.64.208.218:82/
 email:
   host: smtp.163.com
   username: tjsse510@163.com

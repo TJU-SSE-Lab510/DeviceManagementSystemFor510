@@ -1,6 +1,7 @@
 package com.horacio.Repository;
 
 import com.horacio.Model.Admin;
+import com.horacio.Model.Facility;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,5 +13,6 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
     @Query("select a from Admin a where a.username = ?1")
     public Admin findByUsername(String username);
 
+    public Admin findOneByUrl(String Url);
 
 }

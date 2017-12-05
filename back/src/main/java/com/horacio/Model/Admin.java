@@ -17,6 +17,7 @@ public class Admin {
     private String password;
     private String phoneNumber;
     private int superuser;
+    private String url = "default.png";
 
     public Admin() {
     }
@@ -67,5 +68,13 @@ public class Admin {
 
     public void setSuperuser(int superuser) {
         this.superuser = superuser;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
