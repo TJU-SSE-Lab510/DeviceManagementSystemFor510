@@ -148,6 +148,7 @@ public class AdminService {
             node.put("username",user.getUsername());
             node.put("name",user.getName());
             node.put("phoneNumber",user.getPhoneNumber());
+            node.put("superuser",user.getSuperuser());
             array.addPOJO(node);
         }
         return array;
