@@ -92,7 +92,7 @@ labsystem.controller('ProfileCtrl',
           };
 
           $('#avatarImg').cropper(option);
-        
+
 
 
 

@@ -9,8 +9,10 @@ labsystem.controller('BackuserCtrl',
         name: '',
         phoneNumber: '',
         password: '',
-        cpassword:''
+        cpassword:'',
+        superuser:0
       } ;
+
 
 
 
@@ -25,7 +27,8 @@ labsystem.controller('BackuserCtrl',
           name: '',
           phoneNumber: '',
           password: '',
-          cpassword:''
+          cpassword:'',
+          superuser:0
         } ;
         $scope.modalName = "新建用户";
       };
@@ -43,7 +46,8 @@ labsystem.controller('BackuserCtrl',
           name : item.name,
           phoneNumber: item.phoneNumber,
           password: '',
-          cpassword:''
+          cpassword:'',
+          superuser:item.superuser
         } ;
         $scope.modalName = "修改用户";
       };
@@ -51,13 +55,7 @@ labsystem.controller('BackuserCtrl',
       $scope.user_submit = function () {
         if($scope.modalName == "新建用户"){
           var user = Object.assign({},$scope.user);
-          if($scope.isSuper){
-            user.superuser = 0;
-          }else
-          {
-            user.superuser = 1;
-          }
-
+          user.superuser = user.superuser * 1;
           if(user.password == user.cpassword)
           {
             BackSrv.addUser().add(user)
@@ -76,12 +74,7 @@ labsystem.controller('BackuserCtrl',
           }
         }else {
           var user = Object.assign({},$scope.user);
-          if($scope.isSuper){
-            user.superuser = 0;
-          }else
-          {
-            user.superuser = 1;
-          }
+          user.superuser = user.superuser * 1;
           if(user.password == user.cpassword)
           {
             BackSrv.editUser().add(user)

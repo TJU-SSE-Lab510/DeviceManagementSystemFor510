@@ -146,11 +146,21 @@
               </div>
 
               <div class="form-group">
-                <label  class="col-sm-2 control-label">超級管理</label>
+                <label  class="col-sm-2 control-label">权限</label>
                 <div class="col-sm-10">
-                  <div class="checkbox">
+                  <div class="radio">
                     <label>
-                      <input ng-checked="isSuper" type="checkbox">
+                      <input name="auth" type="radio" value="0" ng-model="user.superuser">普通管理
+
+                    </label>
+                  </div>
+                </div>
+                <label  class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                  <div class="radio">
+                    <label>
+                      <input name="auth" type="radio" value="1"  ng-model="user.superuser">超级管理
+
                     </label>
                   </div>
                 </div>
