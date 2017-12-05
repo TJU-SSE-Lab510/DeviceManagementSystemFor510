@@ -1,6 +1,6 @@
 'use strict';
-labsystem.controller('LoginCtrl', ['$scope', 'NoticeSrv', 'TokenSrv', '$state','BackBorrowSrv',
-function($scope, NoticeSrv, TokenSrv, $state,BackBorrowSrv) {
+labsystem.controller('LoginCtrl', ['$scope', 'NoticeSrv', 'TokenSrv', '$state','BackSrv',
+function($scope, NoticeSrv, TokenSrv, $state,BackSrv) {
   $scope.user = {
     "username": '',
     "password": ''
@@ -21,7 +21,7 @@ function($scope, NoticeSrv, TokenSrv, $state,BackBorrowSrv) {
   $scope.login = function () {
     var res = verifyCode.validate($scope.validateCode);
     if(res){
-      BackBorrowSrv.login().add($scope.user)
+      BackSrv.login().add($scope.user)
         .$promise.then(function(response) {
         if (response.errCode === 0) {
           TokenSrv.setToken(response.data.token);

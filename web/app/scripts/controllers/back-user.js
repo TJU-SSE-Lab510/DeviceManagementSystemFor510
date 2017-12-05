@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('BackuserCtrl',
-  ['$scope', 'BackBorrowSrv','NoticeSrv', '$uibModal','$state','UtilSrv','TokenSrv',
-    function($scope,BackBorrowSrv,NoticeSrv, $uibModal, $state, UtilSrv,TokenSrv) {
+  ['$scope', 'BackSrv','NoticeSrv', '$uibModal','$state','UtilSrv','TokenSrv',
+    function($scope,BackSrv,NoticeSrv, $uibModal, $state, UtilSrv,TokenSrv) {
 
       $scope.user = {
         username: '',
@@ -60,7 +60,7 @@ labsystem.controller('BackuserCtrl',
 
           if(user.password == user.cpassword)
           {
-            BackBorrowSrv.addUser().add(user)
+            BackSrv.addUser().add(user)
               .$promise.then(function(response){
               if(response.errCode === 0){
                 NoticeSrv.success("新建成功");
@@ -84,7 +84,7 @@ labsystem.controller('BackuserCtrl',
           }
           if(user.password == user.cpassword)
           {
-            BackBorrowSrv.editUser().add(user)
+            BackSrv.editUser().add(user)
               .$promise.then(function(response){
               if(response.errCode === 0){
                 NoticeSrv.success("修改成功");
@@ -115,7 +115,7 @@ labsystem.controller('BackuserCtrl',
        */
       var getUser = function () {
 
-        BackBorrowSrv.getUser().get()
+        BackSrv.getUser().get()
           .$promise.then(function(response){
           if(response.errCode === 0){
             $scope.userCollection = response.data;
@@ -135,7 +135,7 @@ labsystem.controller('BackuserCtrl',
        *@return:
        */
       $scope.getScore = function(id){
-        BackBorrowSrv.getUserScore(id).get()
+        BackSrv.getUserScore(id).get()
           .$promise.then(function(response){
           if(response.errCode === 0){
             $scope.scoreCollection = response.data;
@@ -157,7 +157,7 @@ labsystem.controller('BackuserCtrl',
       };
 
       $scope.comfirmDelete = function () {
-          BackBorrowSrv.deleteUser().add(deleteData)
+          BackSrv.deleteUser().add(deleteData)
             .$promise.then(function(response){
             if(response.errCode === 0){
               getUser();

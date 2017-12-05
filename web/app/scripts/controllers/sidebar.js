@@ -72,6 +72,7 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
    // });
 
    $scope.currState = $state;
+
    $scope.$watch('currState.current.name', function(newValue, oldValue) {
 
      if(sessionStorage.getItem("token")!=null)
@@ -79,6 +80,7 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
        TokenSrv.setToken(sessionStorage.getItem("token"));
        TokenSrv.setAuth(sessionStorage.getItem("superuser"));
        TokenSrv.setUrl(sessionStorage.getItem("url"));
+
      }
      if(localStorage.getItem("token")!=null)
      {
@@ -86,6 +88,8 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
        TokenSrv.setAuth(localStorage.getItem("superuser"));
        TokenSrv.setUrl(localStorage.getItem("url"));
      }
+
+     $scope.userIcon = TokenSrv.getUrl();
 
        if(TokenSrv.getToken()!= ''){
          $scope.username = TokenSrv.getToken();
@@ -132,73 +136,11 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
 
 
 
-   $scope.showModal = function(){
-     if(TokenSrv.getAuth() == '1') {
-       $('#avatar-modal').modal('show');
 
-       var option = {
-
-         preview: '.avatar-preview',
-         aspectRatio: 1,
-         strict: false,
-         crop: function (data) {
-         }
-       };
-
-       $('#avatarImg').cropper(option);
-     }
-
-
-
-
+   $scope.gotoProfile = function () {
+     $state.go('app.profile');
    };
 
-   /**
-    * 将以base64的图片url数据转换为Blob
-    * @param urlData
-    *            用url方式表示的base64图片数据
-    */
-   function convertBase64UrlToBlob(urlData){
-
-     var bytes=window.atob(urlData.split(',')[1]);        //去掉url的头，并转换为byte
-
-     //处理异常,将ascii码小于0的转换为大于0
-     var ab = new ArrayBuffer(bytes.length);
-     var ia = new Uint8Array(ab);
-     for (var i = 0; i < bytes.length; i++) {
-       ia[i] = bytes.charCodeAt(i);
-     }
-
-     return new Blob( [ab] , {type : 'image/png'});
-   }
-
-   $scope.save = function(){
-     var dataurl = $('#avatarImg').cropper('getCroppedCanvas').toBlob(function (blob) {
-       var formData = new FormData();
-       formData.append('file', blob);
-       ItemSrv.upload().add(formData)
-         .$promise.then(function(response){
-         console.log(response);
-         if(response.errCode === 0){
-           $scope.item.url = response.data;
-           console.log($scope.item.url);
-         }
-       },function (response) {
-         NoticeSrv.error("上传图片错误,http状态码:"+response.status);
-       });
-     });
-
-     $('#avatar-modal').modal('hide');
-   };
-
-
-   $scope.rotate_left =function () {
-     $('#avatarImg').cropper("rotate",-90);
-   };
-
-   $scope.rotate_right =function () {
-     $('#avatarImg').cropper("rotate",90);
-   };
 
 
 

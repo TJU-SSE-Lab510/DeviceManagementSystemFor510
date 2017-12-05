@@ -59,10 +59,10 @@ labsystem.config(function ($stateProvider, $urlRouterProvider) {
       controller: 'BackuserCtrl'
     })
 
-    .state('app.modifyPWD', {
-      url: 'modifyPWD',
-      templateUrl: 'views/modify-pwd.html',
-      controller: 'ModifyPWDCtrl'
+    .state('app.profile', {
+      url: 'profile',
+      templateUrl: 'views/profile.html',
+      controller: 'ProfileCtrl'
     })
 
     .state('login', {
