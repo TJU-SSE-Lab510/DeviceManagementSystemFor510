@@ -59,7 +59,6 @@ public class AdminService {
             user.setPassword(data.get("password").textValue());
             user.setName(data.get("name").textValue());
             user.setSuperuser(data.get("superuser").intValue());
-//            System.out.println(data.get("name").textValue());
             user.setPhoneNumber(data.get("phoneNumber").textValue());
             adminRepository.save(user);
             return true;
@@ -76,6 +75,7 @@ public class AdminService {
             user.setPassword(data.get("password").textValue());
             user.setName(data.get("name").textValue());
             user.setPhoneNumber(data.get("phoneNumber").textValue());
+            user.setSuperuser(data.get("superuser").intValue());
             adminRepository.save(user);
             return true;
         }

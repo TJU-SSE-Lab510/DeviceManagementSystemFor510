@@ -13,6 +13,7 @@ import com.horacio.utils.SendThread;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,12 +96,15 @@ public class RecordService {
 
     public Boolean returnItem(JsonNode data,String userid) throws Exception{
         Record record =recordRepository.findOne(data.get("id").intValue());
+        if(record == null){
+            throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
+        }
         Facility item =facilityRepository.findOneByItemName(record.getItemName());
         if(item == null){
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
         }
         Admin user = adminRepository.findOne(Integer.valueOf(userid));
-        record.setReturnTime(new Date(Long.valueOf(data.get("returnTime").intValue())));
+        record.setReturnTime(new Date(Long.valueOf(data.get("returnTime").textValue())));
         record.setReturnOperator(user.getName());
         recordRepository.save(record);
         int remianNum = item.getRemainNum();
@@ -111,8 +115,11 @@ public class RecordService {
     }
 
     public List<Record> getAll() throws Exception{
-        List<Record> records = recordRepository.findAll();
-        return  records;
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Record.class,"record");
+        criteria.addOrder(Order.desc("record.id"));
+        List<Record> datas = criteria.list();
+        return  datas;
     }
 
     public Boolean delete(JsonNode data) throws Exception{
