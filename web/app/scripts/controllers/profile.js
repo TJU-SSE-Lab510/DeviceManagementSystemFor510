@@ -80,7 +80,6 @@ labsystem.controller('ProfileCtrl',
 
 
       $scope.showModal = function(){
-        if(TokenSrv.getAuth() == '1') {
           $('#avatar-modal').modal('show');
 
           var option = {
@@ -93,7 +92,7 @@ labsystem.controller('ProfileCtrl',
           };
 
           $('#avatarImg').cropper(option);
-        }
+        
 
 
 
