@@ -10,7 +10,7 @@ labsystem.controller('BackuserCtrl',
         phoneNumber: '',
         password: '',
         cpassword:'',
-        superuser:0
+        superuser:'0'
       } ;
 
 
@@ -28,7 +28,7 @@ labsystem.controller('BackuserCtrl',
           phoneNumber: '',
           password: '',
           cpassword:'',
-          superuser:0
+          superuser:0+''
         } ;
         $scope.modalName = "新建用户";
       };
@@ -47,7 +47,7 @@ labsystem.controller('BackuserCtrl',
           phoneNumber: item.phoneNumber,
           password: '',
           cpassword:'',
-          superuser:item.superuser
+          superuser:item.superuser+''
         } ;
         $scope.modalName = "修改用户";
       };
