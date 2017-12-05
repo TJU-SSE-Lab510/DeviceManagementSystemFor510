@@ -66,7 +66,7 @@ gulp.task('clean:tmp', function () {
 });
 
 
-gulp.task('client:build', ['lint:scripts', 'styles', 'copy:views'], function () {
+gulp.task('client:build', ['styles', 'copy:views'], function () {
   var jsFilter = $.filter('**/*.js', {restore: true});
   var cssFilter = $.filter('**/*.css', {restore: true});
 
@@ -92,7 +92,7 @@ gulp.task('rename',['client:build'], function () {
 });
 
 // gulp.task('client:dev', ['styles', 'copy:views'], function () {
-gulp.task('client:dev', ['lint:scripts', 'styles', 'copy:views'], function () {
+gulp.task('client:dev', [ 'styles', 'copy:views'], function () {
   // var jsFilter = $.filter('**/*.js', {restore: true});
   // var cssFilter = $.filter('**/*.css', {restore: true});
 
