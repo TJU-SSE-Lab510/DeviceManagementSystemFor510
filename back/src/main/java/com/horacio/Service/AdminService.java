@@ -81,7 +81,7 @@ public class AdminService {
         if (user == null){
             throw new LabsException(ResultEnum.USER_NOT_FOUND.getCode(),ResultEnum.USER_NOT_FOUND.getMsg());
         }else {
-            if(data.get("password") == null || data.get("password").textValue().equals("")){
+            if(data.get("password") != null && !data.get("password").textValue().equals("")){
                 user.setPassword(data.get("password").textValue());
             }
             user.setName(data.get("name").textValue());
