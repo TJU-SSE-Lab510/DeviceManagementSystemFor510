@@ -10,13 +10,12 @@ import com.horacio.Service.AdminService;
 import com.horacio.utils.AuthCheckUtil;
 import com.horacio.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +57,20 @@ public class AdminController {
         return ResultUtil.success();
     }
 
+    //用户具体信息
+    @RequestMapping(value = "/item", method = RequestMethod.GET)
+    public Object item(HttpSession session) throws Exception{
+        String userid = (String)session.getAttribute("userid");
+        Admin user = adminService.item(userid);
+        return ResultUtil.success(user);
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public Object update(@RequestBody JsonNode body) throws Exception{
+        adminService.update(body);
+        return ResultUtil.success();
+    }
+
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public Object register()throws Exception {
         ArrayNode list = adminService.getAll();
@@ -69,6 +82,26 @@ public class AdminController {
         AuthCheckUtil.check(session);
         adminService.delete(body);
         return ResultUtil.success();
+    }
+
+    @PostMapping(value = "/upload")
+    public Object upload(@RequestParam("file") MultipartFile picture, HttpSession session) throws Exception{
+        if(picture.isEmpty()){
+            throw new LabsException(ResultEnum.PARAM_NOT_FOUND.getCode(),ResultEnum.PARAM_NOT_FOUND.getMsg());
+        }
+        //getContentType返回的是image/png...
+        if(!picture.getContentType().startsWith("image")){
+            throw new LabsException(ResultEnum.FILE_TYPE_ERROR.getCode(), ResultEnum.FILE_TYPE_ERROR.getMsg());
+        }
+        // getSize 函数返回的是字节数
+        if(picture.getSize()>20*1024*1024){
+            throw new LabsException(ResultEnum.FILE_SIZE_ERROR.getCode(),ResultEnum.FILE_SIZE_ERROR.getMsg());
+        }
+        String userid = (String)session.getAttribute("userid");
+        InputStream file = picture.getInputStream();
+        String contentType = picture.getContentType().split("/")[1];
+        String filePath = adminService.uploadUserImage(file,contentType,userid);
+        return ResultUtil.success(filePath);
     }
 
 }

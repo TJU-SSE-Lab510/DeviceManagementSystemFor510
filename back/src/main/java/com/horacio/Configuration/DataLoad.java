@@ -23,8 +23,13 @@ public class DataLoad implements CommandLineRunner {
         //声明分隔符
         UploadUtil.setSeparater();
         //创建图片文件夹
-        String ImageFolder = fileProperties.getImagePath();
-        File folder = new File(ImageFolder);
+        String ImageFacilityFolder = fileProperties.getFacilityPath();
+        File folder = new File(ImageFacilityFolder);
+        if(!folder.exists()&&!folder.isDirectory()){
+            folder.mkdir();
+        }
+        String ImageUserFolder = fileProperties.getUserPath();
+        folder = new File(ImageUserFolder);
         if(!folder.exists()&&!folder.isDirectory()){
             folder.mkdir();
         }

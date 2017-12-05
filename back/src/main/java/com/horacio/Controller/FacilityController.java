@@ -70,18 +70,8 @@ public class FacilityController {
         }
         InputStream file = picture.getInputStream();
         String contentType = picture.getContentType().split("/")[1];
-        String filePath = facilityService.uploadImage(file,contentType);
+        String filePath = facilityService.uploadFacilityImage(file,contentType);
         return ResultUtil.success(filePath);
-    }
-
-    /**
-     * 删除冗余的图片
-     * @throws Exception
-     */
-    @GetMapping(value = "/slim")
-    public Object slim() throws Exception{
-        facilityService.clean();
-        return ResultUtil.success();
     }
 
 }
