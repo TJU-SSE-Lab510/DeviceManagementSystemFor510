@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('BorrowListCtrl',
-  ['$scope', 'BorrowSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv',
-    function($scope,BorrowSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv) {
+  ['$scope', 'BorrowSrv','NoticeSrv', '$uibModal','$state','$http','TokenSrv',
+    function($scope,BorrowSrv,NoticeSrv, $uibModal, $state,$http,TokenSrv) {
       if(TokenSrv.getAuth() == '1'){
         $scope.isSuperUser = true;
       }

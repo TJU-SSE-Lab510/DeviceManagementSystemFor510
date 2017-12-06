@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('BackuserCtrl',
-  ['$scope', 'BackSrv','NoticeSrv', '$uibModal','$state','UtilSrv','TokenSrv',
-    function($scope,BackSrv,NoticeSrv, $uibModal, $state, UtilSrv,TokenSrv) {
+  ['$scope', 'BackSrv','NoticeSrv', '$uibModal','$state','TokenSrv',
+    function($scope,BackSrv,NoticeSrv, $uibModal, $state,TokenSrv) {
 
       $scope.user = {
         username: '',

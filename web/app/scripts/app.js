@@ -71,4 +71,10 @@ labsystem.config(function ($stateProvider, $urlRouterProvider) {
       controller: 'LoginCtrl'
     })
 
+    .state('app.userDetail', {
+      url: 'user/:id',
+          templateUrl: 'views/user-detail.html',
+          controller: 'UserDetailCtrl'
+    })
+
 });

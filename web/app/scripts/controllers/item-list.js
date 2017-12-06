@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('ItemListCtrl',
-  ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','UtilSrv','$http','TokenSrv','BorrowSrv',
-    function($scope,ItemSrv,NoticeSrv, $uibModal, $state, UtilSrv,$http,TokenSrv,BorrowSrv) {
+  ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','$http','TokenSrv','BorrowSrv',
+    function($scope,ItemSrv,NoticeSrv, $uibModal, $state,$http,TokenSrv,BorrowSrv) {
 
 
       $scope.isDisabled = false;

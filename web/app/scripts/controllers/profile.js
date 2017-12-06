@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('ProfileCtrl',
-  ['$scope', 'ProfileSrv','NoticeSrv', '$uibModal','$state','UtilSrv','TokenSrv',
-    function($scope,ProfileSrv,NoticeSrv, $uibModal, $state, UtilSrv,TokenSrv)
+  ['$scope', 'ProfileSrv','NoticeSrv', '$uibModal','$state','TokenSrv',
+    function($scope,ProfileSrv,NoticeSrv, $uibModal, $state,TokenSrv)
     {
 
       $scope.userAvatar = TokenSrv.getUrl();
