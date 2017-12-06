@@ -36,7 +36,9 @@
                 <th>ID</th>
                 <th>用户名</th>
                 <th>姓名</th>
+                <th>学号</th>
                 <th>手机</th>
+                <th>邮箱</th>
                 <th ng-show="isSuperUser">操作</th>
 
               </tr>
@@ -45,8 +47,10 @@
               <tr ng-repeat="item in rowCollection">
                 <td>{{item.id}}</td>
                 <td>{{item.username}}</td>
+                <td>{{item.studentNumber}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.phoneNumber}}</td>
+                <td>{{item.email}}</td>
                 <!--<td ng-if="item.lastCreate != 0">{{item.lastCreate *1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
                 <!--<td ng-if="item.lastCreate == 0">无记录</td>-->
                 <td>
@@ -117,11 +121,35 @@
               </div>
 
               <div class="form-group">
+                <label for="inputNumber" class="col-sm-2 control-label">学号</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputNumber" placeholder="" ng-model="user.studentNumber" required name="inputNumber">
+                  <div ng-messages="form['inputNumber'].$touched && form['inputNumber'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="form-group">
                 <label for="inputPhone" class="col-sm-2 control-label">手机</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="inputPhone" placeholder="" ng-model="user.phoneNumber" required name="inputPhone">
                   <div ng-messages="form['inputPhone'].$touched && form['inputPhone'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
+                <div class="col-sm-10">
+                  <input type="email" required class="form-control" id="inputEmail" placeholder="" ng-model="user.email" name="inputEmail">
+                  <div ng-messages="form['inputEmail'].$touched && form['inputEmail'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                    <div ng-message="email" class="required-warn">请填写正确的邮箱</div>
                   </div>
                 </div>
               </div>
