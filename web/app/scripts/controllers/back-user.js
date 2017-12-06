@@ -4,6 +4,12 @@ labsystem.controller('BackuserCtrl',
   ['$scope', 'BackSrv','NoticeSrv', '$uibModal','$state','TokenSrv',
     function($scope,BackSrv,NoticeSrv, $uibModal, $state,TokenSrv) {
 
+      /**
+       * @description:　修改新建用户弹窗初始化
+       * @param:
+       * @return:
+       */
+
       $scope.user = {
         username: '',
         name: '',
@@ -14,11 +20,22 @@ labsystem.controller('BackuserCtrl',
       } ;
 
 
+      /**
+       * @description:　是否可以进行超级管理员的操作
+       * @param:
+       * @return:
+       */
 
+      if(TokenSrv.getAuth() == '1'){
+        $scope.isSuperUser = true;
+      }
 
       /**
-       *@description:　新建或修改用户
+       *@description:　新建用户弹窗
+       * @param:
+       * @return:
        */
+
       $scope.showNewUserModal = function(){
         $('#editUser').modal('show');
         $scope.isDisabled = false;
@@ -34,6 +51,11 @@ labsystem.controller('BackuserCtrl',
       };
 
 
+      /**
+       *  @description:　修改用户弹窗
+       * @param  item 修改用户的详情
+       * @return
+       */
 
       $scope.editUser = function(item){
         $scope.isDisabled = true;
@@ -51,6 +73,12 @@ labsystem.controller('BackuserCtrl',
         } ;
         $scope.modalName = "修改用户";
       };
+
+      /**
+       *@description:　提交修改或新建用户。
+       *@param:
+       *@return:
+       */
 
       $scope.user_submit = function () {
         if($scope.modalName == "新建用户"){
@@ -96,10 +124,6 @@ labsystem.controller('BackuserCtrl',
 
       };
 
-      if(TokenSrv.getAuth() == '1'){
-        $scope.isSuperUser = true;
-      }
-
 
       /**
        *@description:　获取用户
@@ -121,20 +145,6 @@ labsystem.controller('BackuserCtrl',
 
       getUser();
 
-
-      /**
-       *@description:　获取用户
-       *@param:
-       *@return:
-       */
-      $scope.getScore = function(id){
-        BackSrv.getUserScore(id).get()
-          .$promise.then(function(response){
-          if(response.errCode === 0){
-            $scope.scoreCollection = response.data;
-          }
-        });
-      };
 
       /**
        *@description:　删除用户

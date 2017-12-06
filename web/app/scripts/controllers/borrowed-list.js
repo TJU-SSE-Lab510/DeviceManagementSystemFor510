@@ -3,9 +3,21 @@
 labsystem.controller('BorrowListCtrl',
   ['$scope', 'BorrowSrv','NoticeSrv', '$uibModal','$state','$http','TokenSrv',
     function($scope,BorrowSrv,NoticeSrv, $uibModal, $state,$http,TokenSrv) {
+
+      /**
+       * @description:　是否可以进行超级管理操作
+       * @param:
+       * @return:
+       */
       if(TokenSrv.getAuth() == '1'){
         $scope.isSuperUser = true;
       }
+
+      /**
+       * @description:　修改新建记录弹窗初始化
+       * @param:
+       * @return:
+       */
       $scope.record = {
         name: '',
         itemName: '',
@@ -16,7 +28,9 @@ labsystem.controller('BorrowListCtrl',
       var editid;
 
       /**
-       *@description:　新建或修改记录
+       * @description:　新建记录弹窗
+       * @param:
+       * @return:
        */
       $scope.showNewRecordModal = function(){
         $('#editRecord').modal('show');
@@ -31,6 +45,11 @@ labsystem.controller('BorrowListCtrl',
       };
 
 
+      /**
+       * @description:　修改记录弹窗
+       * @param: item 所修改记录的详情
+       * @return:
+       */
       $scope.editRecord = function(item){
         $scope.isDisabled = true;
         $scope.record = {
@@ -44,6 +63,11 @@ labsystem.controller('BorrowListCtrl',
       };
 
 
+      /**
+       * @description:　提交新建/修改的记录
+       * @param:
+       * @return:
+       */
       $scope.record_submit = function () {
         if($scope.modalName === "新建记录"){
           var record = Object.assign({},$scope.record);
@@ -82,6 +106,11 @@ labsystem.controller('BorrowListCtrl',
 
       };
 
+      /**
+       * @description:　归还设备
+       * @param: id 归还的设备的id
+       * @return:
+       */
       $scope.return = function (id) {
         var data = {};
         data.id = id;
@@ -99,10 +128,11 @@ labsystem.controller('BorrowListCtrl',
         });
       };
 
+
       /**
-       *@description:　获取记录
-       *@param:
-       *@return:
+       * @description:　获取记录
+       * @param:
+       * @return:
        */
       var getRecord = function () {
         BorrowSrv.getRecord().get()
@@ -120,9 +150,9 @@ labsystem.controller('BorrowListCtrl',
 
 
       /**
-       *@description:　删除记录
-       *@param:
-       *@return:
+       * @description:　删除记录
+       * @param:
+       * @return:
        */
 
       var deleteData ={id:''};

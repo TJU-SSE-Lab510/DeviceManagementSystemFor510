@@ -2,23 +2,12 @@
 
 labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state','TokenSrv',
  function($scope, SidebarSrv, NoticeSrv,$state,TokenSrv) {
-
-   $scope.editUser = function(){
-     $scope.isDisabled = true;
-
-     SidebarSrv.getUser().get()
-       .$promise.then(function(response){
-       if(response.errCode === 0){
-         $scope.user = response.data;
-
-       }
-     },function (response) {
-       NoticeSrv.error("获取用户列表错误,http状态码:"+response.status);
-     });
-     $scope.modalName = "修改用户";
-   };
-
-
+  
+   /**
+    * @description:　初始化
+    * @param:
+    * @return:
+    */
 
    if(sessionStorage.getItem("token")!=null)
    {
@@ -33,7 +22,6 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
      TokenSrv.setUrl(localStorage.getItem("url"));
    }
 
-   console.log(TokenSrv.getUrl());
   $scope.userIcon = TokenSrv.getUrl();
 
    $scope.adminMenu = [
@@ -58,18 +46,31 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
    ];
 
 
+   /**
+    * @description:　注销
+    * @param:
+    * @return:
+    */
 
    $scope.signOut = function () {
      sessionStorage.removeItem("token");
+     sessionStorage.removeItem("auth");
+     sessionStorage.removeItem("superuser");
      localStorage.removeItem("token");
+     localStorage.removeItem("auth");
+     localStorage.removeItem("superuser");
      TokenSrv.setToken('');
+     TokenSrv.setAuth('');
+     TokenSrv.setUrl('');
      $state.go('login');
    };
 
-   // console.log("But when I want to access name its empty: ");
-   // $timeout(function() {
-   //    console.log($state.current.name);
-   // });
+
+   /**
+    * @description:　watch 路由变化
+    * @param:
+    * @return:
+    */
 
    $scope.currState = $state;
 
@@ -107,35 +108,11 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
 
    });
 
-
-
-
-
-   $('.avatar-input').change(function(event) {
-     // 根据这个 <input> 获取文件的 HTML5 js 对象
-     var files = event.target.files, file;
-     if (files && files.length > 0) {
-       // 获取目前上传的文件
-       file = files[0];
-       // 那么我们可以做一下诸如文件大小校验的动作
-       if(file.size > 1024 * 1024 * 2) {
-         alert('图片大小不能超过 2MB!');
-         return false;
-       }
-       // !!!!!!
-       // 下面是关键的关键，通过这个 file 对象生成一个可用的图像 URL
-       // 获取 window 的 URL 工具
-       var URL = window.URL || window.webkitURL;
-       // 通过 file 生成目标 url
-       var imgURL = URL.createObjectURL(file);
-       // 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
-       // URL.revokeObjectURL(imgURL);
-       $('#avatarImg').cropper('replace',imgURL);
-     }
-   });
-
-
-
+   /**
+    * @description:　前往profile
+    * @param:
+    * @return:
+    */
 
    $scope.gotoProfile = function () {
      $state.go('app.profile');

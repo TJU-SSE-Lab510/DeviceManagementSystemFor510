@@ -9,12 +9,12 @@ labsystem.service('BackSrv', ['$resource','$http', 'baseURL' ,function ($resourc
   };
 
   //新建管理员
-  this.addUser = function(uid){
+  this.addUser = function(data){
     return $resource(baseURL + '/admin/register',null,{'add':{method: 'POST'}});
   };
 
   //修改管理员
-  this.editUser = function(uid){
+  this.editUser = function(data){
     return $resource(baseURL + '/admin/edit',null,{'add':{method: 'POST'}});
   };
 

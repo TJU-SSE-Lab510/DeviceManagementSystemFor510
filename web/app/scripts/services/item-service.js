@@ -11,23 +11,23 @@ labsystem.service('ItemSrv', ['$resource','$http', 'baseURL' ,function ($resourc
   };
 
   //新建
-  this.addFacility = function(uid){
+  this.addFacility = function(data){
     return $resource(baseURL + '/facility/add',null,{'add':{method: 'POST'}});
   };
 
   //修改
-  this.editItem = function(uid){
+  this.editItem = function(data){
     return $resource(baseURL + '/facility/edit',null,{'add':{method: 'POST'}});
   };
 
   //删除
-  this.deleteItem = function(uid){
+  this.deleteItem = function(data){
     return $resource(baseURL + '/facility/delete',null,{'add':{method: 'POST'}});
   };
 
   //上传图片
 
-  this.upload = function(uid){
+  this.upload = function(data){
     return $resource(baseURL + '/facility/upload',null,{'add':{method: 'POST',headers:{'Content-Type':undefined}}});
   };
 }]);

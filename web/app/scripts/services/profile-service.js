@@ -8,12 +8,12 @@ labsystem.service('ProfileSrv', ['$resource','$http', 'baseURL' ,function ($reso
     return $resource(baseURL + '/admin/item');
   };
 
-  this.editUser = function(uid){
+  this.editUser = function(data){
     return $resource(baseURL + '/admin/update',null,{'add':{method: 'POST'}});
   };
 
 
-  this.upload = function(uid){
+  this.upload = function(data){
     return $resource(baseURL + '/admin/upload',null,{'add':{method: 'POST',headers:{'Content-Type':undefined}}});
   };
 

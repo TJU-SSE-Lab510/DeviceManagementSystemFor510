@@ -1,23 +1,49 @@
 'use strict';
 labsystem.controller('LoginCtrl', ['$scope', 'NoticeSrv', 'TokenSrv', '$state','BackSrv',
 function($scope, NoticeSrv, TokenSrv, $state,BackSrv) {
+
+  $("body").css("height","auto");
+
+  /**
+   * @description:　初始化用户名密码
+   * @param:
+   * @return:
+   */
   $scope.user = {
     "username": '',
     "password": ''
 
   };
 
+  /**
+   * @description:　初始化remember me
+   * @param:
+   * @return:
+   */
   var remember = false;
 
+  /**
+   * @description:　点击remember
+   * @param:
+   * @return:
+   */
   $scope.remember =function () {
       remember = !remember;
   };
 
+  /**
+   * @description:　初始化验证码
+   * @param:
+   * @return:
+   */
   var verifyCode = new GVerify("v_container");
 
 
-  $("body").css("height","auto");
-
+  /**
+   * @description:　点击登陆
+   * @param:
+   * @return:
+   */
   $scope.login = function () {
     var res = verifyCode.validate($scope.validateCode);
     if(res){

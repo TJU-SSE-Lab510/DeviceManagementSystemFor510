@@ -4,8 +4,14 @@ labsystem.controller('ItemListCtrl',
   ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','$http','TokenSrv','BorrowSrv',
     function($scope,ItemSrv,NoticeSrv, $uibModal, $state,$http,TokenSrv,BorrowSrv) {
 
+      /**
+       * @description:　是否拥有超级管理的操作
+       * @param:
+       * @return:
+       */
 
       $scope.isDisabled = false;
+
       if(TokenSrv.getAuth() == '1'){
         $scope.isSuperUser = true;
         $scope.modalBtn = '保存';
@@ -24,8 +30,11 @@ labsystem.controller('ItemListCtrl',
       var editid;
 
       /**
-       *@description:　新建或修改设备
+       * @description:　新建设备弹框
+       * @param:
+       * @return:
        */
+
       $scope.showNewItemModal = function(){
         $('#editItem').modal('show');
         $scope.isDisabled = false;
@@ -38,6 +47,11 @@ labsystem.controller('ItemListCtrl',
         $scope.form.$setUntouched()
       };
 
+      /**
+       * @description:　修改设备弹框
+       * @param:
+       * @return:
+       */
 
       $scope.editItem = function(item){
         $scope.isDisabled = true;
@@ -50,6 +64,12 @@ labsystem.controller('ItemListCtrl',
         $scope.modalName = "修改设备";
         $scope.form.$setUntouched()
       };
+
+      /**
+       * @description:　提交哦修改/新建设备
+       * @param:
+       * @return:
+       */
 
       $scope.item_submit = function () {
         if(TokenSrv.getAuth() == '1') {
@@ -98,10 +118,11 @@ labsystem.controller('ItemListCtrl',
 
 
       /**
-       *@description:　获取设备
-       *@param:
-       *@return:
+       * @description:　获取设备
+       * @param:
+       * @return:
        */
+
       var getItem = function () {
         ItemSrv.getItem().get()
           .$promise.then(function(response){
@@ -118,9 +139,9 @@ labsystem.controller('ItemListCtrl',
 
 
       /**
-       *@description:　删除设备
-       *@param:
-       *@return:
+       * @description:　删除设备
+       * @param:
+       * @return:
        */
 
       var deleteData ={id:''};
@@ -144,6 +165,15 @@ labsystem.controller('ItemListCtrl',
       };
 
 
+      /**
+       * 上传图片操作
+       */
+
+      /**
+       * @description:　当上传的图片发生改变
+       * @param:
+       * @return:
+       */
 
       $('.avatar-input').change(function(event) {
         // 根据这个 <input> 获取文件的 HTML5 js 对象
@@ -171,6 +201,12 @@ labsystem.controller('ItemListCtrl',
 
 
 
+      /**
+       * @description:　上传图片弹窗
+       * @param:
+       * @return:
+       */
+
       $scope.showModal = function(){
         if(TokenSrv.getAuth() == '1') {
           $('#avatar-modal').modal('show');
@@ -186,30 +222,13 @@ labsystem.controller('ItemListCtrl',
 
           $('#avatarImg').cropper(option);
         }
-
-
-
-
       };
 
       /**
-       * 将以base64的图片url数据转换为Blob
-       * @param urlData
-       *            用url方式表示的base64图片数据
+       * @description:　上传图片
+       * @param:
+       * @return:
        */
-      function convertBase64UrlToBlob(urlData){
-
-        var bytes=window.atob(urlData.split(',')[1]);        //去掉url的头，并转换为byte
-
-        //处理异常,将ascii码小于0的转换为大于0
-        var ab = new ArrayBuffer(bytes.length);
-        var ia = new Uint8Array(ab);
-        for (var i = 0; i < bytes.length; i++) {
-          ia[i] = bytes.charCodeAt(i);
-        }
-
-        return new Blob( [ab] , {type : 'image/png'});
-      }
 
       $scope.save = function(){
         var dataurl = $('#avatarImg').cropper('getCroppedCanvas').toBlob(function (blob) {
@@ -229,6 +248,12 @@ labsystem.controller('ItemListCtrl',
       };
 
 
+      /**
+       * @description:　图片旋转
+       * @param:
+       * @return:
+       */
+
       $scope.rotate_left =function () {
         $('#avatarImg').cropper("rotate",-90);
       };
@@ -237,6 +262,12 @@ labsystem.controller('ItemListCtrl',
         $('#avatarImg').cropper("rotate",90);
       };
 
+
+      /**
+       * @description:　借出设备
+       * @param: item 借出设备的详情
+       * @return:
+       */
 
       $scope.newBorrow = function(item){
         $scope.isDisabled = true;

@@ -5,12 +5,18 @@ labsystem.controller('ProfileCtrl',
     function($scope,ProfileSrv,NoticeSrv, $uibModal, $state,TokenSrv)
     {
 
+      /**
+       * @description:　初始化用户头像
+       * @param:
+       * @return:
+       */
+
       $scope.userAvatar = TokenSrv.getUrl();
 
       /**
-       *@description:　获取用户
-       *@param:
-       *@return:
+       * @description:　获取用户
+       * @param:
+       * @return:
        */
       var getUser = function () {
 
@@ -27,6 +33,12 @@ labsystem.controller('ProfileCtrl',
 
       getUser();
 
+
+      /**
+       * @description:　提交修改
+       * @param:
+       * @return:
+       */
 
       $scope.user_submit = function () {
 
@@ -53,6 +65,15 @@ labsystem.controller('ProfileCtrl',
       };
 
 
+      /**
+       * 上传头像
+       */
+
+      /**
+       * @description:　当所选图片发生改变
+       * @param:
+       * @return:
+       */
       $('.avatar-input').change(function(event) {
         // 根据这个 <input> 获取文件的 HTML5 js 对象
         var files = event.target.files, file;
@@ -79,6 +100,11 @@ labsystem.controller('ProfileCtrl',
 
 
 
+      /**
+       * @description:　上传头像弹窗
+       * @param:
+       * @return:
+       */
       $scope.showModal = function(){
           $('#avatar-modal').modal('show');
 
@@ -100,23 +126,10 @@ labsystem.controller('ProfileCtrl',
       };
 
       /**
-       * 将以base64的图片url数据转换为Blob
-       * @param urlData
-       *            用url方式表示的base64图片数据
+       * @description:　保存头像
+       * @param:
+       * @return:
        */
-      function convertBase64UrlToBlob(urlData){
-
-        var bytes=window.atob(urlData.split(',')[1]);        //去掉url的头，并转换为byte
-
-        //处理异常,将ascii码小于0的转换为大于0
-        var ab = new ArrayBuffer(bytes.length);
-        var ia = new Uint8Array(ab);
-        for (var i = 0; i < bytes.length; i++) {
-          ia[i] = bytes.charCodeAt(i);
-        }
-
-        return new Blob( [ab] , {type : 'image/png'});
-      }
 
       $scope.save = function(){
         var dataurl = $('#avatarImg').cropper('getCroppedCanvas').toBlob(function (blob) {
@@ -145,6 +158,11 @@ labsystem.controller('ProfileCtrl',
       };
 
 
+      /**
+       * @description:　旋转头像
+       * @param:
+       * @return:
+       */
       $scope.rotate_left =function () {
         $('#avatarImg').cropper("rotate",-90);
       };
