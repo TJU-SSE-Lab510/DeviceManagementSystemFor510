@@ -10,6 +10,12 @@ import com.horacio.Model.Admin;
 import com.horacio.Properties.FileProperties;
 import com.horacio.Repository.AdminRepository;
 import com.horacio.utils.UploadUtil;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +31,7 @@ import java.util.Map;
  * Created by Horac on 2017/5/15.
  */
 @Service
+@Transactional
 public class AdminService {
 
     @Autowired
@@ -36,7 +43,10 @@ public class AdminService {
     @Autowired
     private FileProperties fileProperties;
 
-    @Transactional
+    @Autowired
+    private SessionFactory sessionFactory;
+
+
     public ObjectNode login( Map<String,Object> data) throws Exception{
         Admin user = adminRepository.findByUsername((String)data.get("username"));
         if (user == null){
@@ -57,7 +67,7 @@ public class AdminService {
 
     }
 
-    @Transactional
+
     public Boolean register(JsonNode data) throws Exception{
         Admin user = adminRepository.findByUsername(data.get("username").textValue());
         if (user != null){
@@ -69,13 +79,14 @@ public class AdminService {
             user.setName(data.get("name").textValue());
             user.setSuperuser(data.get("superuser").intValue());
             user.setPhoneNumber(data.get("phoneNumber").textValue());
+            user.setStudentNumber(data.get("studentNumber").textValue());
+            user.setEmail(data.get("email").textValue());
             adminRepository.save(user);
             return true;
             }
 
     }
 
-    @Transactional
     public Boolean edit(JsonNode data) throws Exception{
         Admin user = adminRepository.findByUsername(data.get("username").textValue());
         if (user == null){
@@ -87,12 +98,14 @@ public class AdminService {
             user.setName(data.get("name").textValue());
             user.setPhoneNumber(data.get("phoneNumber").textValue());
             user.setSuperuser(data.get("superuser").intValue());
+            user.setStudentNumber(data.get("studentNumber").textValue());
+            user.setEmail(data.get("email").textValue());
             adminRepository.save(user);
             return true;
         }
     }
 
-    @Transactional
+
     public Boolean update(JsonNode data) throws Exception{
         Admin user = adminRepository.findByUsername(data.get("username").textValue());
         if (user == null){
@@ -101,12 +114,14 @@ public class AdminService {
             user.setPassword(data.get("password").textValue());
             user.setName(data.get("name").textValue());
             user.setPhoneNumber(data.get("phoneNumber").textValue());
+            user.setStudentNumber(data.get("studentNumber").textValue());
+            user.setEmail(data.get("email").textValue());
             adminRepository.save(user);
             return true;
         }
     }
 
-    @Transactional
+
     public Admin item(String userid) throws Exception{
         Admin user = adminRepository.findOne(Integer.valueOf(userid));
         if (user == null){
@@ -116,7 +131,7 @@ public class AdminService {
         }
     }
 
-    @Transactional
+
     public Boolean delete(JsonNode data) throws Exception{
         Admin user = adminRepository.findOne(data.get("id").intValue());
         if (user == null){
@@ -138,7 +153,7 @@ public class AdminService {
     }
 
 
-    @Transactional
+
     public ArrayNode getAll() throws Exception{
         List<Admin> admins = adminRepository.findAll();
         ArrayNode array = mapper.createArrayNode();
@@ -149,11 +164,31 @@ public class AdminService {
             node.put("name",user.getName());
             node.put("phoneNumber",user.getPhoneNumber());
             node.put("superuser",user.getSuperuser());
+            node.put("studentNumber",user.getStudentNumber());
+            node.put("email",user.getEmail());
             array.addPOJO(node);
         }
         return array;
     }
 
+    public ArrayNode search(String number) throws Exception{
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Admin.class,"admin");
+        criteria.add(Restrictions.like("admin.studentNumber",number,MatchMode.START));
+        criteria.addOrder(Order.asc("admin.studentNumber"));
+        List<Admin> datas = criteria.list();
+        ArrayNode array = mapper.createArrayNode();
+        for(Admin user: datas){
+            ObjectNode node = mapper.createObjectNode();
+            node.put("id",user.getId());
+            node.put("username",user.getUsername());
+            node.put("name",user.getName());
+            node.put("studentNumber",user.getStudentNumber());
+            node.put("email",user.getEmail());
+            array.addPOJO(node);
+        }
+        return array;
+    }
     /**
      * 上传用户头像
      * @param stream

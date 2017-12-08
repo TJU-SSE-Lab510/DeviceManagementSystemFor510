@@ -17,6 +17,8 @@ public class Admin {
     private String password;
     private String phoneNumber;
     private int superuser;
+    private String email;
+    private String studentNumber;
     private String url = "default.png";
 
     public Admin() {
@@ -76,5 +78,21 @@ public class Admin {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getStudentNumber() {
+        return studentNumber;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
     }
 }
