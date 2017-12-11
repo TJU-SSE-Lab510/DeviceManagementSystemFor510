@@ -2,6 +2,8 @@ package com.horacio.Controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.horacio.Enum.ResultEnum;
+import com.horacio.Exception.LabsException;
 import com.horacio.Model.Record;
 import com.horacio.Service.RecordService;
 import com.horacio.utils.AuthCheckUtil;
@@ -35,6 +37,9 @@ public class LendController {
         String phone = request.containsKey("phone")?(String)request.get("phone"):null;
         String email = request.containsKey("email")?(String)request.get("email"):null;
         Integer number = request.containsKey("number")?(Integer)request.get("number"):null;
+        if(number<=0){
+            throw new LabsException(ResultEnum.INPUT_ILLEGAL.getCode(),ResultEnum.INPUT_ILLEGAL.getMsg());
+        }
         String userid = (String)session.getAttribute("userid");
         recordService.add(itemName,borrowedTime,name,phone,email,number,2,userid);
         return ResultUtil.success();
@@ -47,6 +52,9 @@ public class LendController {
         String phone = request.containsKey("phone")?(String)request.get("phone"):null;
         String email = request.containsKey("email")?(String)request.get("email"):null;
         Integer number = request.containsKey("number")?(Integer)request.get("number"):null;
+        if(number<=0){
+            throw new LabsException(ResultEnum.INPUT_ILLEGAL.getCode(),ResultEnum.INPUT_ILLEGAL.getMsg());
+        }
         String userid = (String)session.getAttribute("userid");
         recordService.edit(id,name,phone,email,userid,number);
         return ResultUtil.success();

@@ -99,8 +99,7 @@ public class RecordService {
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
         }
         int origin  = record.getNumber();
-        int change_num = number - origin;
-        int remain_num = item.getRemainNum()+change_num;
+        int remain_num = item.getRemainNum()+origin-number;
         if(remain_num < 0){
             throw new LabsException(ResultEnum.FACILITY_NOT_ENOUGH.getCode(),ResultEnum.FACILITY_NOT_ENOUGH.getMsg());
         }
@@ -145,7 +144,7 @@ public class RecordService {
             }
         }else{//借出
             if(name!=null){//若name存在则搜索出该管理员的借出的设备列表
-                criteria.add(Restrictions.eq("record.borrowed_operator",name));
+                criteria.add(Restrictions.eq("record.borrowOperator",name));
             }
         }
         criteria.addOrder(Order.desc("record.id"));
@@ -157,7 +156,7 @@ public class RecordService {
             node.put("borrow_operator",item.getBorrowOperator());
             node.put("borrowed_time",format.format(item.getBorrowedTime()));
             node.put("item_name",item.getItemName());
-            node.put("name",item.getItemName());
+            node.put("name",item.getName());
             node.put("number",item.getNumber());
             node.put("phone",item.getPhone());
             node.put("email",item.getEmail());

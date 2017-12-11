@@ -2,6 +2,8 @@ package com.horacio.Controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.horacio.Enum.ResultEnum;
+import com.horacio.Exception.LabsException;
 import com.horacio.Model.Admin;
 import com.horacio.Model.Record;
 import com.horacio.Repository.AdminRepository;
@@ -40,6 +42,9 @@ public class UseController {
         String itemName = request.containsKey("itemName")?(String)request.get("itemName"):null;
         String borrowedTime = request.containsKey("borrowedTime")?(String)request.get("borrowedTime"):null;
         Integer number = request.containsKey("number")?(Integer)request.get("number"):null;
+        if(number<=0){
+            throw new LabsException(ResultEnum.INPUT_ILLEGAL.getCode(),ResultEnum.INPUT_ILLEGAL.getMsg());
+        }
         Integer id = request.containsKey("adminid")?(Integer)request.get("adminid"):null;
         Admin admin = adminService.item(String.valueOf(id));
         String name = admin.getName();
@@ -55,6 +60,9 @@ public class UseController {
         Integer id = request.containsKey("id")?(Integer)request.get("id"):null;
         Integer adminid = request.containsKey("adminid")?(Integer)request.get("adminid"):null;
         Integer number = request.containsKey("number")?(Integer)request.get("number"):null;
+        if(number<=0){
+            throw new LabsException(ResultEnum.INPUT_ILLEGAL.getCode(),ResultEnum.INPUT_ILLEGAL.getMsg());
+        }
         Admin admin = adminService.item(String.valueOf(adminid));
         String name = admin.getName();
         String phone = admin.getPhoneNumber();
@@ -68,7 +76,6 @@ public class UseController {
         String name = request.containsKey("name")?(String)request.get("name"):null;
         ArrayNode records = recordService.getAll(1,name);
         return ResultUtil.success(records);
-
     }
 
 }

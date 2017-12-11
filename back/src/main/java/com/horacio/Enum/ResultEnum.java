@@ -23,7 +23,8 @@ public enum ResultEnum {
     FILE_FOLDER_NOT_FOUND(606,"文件夹不存在"),
 
     OPERATE_NOT_ALLOW(701,"操作请求不合法"),
-    STATUS_NOT_AVAILABLE(702,"操作业务状态不合法")
+    STATUS_NOT_AVAILABLE(702,"操作业务状态不合法"),
+    INPUT_ILLEGAL(703,"输入参数不合法"),
     ;
 
 
