@@ -53,11 +53,12 @@ public class UseController {
         String userid = (String)session.getAttribute("userid");
         Integer id = request.containsKey("id")?(Integer)request.get("id"):null;
         Integer adminid = request.containsKey("adminid")?(Integer)request.get("adminid"):null;
+        Integer number = request.containsKey("number")?(Integer)request.get("number"):null;
         Admin admin = adminService.item(String.valueOf(adminid));
         String name = admin.getName();
         String phone = admin.getPhoneNumber();
         String email = admin.getEmail();
-        recordService.edit(id,name,phone,email,userid);
+        recordService.edit(id,name,phone,email,userid,number);
         return ResultUtil.success();
 
     }

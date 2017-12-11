@@ -74,7 +74,7 @@ public class RecordService {
             recordRepository.save(record);
     }
 
-    public Boolean edit(int id,String name,String phone,String email,String userid) throws Exception{
+    public Boolean edit(int id,String name,String phone,String email,String userid,int number) throws Exception{
         Record record =recordRepository.findOne(id);
         if(record == null){
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
@@ -88,9 +88,22 @@ public class RecordService {
         if(!record.getBorrowOperator().equals(user.getName())){
             throw new LabsException(ResultEnum.AUTH_NOT_FOUND.getCode(),ResultEnum.AUTH_NOT_FOUND.getMsg());
         }
+        Facility item =facilityRepository.findOneByItemName(record.getItemName());
+        if(item == null){
+            throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
+        }
+        int origin  = record.getNumber();
+        int change_num = number - origin;
+        int remain_num = item.getRemainNum()+change_num;
+        if(remain_num < 0){
+            throw new LabsException(ResultEnum.FACILITY_NOT_ENOUGH.getCode(),ResultEnum.FACILITY_NOT_ENOUGH.getMsg());
+        }
+        item.setRemainNum(remain_num);
+        facilityRepository.save(item);
         record.setName(name);
         record.setPhone(phone);
         record.setEmail(email);
+        record.setNumber(number);
         recordRepository.save(record);
         return true;
     }

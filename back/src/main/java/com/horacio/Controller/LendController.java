@@ -45,8 +45,9 @@ public class LendController {
         String name = request.containsKey("name")?(String)request.get("name"):null;
         String phone = request.containsKey("phone")?(String)request.get("phone"):null;
         String email = request.containsKey("email")?(String)request.get("email"):null;
+        Integer number = request.containsKey("number")?(Integer)request.get("number"):null;
         String userid = (String)session.getAttribute("userid");
-        recordService.edit(id,name,phone,email,userid);
+        recordService.edit(id,name,phone,email,userid,number);
         return ResultUtil.success();
     }
 
