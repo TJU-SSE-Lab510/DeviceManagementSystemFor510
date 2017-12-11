@@ -22,7 +22,8 @@ labsystem.controller('BorrowListCtrl',
         name: '',
         itemName: '',
         phone:'',
-        email:''
+        email:'',
+        number:''
       } ;
 
       var editid;
@@ -39,7 +40,8 @@ labsystem.controller('BorrowListCtrl',
           name: '',
           itemName: '',
           phone:'',
-          email:''
+          email:'',
+          number:''
         } ;
         $scope.modalName = "新建记录";
       };
@@ -56,7 +58,8 @@ labsystem.controller('BorrowListCtrl',
           name: item.name,
           itemName: item.itemName,
           phone:item.phone,
-          email:item.email
+          email:item.email,
+          number:item.number
         } ;
         editid = item.id;
         $scope.modalName = "修改记录";
