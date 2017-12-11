@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('UserDetailCtrl',
-  ['$scope', 'BackSrv','NoticeSrv', '$uibModal','$state','TokenSrv','$stateParams',
-    function($scope,BackSrv,NoticeSrv, $uibModal, $state,TokenSr,$stateParams)
+      ['$scope', 'BackSrv','NoticeSrv', '$uibModal','$state','TokenSrv','$stateParams','BorrowSrv','UseSrv',
+    function($scope,BackSrv,NoticeSrv, $uibModal, $state,TokenSr,$stateParams,BorrowSrv,UseSrv)
     {
 
       $scope.user ={
@@ -19,6 +19,40 @@ labsystem.controller('UserDetailCtrl',
       var userId = {
         id : $stateParams.id
       };
+
+      /**
+       * @description:　获取记录
+       * @param:
+       * @return:
+       */
+      var getBorrowRecord = function () {
+        BorrowSrv.getRecord().get()
+          .$promise.then(function(response){
+          if(response.errCode === 0){
+            $scope.borrowCollection = response.data;
+          }
+        },function (response) {
+          NoticeSrv.error("获取记录列表错误,http状态码:"+response.status);
+        });
+
+      };
+
+      getBorrowRecord();
+
+      var getUseRecord = function () {
+        UseSrv.getRecord().get()
+          .$promise.then(function(response){
+          if(response.errCode === 0){
+            $scope.useCollection = response.data;
+          }
+        },function (response) {
+          NoticeSrv.error("获取记录列表错误,http状态码:"+response.status);
+        });
+
+      };
+
+      getUseRecord();
+
 
       /**
        *@description:　获取用户
