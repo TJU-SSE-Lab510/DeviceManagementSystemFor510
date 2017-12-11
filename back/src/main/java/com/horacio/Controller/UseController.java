@@ -1,6 +1,7 @@
 package com.horacio.Controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.horacio.Model.Admin;
 import com.horacio.Model.Record;
 import com.horacio.Repository.AdminRepository;
@@ -60,12 +61,12 @@ public class UseController {
         String email = admin.getEmail();
         recordService.edit(id,name,phone,email,userid,number);
         return ResultUtil.success();
-
     }
 
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public Object register() throws Exception{
-        List<Record> records = recordService.getAll(1);
+    @RequestMapping(value = "/getAll", method = RequestMethod.POST)
+    public Object register(@RequestBody Map<String,Object> request) throws Exception{
+        String name = request.containsKey("name")?(String)request.get("name"):null;
+        ArrayNode records = recordService.getAll(1,name);
         return ResultUtil.success(records);
 
     }
