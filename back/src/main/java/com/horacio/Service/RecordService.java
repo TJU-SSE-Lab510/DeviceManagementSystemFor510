@@ -68,7 +68,6 @@ public class RecordService {
             facilityRepository.save(item);
             Admin user = adminRepository.findOne(Integer.valueOf(userid));
             Record record = new Record();
-            record.setType(2);
             record.setItemName(itemName);
             record.setBorrowedTime(new Date(Long.valueOf(borrowedTime)));
             record.setName(name);
@@ -113,8 +112,8 @@ public class RecordService {
         return true;
     }
 
-    public Boolean returnItem(JsonNode data,String userid) throws Exception{
-        Record record =recordRepository.findOne(data.get("id").intValue());
+    public Boolean returnItem(int id, String return_time,String userid,int number) throws Exception{
+        Record record =recordRepository.findOne(id);
         if(record == null){
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
         }
@@ -122,9 +121,26 @@ public class RecordService {
         if(item == null){
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
         }
+        if(number>record.getNumber()){
+            throw new LabsException(ResultEnum.INPUT_ILLEGAL.getCode(),ResultEnum.INPUT_ILLEGAL.getMsg());
+        }
+        //如果没有全部归还，则针对为归还的设备新建一个新的条目
+        if(number<record.getNumber()){
+            Record tmp = new Record();
+            tmp.setItemName(record.getItemName());
+            tmp.setBorrowedTime(record.getBorrowedTime());
+            tmp.setName(record.getName());
+            tmp.setPhone(record.getPhone());
+            tmp.setEmail(record.getEmail());
+            tmp.setBorrowOperator(record.getBorrowOperator());
+            tmp.setNumber(record.getNumber() - number);
+            tmp.setType(record.getType());
+            recordRepository.save(tmp);
+        }
         Admin user = adminRepository.findOne(Integer.valueOf(userid));
-        record.setReturnTime(new Date(Long.valueOf(data.get("returnTime").textValue())));
+        record.setReturnTime(new Date(Long.valueOf(return_time)));
         record.setReturnOperator(user.getName());
+        record.setNumber(number);
         recordRepository.save(record);
         int remianNum = item.getRemainNum();
         remianNum = remianNum + record.getNumber();

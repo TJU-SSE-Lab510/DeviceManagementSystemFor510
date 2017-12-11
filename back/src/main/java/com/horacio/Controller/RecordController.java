@@ -1,6 +1,8 @@
 package com.horacio.Controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.horacio.Enum.ResultEnum;
+import com.horacio.Exception.LabsException;
 import com.horacio.Model.Record;
 import com.horacio.Service.RecordService;
 import com.horacio.utils.AuthCheckUtil;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by arlex on 2017/12/8.
@@ -30,9 +33,15 @@ public class RecordController {
 
 
     @RequestMapping(value = "/returnItem", method = RequestMethod.POST)
-    public Object returnItem(@RequestBody JsonNode body,HttpSession session) throws Exception{
+    public Object returnItem(@RequestBody Map<String,Object> request, HttpSession session) throws Exception{
+        Integer id = request.containsKey("id")?(Integer)request.get("id"):null;
+        String returnTime = request.containsKey("returnTime")?(String)request.get("returnTime"):null;
+        Integer number = request.containsKey("number")?(Integer)request.get("number"):null;
+        if(number<=0){
+            throw new LabsException(ResultEnum.INPUT_ILLEGAL.getCode(),ResultEnum.INPUT_ILLEGAL.getMsg());
+        }
         String userid = (String)session.getAttribute("userid");
-        recordService.returnItem(body,userid);
+        recordService.returnItem(id,returnTime,userid,number);
         return ResultUtil.success();
 
     }
