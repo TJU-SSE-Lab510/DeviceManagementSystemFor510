@@ -41,11 +41,18 @@ labsystem.config(function ($stateProvider, $urlRouterProvider) {
     })
 
 
-    .state('app.userlist', {
+    .state('app.borrowlist', {
       url: 'borrowedList',
       templateUrl: 'views/borrowed-list.html',
       controller: 'BorrowListCtrl'
     })
+
+    .state('app.uselist', {
+      url: 'useList',
+      templateUrl: 'views/use-list.html',
+      controller: 'UseListCtrl'
+    })
+
 
     .state('app.itemlist', {
       url: 'itemList',
