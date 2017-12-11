@@ -23,6 +23,7 @@ public class Record {
     private String borrowOperator;
     private String returnOperator;
     private int number;
+    private int type;// 1 内部使用 2借出
 
     public String getBorrowOperator() {
         return borrowOperator;
@@ -105,5 +106,13 @@ public class Record {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

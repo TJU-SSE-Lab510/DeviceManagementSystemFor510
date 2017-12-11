@@ -48,14 +48,13 @@ public class RecordService {
 
 
 
-    public void add(JsonNode data,String userid) throws Exception{
-            String itemName =  data.get("itemName").textValue();
+    public void add(String itemName,String borrowedTime,String name,String phone,String email,int number,int type,String userid) throws Exception{
             Facility item =facilityRepository.findOneByItemName(itemName);
             if(item == null){
                 throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
             }
             int remianNum = item.getRemainNum();
-            remianNum = remianNum - data.get("number").intValue();
+            remianNum = remianNum - number;
             if(remianNum < 0){
                 throw new LabsException(ResultEnum.FACILITY_NOT_ENOUGH.getCode(),ResultEnum.FACILITY_NOT_ENOUGH.getMsg());
             }
@@ -63,18 +62,20 @@ public class RecordService {
             facilityRepository.save(item);
             Admin user = adminRepository.findOne(Integer.valueOf(userid));
             Record record = new Record();
-            record.setItemName(data.get("itemName").textValue());
-            record.setBorrowedTime(new Date(Long.valueOf(data.get("borrowedTime").textValue())));
-            record.setName(data.get("name").textValue());
-            record.setPhone(data.get("phone").textValue());
-            record.setEmail(data.get("email").textValue());
+            record.setType(2);
+            record.setItemName(itemName);
+            record.setBorrowedTime(new Date(Long.valueOf(borrowedTime)));
+            record.setName(name);
+            record.setPhone(phone);
+            record.setEmail(email);
             record.setBorrowOperator(user.getName());
-            record.setNumber(data.get("number").intValue());
+            record.setNumber(number);
+            record.setType(type);
             recordRepository.save(record);
     }
 
-    public Boolean edit(JsonNode data,String userid) throws Exception{
-        Record record =recordRepository.findOne(data.get("id").intValue());
+    public Boolean edit(int id,String name,String phone,String email,String userid) throws Exception{
+        Record record =recordRepository.findOne(id);
         if(record == null){
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
         }
@@ -87,9 +88,9 @@ public class RecordService {
         if(!record.getBorrowOperator().equals(user.getName())){
             throw new LabsException(ResultEnum.AUTH_NOT_FOUND.getCode(),ResultEnum.AUTH_NOT_FOUND.getMsg());
         }
-        record.setName(data.get("name").textValue());
-        record.setPhone(data.get("phone").textValue());
-        record.setEmail(data.get("email").textValue());
+        record.setName(name);
+        record.setPhone(phone);
+        record.setEmail(email);
         recordRepository.save(record);
         return true;
     }
@@ -114,9 +115,10 @@ public class RecordService {
         return true;
     }
 
-    public List<Record> getAll() throws Exception{
+    public List<Record> getAll(int type) throws Exception{
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Record.class,"record");
+        criteria.add(Restrictions.eq("record.type",type));
         criteria.addOrder(Order.desc("record.id"));
         List<Record> datas = criteria.list();
         return  datas;
@@ -142,6 +144,7 @@ public class RecordService {
         Session session = sessionFactory.getCurrentSession();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Criteria criteria = session.createCriteria(Record.class,"record");
+        criteria.add(Restrictions.eq("record.type",2));
         criteria.add(Restrictions.isNull("record.returnTime"));
         String oneMonthAgo = format.format(new Date().getTime()- Long.valueOf("2592000000"));
         criteria.add(Restrictions.lt("record.borrowedTime",format.parse(oneMonthAgo)));

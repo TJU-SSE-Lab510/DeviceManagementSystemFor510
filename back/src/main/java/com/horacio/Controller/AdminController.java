@@ -72,7 +72,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public Object register()throws Exception {
+    public Object getAll()throws Exception {
         ArrayNode list = adminService.getAll();
         return ResultUtil.success(list);
     }
@@ -102,6 +102,13 @@ public class AdminController {
         String contentType = picture.getContentType().split("/")[1];
         String filePath = adminService.uploadUserImage(file,contentType,userid);
         return ResultUtil.success(filePath);
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public Object search(@RequestBody Map<String,Object> request)throws Exception {
+        String studentNumber = request.containsKey("studentNumber")?(String)request.get("studentNumber"):null;
+        ArrayNode list = adminService.search(studentNumber);
+        return ResultUtil.success(list);
     }
 
 }
