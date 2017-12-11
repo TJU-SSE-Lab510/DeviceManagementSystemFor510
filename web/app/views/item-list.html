@@ -54,7 +54,7 @@
                   <span class="label label-primary" ng-click="editItem(item)" data-toggle="modal" data-target="#editItem"><i class="fa fa-file-text-o"></i>&nbsp;详情</span>
                   <span class="label label-danger" ng-click="deleteItem(item.id)" data-toggle="modal" data-target="#modifyDelete" ng-show="isSuperUser"><i class="fa fa-trash"></i>&nbsp;删除</span>
                   <span class="label label-info" ng-click="newBorrow(item)" data-toggle="modal" data-target="#newBorrow"><i class="fa fa-hand-o-right"></i> 借出</span>
-                  <span class="label label-success" ng-click="newBorrow(item)" data-toggle="modal" data-target="#newUse"><i class="fa fa-hand-o-right"></i> 分配</span>
+                  <span class="label label-success" ng-click="newUse(item)" data-toggle="modal" data-target="#newUse"><i class="fa fa-hand-o-right"></i> 分配</span>
                 </td>
 
               </tr>
@@ -287,11 +287,11 @@
 <div class="modal fade" id="newUse" tabindex="-1" role="dialog" aria-labelledby="newUseLabel">
   <div class="modal-dialog" role="document">
     <div class="box box-info">
-      <form class="form-horizontal"  name="form2">
+      <form class="form-horizontal"  name="form3">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="newUseLabel">设备借出</h4>
+            <h4 class="modal-title" id="newUseLabel">设备分配</h4>
           </div>
           <div class="modal-body">
             <div>
@@ -307,9 +307,19 @@
               </div>
 
               <div class="form-group">
+                <label for="inputrItemNumber3" class="col-sm-2 control-label">分配数量</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" id="inputrItemNumber3" placeholder="" ng-model="use.number" required name="inputrItemNumber3" min="1" step="1">
+                  <div ng-messages="form3['inputrItemNumber3'].$touched && form3['inputrItemNumber3'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
                 <label for="inputrItemNumber2" class="col-sm-2 control-label">年级</label>
                 <div class="col-sm-10">
-                  <input type="number" class="form-control" id="inputrItemNumber2" placeholder="" ng-model="record.number" required name="inputrItemNumber2" min="1" step="1">
+                  <input type="number" class="form-control" id="inputrItemNumber2" placeholder="" ng-change="searchStudent()" ng-model="use.studentNumber" required name="inputrItemNumber2" min="1" step="1">
                   <div ng-messages="form3['inputrItemNumber2'].$touched && form3['inputrItemNumber2'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
                   </div>
@@ -317,20 +327,19 @@
               </div>
 
 
+
               <div class="form-group">
-                <label for="userrName2" class="col-sm-2 control-label">姓名</label>
+                <label required class="col-sm-2 control-label">姓名</label>
                 <div class="col-sm-10">
-                  <input type="text" required class="form-control" id="userrName2" placeholder="" ng-model="record.name" name="userrName2">
-                  <div ng-messages="form3['userrName2'].$touched && form3['userrName2'].$error">
-                    <div ng-message="required" class="required-warn">必填项</div>
-                  </div>
+                  <select ng-model="use.adminid" class="form-control" ng-options="node.id as node.name for node in selectOptions">
+                  </select>
                 </div>
               </div>
 
             </div>
           </div>
           <div class="modal-footer">
-            <button ng-disabled="!form2.$valid" type="button" class="btn btn-primary" ng-click="borrow_submit()">保存</button>
+            <button ng-disabled="!form3.$valid" type="button" class="btn btn-primary" ng-click="use_submit()">保存</button>
           </div>
         </div>
       </form>

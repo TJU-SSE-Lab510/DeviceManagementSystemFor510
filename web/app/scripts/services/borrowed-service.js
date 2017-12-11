@@ -7,22 +7,18 @@ labsystem.service('BorrowSrv', ['$resource','$http', 'baseURL' ,function ($resou
 
   //查看所有用户。
   this.getRecord = function(){
-    return $resource(baseURL + '/record/getAll');
+    return $resource(baseURL + '/lend/getAll');
   };
 
-  //查看用户成绩
-  this.getRecordScore = function(data){
-    return $resource(baseURL + '/score/getAll?data='+data);
-  };
 
   //新建记录
   this.addRecord = function(data){
-    return $resource(baseURL + '/record/add',null,{'add':{method: 'POST'}});
+    return $resource(baseURL + '/lend/add',null,{'add':{method: 'POST'}});
   };
 
   //修改
   this.editRecord = function(data){
-    return $resource(baseURL + '/record/edit',null,{'add':{method: 'POST'}});
+    return $resource(baseURL + '/lend/edit',null,{'add':{method: 'POST'}});
   };
 
   //归还物品

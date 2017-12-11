@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('ItemListCtrl',
-  ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','$http','TokenSrv','BorrowSrv',
-    function($scope,ItemSrv,NoticeSrv, $uibModal, $state,$http,TokenSrv,BorrowSrv) {
+  ['$scope', 'ItemSrv','NoticeSrv', '$uibModal','$state','$http','TokenSrv','BorrowSrv','UseSrv',
+    function($scope,ItemSrv,NoticeSrv, $uibModal, $state,$http,TokenSrv,BorrowSrv,UseSrv) {
 
       /**
        * @description:　是否拥有超级管理的操作
@@ -298,5 +298,54 @@ labsystem.controller('ItemListCtrl',
           });
       };
 
+      $scope.searchStudent = function () {
+        var data = {
+          studentNumber: $scope.use.studentNumber + ''
+        };
+        ItemSrv.search().add(data).$promise.then(function(response){
+          if(response.errCode === 0){
+            $scope.selectOptions = response.data;
+          }
+        },function (response) {
+          NoticeSrv.error("搜索错误,http状态码:"+response.status);
+        });
+      }
+
+      /**
+       * @description:　分配设备
+       * @param: item 分配设备的详情
+       * @return:
+       */
+
+      $scope.newUse = function(item){
+        $scope.isDisabled = true;
+        $scope.use = {
+          itemName: item.itemName,
+          name: '',
+          studentNumber:''
+        } ;
+        $scope.form3.$setUntouched()
+      };
+
+
+      $scope.use_submit = function () {
+        var data = Object.assign({},$scope.use);
+        data.borrowedTime =  Date.parse(new Date()) +"";
+
+        UseSrv.addRecord().add(data)
+          .$promise.then(function(response){
+          if(response.errCode === 0){
+            NoticeSrv.success("新建成功");
+            getItem();
+            $('#newUse').modal('hide');
+            $scope.form3.$setUntouched();
+          }
+        },function (response) {
+          NoticeSrv.error("新建分配错误,http状态码:"+response.status);
+        });
+      };
 
     }]);
+
+
+
