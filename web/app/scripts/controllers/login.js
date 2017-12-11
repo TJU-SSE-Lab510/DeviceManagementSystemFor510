@@ -63,10 +63,10 @@ function($scope, NoticeSrv, TokenSrv, $state,BackSrv) {
             localStorage.setItem("url", response.data.url);
           }
           NoticeSrv.success("登录成功！");
-          $state.go('app.userlist');
+          $state.go('app.itemlist');
         }
       }, function(response) {
-        $state.go('app.userlist');
+        $state.go('app.itemlist');
         NoticeSrv.error("登录错误,http状态码:"+response.status);
       });
     }else{

@@ -1,8 +1,8 @@
 'use strict';
 
-labsystem.controller('BorrowListCtrl',
-  ['$scope', 'BorrowSrv','NoticeSrv', '$uibModal','$state','$http','TokenSrv',
-    function($scope,BorrowSrv,NoticeSrv, $uibModal, $state,$http,TokenSrv) {
+labsystem.controller('UseListCtrl',
+  ['$scope', 'UseSrv','NoticeSrv', '$uibModal','$state','$http','TokenSrv',
+    function($scope,UseSrv,NoticeSrv, $uibModal, $state,$http,TokenSrv) {
 
       /**
        * @description:　是否可以进行超级管理操作
@@ -18,33 +18,14 @@ labsystem.controller('BorrowListCtrl',
        * @param:
        * @return:
        */
-      $scope.record = {
-        name: '',
+      $scope.use = {
         itemName: '',
-        phone:'',
-        email:'',
+        name: '',
+        studentNumber:'',
         number:''
       } ;
 
       var editid;
-
-      /**
-       * @description:　新建记录弹窗
-       * @param:
-       * @return:
-       */
-      $scope.showNewRecordModal = function(){
-        $('#editRecord').modal('show');
-        $scope.isDisabled = false;
-        $scope.record = {
-          name: '',
-          itemName: '',
-          phone:'',
-          email:'',
-          number:''
-        } ;
-        $scope.modalName = "新建记录";
-      };
 
 
       /**
@@ -54,12 +35,11 @@ labsystem.controller('BorrowListCtrl',
        */
       $scope.editRecord = function(item){
         $scope.isDisabled = true;
-        $scope.record = {
-          name: item.name,
+        $scope.use = {
           itemName: item.itemName,
-          phone:item.phone,
-          email:item.email,
-          number:item.number
+          name: '',
+          studentNumber:'',
+          number:''
         } ;
         editid = item.id;
         $scope.modalName = "修改记录";
@@ -72,26 +52,10 @@ labsystem.controller('BorrowListCtrl',
        * @return:
        */
       $scope.record_submit = function () {
-        if($scope.modalName === "新建记录"){
-          var record = Object.assign({},$scope.record);
-          record.borrowedTime =  Date.parse(new Date())+"";
-          record.borrowOperator = TokenSrv.getToken();
-          BorrowSrv.addRecord().add(record)
-            .$promise.then(function(response){
-              if(response.errCode === 0){
-                NoticeSrv.success("新建成功");
-                getRecord();
-                $('#editRecord').modal('hide');
-                $scope.form.$setUntouched()
-              }
-            },function (response) {
-              NoticeSrv.error("新建用户错误,http状态码:"+response.status);
-            $scope.form.$setUntouched()
-            });
-        }else {
-          var record = Object.assign({},$scope.record);
-          record.id = editid;
-          BorrowSrv.editRecord().add(record)
+
+          var use = Object.assign({},$scope.use);
+        use.id = editid;
+          UseSrv.editRecord().add(use)
             .$promise.then(function(response){
               if(response.errCode === 0){
                 NoticeSrv.success("修改成功");
@@ -105,8 +69,6 @@ labsystem.controller('BorrowListCtrl',
             });
 
 
-        }
-
       };
 
       /**
@@ -119,7 +81,7 @@ labsystem.controller('BorrowListCtrl',
         data.id = id;
         data.returnTime =  Date.parse(new Date())+"";
         data.returnOperator = TokenSrv.getToken();
-        BorrowSrv.returnItem().add(data)
+        UseSrv.returnItem().add(data)
           .$promise.then(function(response){
           if(response.errCode === 0){
             NoticeSrv.success("归还成功");
@@ -138,7 +100,7 @@ labsystem.controller('BorrowListCtrl',
        * @return:
        */
       var getRecord = function () {
-        BorrowSrv.getRecord().get()
+        UseSrv.getRecord().get()
           .$promise.then(function(response){
           if(response.errCode === 0){
             $scope.recordCollection = response.data;
@@ -166,7 +128,7 @@ labsystem.controller('BorrowListCtrl',
       };
 
       $scope.comfirmDelete = function () {
-        BorrowSrv.deleteRecord().add(deleteData)
+        UseSrv.deleteRecord().add(deleteData)
           .$promise.then(function(response){
           if(response.errCode === 0){
             getRecord();
@@ -179,5 +141,22 @@ labsystem.controller('BorrowListCtrl',
       };
 
 
+      /**
+       * @description:　搜索学生
+       * @param:
+       * @return:
+       */
+      $scope.searchStudent = function () {
+        var data = {
+          studentNumber: $scope.use.studentNumber + ''
+        };
+        UseSrv.search().add(data).$promise.then(function(response){
+          if(response.errCode === 0){
+            $scope.selectOptions = response.data;
+          }
+        },function (response) {
+          NoticeSrv.error("搜索错误,http状态码:"+response.status);
+        });
+      }
 
     }]);

@@ -2,7 +2,7 @@
 
 labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state','TokenSrv',
  function($scope, SidebarSrv, NoticeSrv,$state,TokenSrv) {
-  
+
    /**
     * @description:　初始化
     * @param:
@@ -35,7 +35,12 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
        active: '',
        icon: 'fa fa-circle-o',
        name: '借出列表',
-       url: "app.userlist"
+       url: "app.borrowlist"
+     },{
+       active: '',
+       icon: 'fa fa-circle-o',
+       name: '使用列表',
+       url: "app.uselist"
      },
      {
        active: '',
@@ -120,6 +125,7 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
 
 
 
+   /*必须在angular之后加载*/
 
    /*! AdminLTE app.js
     * ================

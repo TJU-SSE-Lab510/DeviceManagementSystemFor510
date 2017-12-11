@@ -25,6 +25,11 @@ labsystem.service('ItemSrv', ['$resource','$http', 'baseURL' ,function ($resourc
     return $resource(baseURL + '/facility/delete',null,{'add':{method: 'POST'}});
   };
 
+  //搜索
+  this.search = function(data){
+    return $resource(baseURL + '/admin/search',null,{'add':{method: 'POST'}});
+  };
+
   //上传图片
 
   this.upload = function(data){

@@ -16,89 +16,193 @@
     <!-- Manager List Table-->
     <div class="row" style="margin-top: 1%">
       <div class="col-xs-12">
-        <div class="box box-primary">
-          <div class="box-header">
-            <div class="row">
-              <h3 class="box-title col-sm-12">Profile</h3>
+        <div class="col-md-3">
+
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" ng-src="{{user.url}}" alt="User profile picture">
+
+              <h3 class="profile-username text-center">{{user.name}}</h3>
+
+              <p class="text-muted text-center">Software Engineer</p>
+
+              <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                  <b>学号</b> <a class="pull-right">{{user.studentNumber}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>借用设备</b> <a class="pull-right">543</a>
+                </li>
+                <li class="list-group-item">
+                  <b>使用设备</b> <a class="pull-right">13,287</a>
+                </li>
+              </ul>
+
+              <span class="btn btn-primary btn-block"  data-toggle="modal" data-target="#editUser"><b>修改</b></span>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- About Me Box -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">About Me</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <strong><i class="fa fa-mobile-phone margin-r-5"></i> Phone</strong>
+
+              <p class="text-muted">
+                {{user.phone}}
+              </p>
+
+              <hr>
+
+              <strong><i class="fa fa-inbox margin-r-5"></i> Email</strong>
+
+              <p class="text-muted">{{user.email}}</p>
+
+              <hr>
 
             </div>
+            <!-- /.box-body -->
           </div>
-          <div class="box-body">
+          <!-- /.box -->
+        </div>
+        <div class="col-md-9">
 
-            <div class="col-md-3">
+          <div class="box box-primary">
+            <div class="box-header">
+              <div class="row">
+                <h3 class="box-title col-sm-12">设备借用列表</h3>
 
-              <!-- Profile Image -->
-              <div class="box box-primary">
-                <div class="box-body box-profile">
-                  <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
-
-                  <h3 class="profile-username text-center">Nina Mcintire</h3>
-
-                  <p class="text-muted text-center">Software Engineer</p>
-
-                  <ul class="list-group list-group-unbordered">
-                    <li class="list-group-item">
-                      <b>Followers</b> <a class="pull-right">1,322</a>
-                    </li>
-                    <li class="list-group-item">
-                      <b>Following</b> <a class="pull-right">543</a>
-                    </li>
-                    <li class="list-group-item">
-                      <b>Friends</b> <a class="pull-right">13,287</a>
-                    </li>
-                  </ul>
-
-                  <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
-                </div>
-                <!-- /.box-body -->
               </div>
-              <!-- /.box -->
-
-              <!-- About Me Box -->
-              <div class="box box-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">About Me</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                  <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
-
-                  <p class="text-muted">
-                    B.S. in Computer Science from the University of Tennessee at Knoxville
-                  </p>
-
-                  <hr>
-
-                  <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
-
-                  <p class="text-muted">Malibu, California</p>
-
-                  <hr>
-
-                  <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
-
-                  <p>
-                    <span class="label label-danger">UI Design</span>
-                    <span class="label label-success">Coding</span>
-                    <span class="label label-info">Javascript</span>
-                    <span class="label label-warning">PHP</span>
-                    <span class="label label-primary">Node.js</span>
-                  </p>
-
-                  <hr>
-
-                  <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
-                </div>
-                <!-- /.box-body -->
-              </div>
-              <!-- /.box -->
             </div>
+            <div class="box-body">
+              <table st-table="rowCollection" st-safe-src="borrowCollection" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th colspan="14" class="form-inline">
+                    <label class="pull-left">搜索：<input st-search placeholder="全局动态搜索" class="form-control" type="search"/></label>
+                    <!--<button type="button" class="btn btn-primary pull-right" ng-click="showNewRecordModal()">新建</button>-->
+                  </th>
+                </tr>
+                <tr>
+                  <th>ID</th>
+                  <th>设备名称</th>
+                  <th>借用数量</th>
+                  <th>姓名</th>
+                  <th>借出操作人</th>
+                  <th>借出时间</th>
+                  <th>归还操作人</th>
+                  <th>归还日期</th>
+                  <th>操作</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in rowCollection">
+                  <td>{{item.id}}</td>
+                  <td>{{item.itemName}}</td>
+                  <td>{{item.number}}</td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.borrowOperator}}</td>
+                  <td>{{item.borrowedTime}}</td>
+                  <td>{{item.returnOperator}}</td>
+                  <td>{{item.returnTime}}</td>
+                  <td>
+                    <span class="label label-primary" ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="editRecord(item)" data-toggle="modal" data-target="#editRecord"><i class="fa fa-edit"></i>&nbsp;修改</span>
+                    <span class="label label-default" ng-if="item.returnTime != 0 && item.returnTime != null"><i class="fa fa-check"></i>&nbsp;已归还</span>
+                    <span class="label label-danger" ng-click="deleteRecord(item.id)" data-toggle="modal" data-target="#modifyDelete" ng-show="isSuperUser"><i class="fa fa-trash"></i>&nbsp;删除</span>
+                    <span class="label label-info"  ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="return(item.id)"><i class="fa fa-check-square-o"></i>&nbsp;归还</span>
+                  </td>
+                </tr>
 
 
+
+                </tbody>
+
+                <tfoot>
+                <tr>
+                  <td colspan=8>
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-template="./views/custom-pagination.html"></div>
+                  </td>
+                </tr>
+                </tfoot>
+
+              </table>
+            </div>
+            <!-- /.box-body -->
           </div>
-          <!-- /.box-body -->
+          <!-- /.box -->
+
+          <!-- About Me Box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <div class="row">
+                <h3 class="box-title col-sm-12">设备使用列表</h3>
+
+              </div>
+            </div>
+            <div class="box-body">
+              <table st-table="rowCollection2" st-safe-src="useCollection" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th colspan="14" class="form-inline">
+                    <label class="pull-left">搜索：<input st-search placeholder="全局动态搜索" class="form-control" type="search"/></label>
+                    <!--<button type="button" class="btn btn-primary pull-right" ng-click="showNewRecordModal()">新建</button>-->
+                  </th>
+                </tr>
+                <tr>
+                  <th>ID</th>
+                  <th>设备名称</th>
+                  <th>借用数量</th>
+                  <th>姓名</th>
+                  <th>借出操作人</th>
+                  <th>借出时间</th>
+                  <th>归还操作人</th>
+                  <th>归还日期</th>
+                  <th>操作</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in rowCollection2">
+                  <td>{{item.id}}</td>
+                  <td>{{item.itemName}}</td>
+                  <td>{{item.number}}</td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.borrowOperator}}</td>
+                  <td>{{item.borrowedTime}}</td>
+                  <td>{{item.returnOperator}}</td>
+                  <td>{{item.returnTime}}</td>
+                  <td>
+                    <span class="label label-primary" ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="editRecord(item)" data-toggle="modal" data-target="#editRecord"><i class="fa fa-edit"></i>&nbsp;修改</span>
+                    <span class="label label-default" ng-if="item.returnTime != 0 && item.returnTime != null"><i class="fa fa-check"></i>&nbsp;已归还</span>
+                    <span class="label label-danger" ng-click="deleteRecord(item.id)" data-toggle="modal" data-target="#modifyDelete" ng-show="isSuperUser"><i class="fa fa-trash"></i>&nbsp;删除</span>
+                    <span class="label label-info"  ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="return(item.id)"><i class="fa fa-check-square-o"></i>&nbsp;归还</span>
+                  </td>
+                </tr>
+
+
+
+                </tbody>
+
+                <tfoot>
+                <tr>
+                  <td colspan=8>
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-template="./views/custom-pagination.html"></div>
+                  </td>
+                </tr>
+                </tfoot>
+
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
         </div>
         <!-- /.box -->
       </div>
@@ -157,5 +261,129 @@
         </div>
       </form>
     </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUserLabel">
+  <div class="modal-dialog" role="document">
+    <div class="box box-info">
+      <form class="form-horizontal"  name="form">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="editUserLabel">修改用户</h4>
+          </div>
+          <div class="modal-body">
+            <div>
+
+              <div id="crop-avatar">
+                <div class="avatar-view" title="点击更换头像">
+                  <img class="profile-user-img img-responsive img-circle" style="width: 200px" ng-src="{{user.url}}" alt="点击更换头像" ng-click="showModal()">
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top: 5%">
+                <label for="inputUserName" class="col-sm-2 control-label">用户名</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputUserName" placeholder="" ng-model="user.username" required name="inputUserName" ng-disabled="isDisabled">
+                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputName" class="col-sm-2 control-label">姓名</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputName" placeholder="" ng-model="user.name" required name="inputName">
+                  <div ng-messages="form['inputName'].$touched && form['inputName'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputNumber" class="col-sm-2 control-label">学号</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputNumber" placeholder="" ng-model="user.studentNumber" required name="inputNumber">
+                  <div ng-messages="form['inputNumber'].$touched && form['inputNumber'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="form-group">
+                <label for="inputPhone" class="col-sm-2 control-label">手机</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputPhone" placeholder="" ng-model="user.phone" required name="inputPhone">
+                  <div ng-messages="form['inputPhone'].$touched && form['inputPhone'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
+                <div class="col-sm-10">
+                  <input type="email" required class="form-control" id="inputEmail" placeholder="" ng-model="user.email" name="inputEmail">
+                  <div ng-messages="form['inputEmail'].$touched && form['inputEmail'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                    <div ng-message="email" class="required-warn">请填写正确的邮箱</div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <label for="inputPWD" class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-10">
+                  <input type="password"  class="form-control" id="inputPWD" placeholder="" ng-model="user.password" >
+                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputCPWD" class="col-sm-2 control-label">确认密码</label>
+                <div class="col-sm-10">
+                  <input type="password"  class="form-control" id="inputCPWD" placeholder="" ng-model="user.cpassword" >
+                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">权限</label>
+                <div class="col-sm-10">
+                  <div class="radio">
+                    <label>
+                      <input name="auth" type="radio" value="0" ng-model="user.superuser">普通管理
+                    </label>
+                  </div>
+                </div>
+                <label  class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                  <div class="radio">
+                    <label>
+                      <input name="auth" type="radio" value="1"  ng-model="user.superuser">超级管理
+
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button ng-disabled="!form.$valid" type="button" class="btn btn-primary" ng-click="user_submit()">保存</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
   </div>
 </div>

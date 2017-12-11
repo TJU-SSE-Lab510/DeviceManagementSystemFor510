@@ -3,22 +3,22 @@
  */
 'use strict';
 
-labsystem.service('BorrowSrv', ['$resource','$http', 'baseURL' ,function ($resource, $http, baseURL) {
+labsystem.service('UseSrv', ['$resource','$http', 'baseURL' ,function ($resource, $http, baseURL) {
 
   //查看所有用户。
   this.getRecord = function(){
-    return $resource(baseURL + '/lend/getAll');
+    return $resource(baseURL + '/use/getAll');
   };
 
 
   //新建记录
   this.addRecord = function(data){
-    return $resource(baseURL + '/lend/add',null,{'add':{method: 'POST'}});
+    return $resource(baseURL + '/use/add',null,{'add':{method: 'POST'}});
   };
 
   //修改
   this.editRecord = function(data){
-    return $resource(baseURL + '/lend/edit',null,{'add':{method: 'POST'}});
+    return $resource(baseURL + '/use/edit',null,{'add':{method: 'POST'}});
   };
 
   //归还物品
@@ -29,5 +29,10 @@ labsystem.service('BorrowSrv', ['$resource','$http', 'baseURL' ,function ($resou
   //删除
   this.deleteRecord = function(data){
     return $resource(baseURL + '/record/delete',null,{'add':{method: 'POST'}});
+  };
+
+  //搜索
+  this.search = function(data){
+    return $resource(baseURL + '/admin/search',null,{'add':{method: 'POST'}});
   };
 }]);
