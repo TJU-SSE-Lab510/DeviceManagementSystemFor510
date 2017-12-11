@@ -30,4 +30,9 @@ labsystem.service('UseSrv', ['$resource','$http', 'baseURL' ,function ($resource
   this.deleteRecord = function(data){
     return $resource(baseURL + '/record/delete',null,{'add':{method: 'POST'}});
   };
+
+  //搜索
+  this.search = function(data){
+    return $resource(baseURL + '/admin/search',null,{'add':{method: 'POST'}});
+  };
 }]);

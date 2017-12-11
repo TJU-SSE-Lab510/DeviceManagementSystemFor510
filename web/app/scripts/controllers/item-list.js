@@ -322,7 +322,8 @@ labsystem.controller('ItemListCtrl',
         $scope.use = {
           itemName: item.itemName,
           name: '',
-          studentNumber:''
+          studentNumber:'',
+          number:''
         } ;
         $scope.form3.$setUntouched()
       };
