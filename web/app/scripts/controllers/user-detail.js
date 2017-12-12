@@ -17,7 +17,7 @@ labsystem.controller('UserDetailCtrl',
        获取用户id
        */
       var userId = {
-        id : $stateParams.id
+        adminid : $stateParams.id
       };
 
       /**
@@ -27,6 +27,9 @@ labsystem.controller('UserDetailCtrl',
        */
       var getUser = function () {
         console.log(userId);
+        if(userId.adminid == ''){
+          userId.adminid = null;
+        }
         BackSrv.getuUserById().add(userId)
           .$promise.then(function(response){
           if(response.errCode === 0){

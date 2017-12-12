@@ -19,6 +19,15 @@ labsystem.controller('BackuserCtrl',
         superuser:'0'
       } ;
 
+      /**
+       * @description:　前往用户详情页
+       * @param: id 用户id
+       * @return:
+       */
+
+      $scope.goToUser = function (id) {
+        $state.go('app.userDetail', {id: id});
+      };
 
       /**
        * @description:　是否可以进行超级管理员的操作

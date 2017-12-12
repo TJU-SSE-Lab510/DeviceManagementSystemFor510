@@ -54,6 +54,7 @@
                 <!--<td ng-if="item.lastCreate != 0">{{item.lastCreate *1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
                 <!--<td ng-if="item.lastCreate == 0">无记录</td>-->
                 <td>
+                  <span class="label label-info" ng-click="goToUser(item.id)" ng-show="isSuperUser"><i class="fa fa-user-o"></i>&nbsp;查看</span>
                   <span class="label label-primary" ng-click="editUser(item)" data-toggle="modal" data-target="#editUser" ng-show="isSuperUser"><i class="fa fa-edit"></i>&nbsp;修改</span>
                   <span class="label label-danger" ng-click="deleteAdmin(item.id)" data-toggle="modal" data-target="#modifyDelete" ng-if="item.name!='admin'" ng-show="isSuperUser"><i class="fa fa-trash"></i>&nbsp;删除</span>
                 </td>
