@@ -30,7 +30,7 @@ labsystem.service('BackSrv', ['$resource','$http', 'baseURL' ,function ($resourc
 
   //获取管理员详情
   this.getuUserById = function(){
-    return $resource(baseURL + '/admin/login',null,{'add':{method: 'POST'}});
+    return $resource(baseURL + '/admin/item',null,{'add':{method: 'POST'}});
   };
 
 

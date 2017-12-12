@@ -32,14 +32,14 @@
                   <b>学号</b> <a class="pull-right">{{user.studentNumber}}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>借用设备</b> <a class="pull-right">543</a>
+                  <b>借用设备</b> <a class="pull-right">{{lendNumber}}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>使用设备</b> <a class="pull-right">13,287</a>
+                  <b>使用设备</b> <a class="pull-right">{{useNumber}}</a>
                 </li>
               </ul>
 
-              <span class="btn btn-primary btn-block"  data-toggle="modal" data-target="#editUser"><b>修改</b></span>
+              <span class="btn btn-primary btn-block" ng-click="show_edit()"  data-toggle="modal" data-target="#editUser"><b>修改</b></span>
             </div>
             <!-- /.box-body -->
           </div>
@@ -55,7 +55,7 @@
               <strong><i class="fa fa-mobile-phone margin-r-5"></i> Phone</strong>
 
               <p class="text-muted">
-                {{user.phone}}
+                {{user.phoneNumber}}
               </p>
 
               <hr>
@@ -98,26 +98,20 @@
                   <th>借出时间</th>
                   <th>归还操作人</th>
                   <th>归还日期</th>
-                  <th>操作</th>
 
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="item in rowCollection">
                   <td>{{item.id}}</td>
-                  <td>{{item.itemName}}</td>
+                  <td>{{item.item_name}}</td>
                   <td>{{item.number}}</td>
                   <td>{{item.name}}</td>
-                  <td>{{item.borrowOperator}}</td>
-                  <td>{{item.borrowedTime}}</td>
+                  <td>{{item.borrow_operator}}</td>
+                  <td>{{item.borrowed_time}}</td>
                   <td>{{item.returnOperator}}</td>
-                  <td>{{item.returnTime}}</td>
-                  <td>
-                    <span class="label label-primary" ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="editRecord(item)" data-toggle="modal" data-target="#editRecord"><i class="fa fa-edit"></i>&nbsp;修改</span>
-                    <span class="label label-default" ng-if="item.returnTime != 0 && item.returnTime != null"><i class="fa fa-check"></i>&nbsp;已归还</span>
-                    <span class="label label-danger" ng-click="deleteRecord(item.id)" data-toggle="modal" data-target="#modifyDelete" ng-show="isSuperUser"><i class="fa fa-trash"></i>&nbsp;删除</span>
-                    <span class="label label-info"  ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="return(item.id)"><i class="fa fa-check-square-o"></i>&nbsp;归还</span>
-                  </td>
+                  <td>{{item.return_time}}</td>
+
                 </tr>
 
 
@@ -164,26 +158,19 @@
                   <th>借出时间</th>
                   <th>归还操作人</th>
                   <th>归还日期</th>
-                  <th>操作</th>
 
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="item in rowCollection2">
                   <td>{{item.id}}</td>
-                  <td>{{item.itemName}}</td>
+                  <td>{{item.item_name}}</td>
                   <td>{{item.number}}</td>
                   <td>{{item.name}}</td>
-                  <td>{{item.borrowOperator}}</td>
-                  <td>{{item.borrowedTime}}</td>
+                  <td>{{item.borrow_operator}}</td>
+                  <td>{{item.borrowed_time}}</td>
                   <td>{{item.returnOperator}}</td>
-                  <td>{{item.returnTime}}</td>
-                  <td>
-                    <span class="label label-primary" ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="editRecord(item)" data-toggle="modal" data-target="#editRecord"><i class="fa fa-edit"></i>&nbsp;修改</span>
-                    <span class="label label-default" ng-if="item.returnTime != 0 && item.returnTime != null"><i class="fa fa-check"></i>&nbsp;已归还</span>
-                    <span class="label label-danger" ng-click="deleteRecord(item.id)" data-toggle="modal" data-target="#modifyDelete" ng-show="isSuperUser"><i class="fa fa-trash"></i>&nbsp;删除</span>
-                    <span class="label label-info"  ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="return(item.id)"><i class="fa fa-check-square-o"></i>&nbsp;归还</span>
-                  </td>
+                  <td>{{item.return_time}}</td>
                 </tr>
 
 
@@ -217,20 +204,127 @@
 </section>
 
 
+
+
+
+<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUserLabel">
+  <div class="modal-dialog" role="document">
+    <div class="box box-info">
+      <form class="form-horizontal"  name="form">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="editUserLabel">修改用户</h4>
+          </div>
+          <div class="modal-body">
+            <div>
+
+              <div id="crop-avatar">
+                <div class="avatar-view" title="点击更换头像">
+                  <img class="profile-user-img img-responsive img-circle" style="width: 200px" ng-src="{{edit.url}}" alt="点击更换头像" ng-click="showModal()">
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top: 5%">
+                <label for="inputUserName" class="col-sm-2 control-label">用户名</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputUserName" placeholder="" ng-model="edit.username" required name="inputUserName" ng-disabled="isDisabled">
+                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputName" class="col-sm-2 control-label">姓名</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputName" placeholder="" ng-model="edit.name" required name="inputName">
+                  <div ng-messages="form['inputName'].$touched && form['inputName'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputNumber" class="col-sm-2 control-label">学号</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputNumber" placeholder="" ng-model="edit.studentNumber" required name="inputNumber">
+                  <div ng-messages="form['inputNumber'].$touched && form['inputNumber'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="form-group">
+                <label for="inputPhone" class="col-sm-2 control-label">手机</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputPhone" placeholder="" ng-model="edit.phoneNumber" required name="inputPhone">
+                  <div ng-messages="form['inputPhone'].$touched && form['inputPhone'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
+                <div class="col-sm-10">
+                  <input type="email" required class="form-control" id="inputEmail" placeholder="" ng-model="edit.email" name="inputEmail">
+                  <div ng-messages="form['inputEmail'].$touched && form['inputEmail'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                    <div ng-message="email" class="required-warn">请填写正确的邮箱</div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <label for="inputPWD" class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-10">
+                  <input type="password"  class="form-control" id="inputPWD" placeholder="" ng-model="edit.password" >
+                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputCPWD" class="col-sm-2 control-label">确认密码</label>
+                <div class="col-sm-10">
+                  <input type="password"  class="form-control" id="inputCPWD" placeholder="" ng-model="edit.cpassword" >
+                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button ng-disabled="!form.$valid" type="button" class="btn btn-primary" ng-click="user_submit()">保存</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
 <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <form class="avatar-form"  method="post">
         <div class="modal-header">
           <button class="close" data-dismiss="modal" type="button">&times;</button>
-          <h4 class="modal-title" id="avatar-modal-label">更换图片</h4>
+          <h4 class="modal-title" id="avatar-modal-label">更换头像</h4>
         </div>
         <div class="modal-body">
           <div class="avatar-body">
             <div class="avatar-upload">
               <input class="avatar-src" name="avatar_src" type="hidden">
               <input class="avatar-data" name="avatar_data" type="hidden">
-              <label for="avatarInput">图片上传</label>
+              <label for="avatarInput">头像上传</label>
               <input class="avatar-input" id="avatarInput" name="avatar_file" type="file"></div>
             <div class="row">
               <div class="col-md-9">
@@ -254,136 +348,12 @@
                 </div>
               </div>
               <div class="col-md-3">
-                <button class="btn btn-success btn-block avatar-save" ng-click="save()"><i class="fa fa-save"></i> 保存修改</button>
+                <button class="btn btn-success btn-block avatar-save" ng-click="save()"><i class="fa fa-save"></i> 保存头像</button>
               </div>
             </div>
           </div>
         </div>
       </form>
     </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUserLabel">
-  <div class="modal-dialog" role="document">
-    <div class="box box-info">
-      <form class="form-horizontal"  name="form">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="editUserLabel">修改用户</h4>
-          </div>
-          <div class="modal-body">
-            <div>
-
-              <div id="crop-avatar">
-                <div class="avatar-view" title="点击更换头像">
-                  <img class="profile-user-img img-responsive img-circle" style="width: 200px" ng-src="{{user.url}}" alt="点击更换头像" ng-click="showModal()">
-                </div>
-              </div>
-
-              <div class="form-group" style="margin-top: 5%">
-                <label for="inputUserName" class="col-sm-2 control-label">用户名</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputUserName" placeholder="" ng-model="user.username" required name="inputUserName" ng-disabled="isDisabled">
-                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
-                    <div ng-message="required" class="required-warn">必填项</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="inputName" class="col-sm-2 control-label">姓名</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputName" placeholder="" ng-model="user.name" required name="inputName">
-                  <div ng-messages="form['inputName'].$touched && form['inputName'].$error">
-                    <div ng-message="required" class="required-warn">必填项</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="inputNumber" class="col-sm-2 control-label">学号</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputNumber" placeholder="" ng-model="user.studentNumber" required name="inputNumber">
-                  <div ng-messages="form['inputNumber'].$touched && form['inputNumber'].$error">
-                    <div ng-message="required" class="required-warn">必填项</div>
-                  </div>
-                </div>
-              </div>
-
-
-
-
-              <div class="form-group">
-                <label for="inputPhone" class="col-sm-2 control-label">手机</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputPhone" placeholder="" ng-model="user.phone" required name="inputPhone">
-                  <div ng-messages="form['inputPhone'].$touched && form['inputPhone'].$error">
-                    <div ng-message="required" class="required-warn">必填项</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
-                <div class="col-sm-10">
-                  <input type="email" required class="form-control" id="inputEmail" placeholder="" ng-model="user.email" name="inputEmail">
-                  <div ng-messages="form['inputEmail'].$touched && form['inputEmail'].$error">
-                    <div ng-message="required" class="required-warn">必填项</div>
-                    <div ng-message="email" class="required-warn">请填写正确的邮箱</div>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="form-group">
-                <label for="inputPWD" class="col-sm-2 control-label">密码</label>
-                <div class="col-sm-10">
-                  <input type="password"  class="form-control" id="inputPWD" placeholder="" ng-model="user.password" >
-                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="inputCPWD" class="col-sm-2 control-label">确认密码</label>
-                <div class="col-sm-10">
-                  <input type="password"  class="form-control" id="inputCPWD" placeholder="" ng-model="user.cpassword" >
-                  <div ng-messages="form['inputUserName'].$touched && form['inputUserName'].$error">
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label  class="col-sm-2 control-label">权限</label>
-                <div class="col-sm-10">
-                  <div class="radio">
-                    <label>
-                      <input name="auth" type="radio" value="0" ng-model="user.superuser">普通管理
-                    </label>
-                  </div>
-                </div>
-                <label  class="col-sm-2 control-label"></label>
-                <div class="col-sm-10">
-                  <div class="radio">
-                    <label>
-                      <input name="auth" type="radio" value="1"  ng-model="user.superuser">超级管理
-
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button ng-disabled="!form.$valid" type="button" class="btn btn-primary" ng-click="user_submit()">保存</button>
-          </div>
-        </div>
-      </form>
-    </div>
-
   </div>
 </div>

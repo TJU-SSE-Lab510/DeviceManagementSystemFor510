@@ -120,7 +120,7 @@ labsystem.controller('SidebarCtrl', ['$scope', 'SidebarSrv', 'NoticeSrv','$state
     */
 
    $scope.gotoProfile = function () {
-     $state.go('app.profile');
+     $state.go('app.userDetail');
    };
 
 

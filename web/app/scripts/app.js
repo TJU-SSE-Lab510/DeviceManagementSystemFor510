@@ -22,7 +22,7 @@ labsystem.config(function($httpProvider) {
   $httpProvider.interceptors.push('myInterceptor');
   $httpProvider.defaults.withCredentials = true;
 });
-labsystem.value('baseURL', 'http://100.64.208.218:8080/labsystem');
+labsystem.value('baseURL', 'http://192.168.1.100:8080');
 
 labsystem.controller('MainCtrl', function ($state) {
   // $state.go('app.back.home');
