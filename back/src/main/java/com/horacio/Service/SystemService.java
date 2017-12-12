@@ -58,6 +58,9 @@ public class SystemService {
         for(int i=0;i<images.length;i++){
             File image = images[i];
             String name = image.getName();
+            if(name.equals("default.png")){
+                continue;
+            }
             admin= adminRepository.findOneByUrl(name);
             if(admin == null){
                 image.delete();
