@@ -56,7 +56,7 @@ labsystem.controller('BorrowListCtrl',
         $scope.isDisabled = true;
         $scope.record = {
           name: item.name,
-          itemName: item.itemName,
+          itemName: item.item_name,
           phone:item.phone,
           email:item.email,
           number:item.number
@@ -114,23 +114,29 @@ labsystem.controller('BorrowListCtrl',
        * @param: id 归还的设备的id
        * @return:
        */
-      $scope.return = function (id) {
-        var data = {};
-        data.id = id;
+
+      $scope.show_return = function (id) {
+        $scope.return = {
+          id:id,
+          number: ''
+        };
+        $scope.returnForm.$setUntouched();
+      };
+
+      $scope.return_submit = function () {
+        var data = Object.assign({},$scope.return);
         data.returnTime =  Date.parse(new Date())+"";
-        data.returnOperator = TokenSrv.getToken();
-        BorrowSrv.returnItem().add(data)
+        UseSrv.returnItem().add(data)
           .$promise.then(function(response){
           if(response.errCode === 0){
             NoticeSrv.success("归还成功");
             getRecord();
-            $('#editRecord').modal('hide');
+            $('#newReturn').modal('hide');
           }
         },function (response) {
           NoticeSrv.error("归还失败,http状态码:"+response.status);
         });
       };
-
 
       /**
        * @description:　获取记录
@@ -138,7 +144,9 @@ labsystem.controller('BorrowListCtrl',
        * @return:
        */
       var getRecord = function () {
-        BorrowSrv.getRecord().get()
+        var data = {};
+        data.name = null;
+        BorrowSrv.getRecord().add(data)
           .$promise.then(function(response){
           if(response.errCode === 0){
             $scope.recordCollection = response.data;

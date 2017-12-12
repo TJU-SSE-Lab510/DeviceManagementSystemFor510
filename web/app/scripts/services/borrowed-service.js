@@ -7,7 +7,7 @@ labsystem.service('BorrowSrv', ['$resource','$http', 'baseURL' ,function ($resou
 
   //查看所有用户。
   this.getRecord = function(){
-    return $resource(baseURL + '/lend/getAll');
+    return $resource(baseURL + '/lend/getAll',null,{'add':{method: 'POST'}});
   };
 
 
