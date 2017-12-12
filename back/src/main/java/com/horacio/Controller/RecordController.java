@@ -51,7 +51,6 @@ public class RecordController {
         AuthCheckUtil.check(session);
         recordService.delete(body);
         return ResultUtil.success();
-
     }
 
 }

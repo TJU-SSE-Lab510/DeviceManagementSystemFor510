@@ -58,10 +58,13 @@ public class AdminController {
     }
 
     //用户具体信息
-    @RequestMapping(value = "/item", method = RequestMethod.GET)
-    public Object item(HttpSession session) throws Exception{
-        String userid = (String)session.getAttribute("userid");
-        Admin user = adminService.item(userid);
+    @RequestMapping(value = "/item", method = RequestMethod.POST)
+    public Object item(@RequestBody Map<String,Object> request,HttpSession session) throws Exception{
+        String adminid = request.containsKey("adminid")?(String)request.get("adminid"):null;
+        if(adminid == null){
+            adminid = (String)session.getAttribute("userid");
+        }
+        ObjectNode user = adminService.item(adminid);
         return ResultUtil.success(user);
     }
 
