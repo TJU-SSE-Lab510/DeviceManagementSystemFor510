@@ -50,20 +50,20 @@
               <tbody>
               <tr ng-repeat="item in rowCollection">
                 <td>{{item.id}}</td>
-                <td>{{item.itemName}}</td>
+                <td>{{item.item_name}}</td>
                 <td>{{item.number}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.phone}}</td>
                 <td>{{item.email}}</td>
-                <td>{{item.borrowOperator}}</td>
-                <td>{{item.borrowedTime}}</td>
-                <td>{{item.returnOperator}}</td>
-                <td >{{item.returnTime}}</td>
+                <td>{{item.borrow_operator}}</td>
+                <td>{{item.borrowed_time}}</td>
+                <td>{{item.return_operator}}</td>
+                <td >{{item.return_time}}</td>
                 <td>
-                  <span class="label label-primary" ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="editRecord(item)" data-toggle="modal" data-target="#editRecord"><i class="fa fa-edit"></i>&nbsp;修改</span>
-                  <span class="label label-default" ng-if="item.returnTime != 0 && item.returnTime != null"><i class="fa fa-check"></i>&nbsp;已归还</span>
+                  <span class="label label-primary" ng-if="item.return_time == '未归还'" ng-click="editRecord(item)" data-toggle="modal" data-target="#editRecord"><i class="fa fa-edit"></i>&nbsp;修改</span>
+                  <span class="label label-default" ng-if="item.return_time != '未归还'"><i class="fa fa-check"></i>&nbsp;已归还</span>
                   <span class="label label-danger" ng-click="deleteRecord(item.id)" data-toggle="modal" data-target="#modifyDelete" ng-show="isSuperUser"><i class="fa fa-trash"></i>&nbsp;删除</span>
-                  <span class="label label-info"  ng-if="item.returnTime == 0 || item.returnTime == null" ng-click="return(item.id)"><i class="fa fa-check-square-o"></i>&nbsp;归还</span>
+                  <span class="label label-info"  ng-if="item.return_time == '未归还'" ng-click="show_return(item.id)"  data-toggle="modal" data-target="#newReturn"><i class="fa fa-check-square-o"></i>&nbsp;归还</span>
                 </td>
               </tr>
 
@@ -177,5 +177,39 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="newReturn" tabindex="-1" role="dialog" aria-labelledby="newReturnLabel">
+  <div class="modal-dialog" role="document">
+    <div class="box box-info">
+      <form class="form-horizontal"  name="returnForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="newReturnLabel">设备分配</h4>
+          </div>
+          <div class="modal-body">
+            <div>
+
+              <div class="form-group">
+                <label for="inputReturnNumber" class="col-sm-2 control-label">归还数量</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" id="inputReturnNumber" placeholder="" ng-model="return.number" required name="inputReturnNumber" min="1" step="1">
+                  <div ng-messages="returnForm['inputReturnNumber'].$touched && returnForm['inputReturnNumber'].$error">
+                    <div ng-message="required" class="required-warn">必填项</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button ng-disabled="!returnForm.$valid" type="button" class="btn btn-primary" ng-click="return_submit()">保存</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
   </div>
 </div>

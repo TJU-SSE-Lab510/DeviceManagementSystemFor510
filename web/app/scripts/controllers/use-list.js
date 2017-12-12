@@ -36,7 +36,7 @@ labsystem.controller('UseListCtrl',
       $scope.editRecord = function(item){
         $scope.isDisabled = true;
         $scope.use = {
-          itemName: item.itemName,
+          itemName: item.item_name,
           name: '',
           studentNumber:'',
           number:''
@@ -76,17 +76,22 @@ labsystem.controller('UseListCtrl',
        * @param: id 归还的设备的id
        * @return:
        */
-      $scope.return = function (id) {
-        var data = {};
-        data.id = id;
+      $scope.show_return = function (id) {
+        $scope.return = {
+          id:id,
+          number: ''
+        };
+      };
+
+      $scope.return_submit = function () {
+        var data = Object.assign({},$scope.return);
         data.returnTime =  Date.parse(new Date())+"";
-        data.returnOperator = TokenSrv.getToken();
         UseSrv.returnItem().add(data)
           .$promise.then(function(response){
           if(response.errCode === 0){
             NoticeSrv.success("归还成功");
             getRecord();
-            $('#editRecord').modal('hide');
+            $('#newReturn').modal('hide');
           }
         },function (response) {
           NoticeSrv.error("归还失败,http状态码:"+response.status);
@@ -100,7 +105,10 @@ labsystem.controller('UseListCtrl',
        * @return:
        */
       var getRecord = function () {
-        UseSrv.getRecord().get()
+        var data = {
+          name: null
+        };
+        UseSrv.getRecord().add(data)
           .$promise.then(function(response){
           if(response.errCode === 0){
             $scope.recordCollection = response.data;

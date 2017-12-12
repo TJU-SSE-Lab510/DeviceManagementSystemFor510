@@ -7,7 +7,7 @@ labsystem.service('UseSrv', ['$resource','$http', 'baseURL' ,function ($resource
 
   //查看所有用户。
   this.getRecord = function(){
-    return $resource(baseURL + '/use/getAll');
+    return $resource(baseURL + '/use/getAll',null,{'add':{method: 'POST'}});
   };
 
 

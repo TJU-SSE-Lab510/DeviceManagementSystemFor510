@@ -211,7 +211,7 @@
 <div class="modal fade" id="newBorrow" tabindex="-1" role="dialog" aria-labelledby="newBorrowLabel">
   <div class="modal-dialog" role="document">
     <div class="box box-info">
-      <form class="form-horizontal"  name="form2">
+      <form class="form-horizontal"  name="borrowForm">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -221,50 +221,50 @@
             <div>
 
               <div class="form-group">
-                <label for="inputrItemName" class="col-sm-2 control-label">设备名</label>
+                <label for="inputBorrowName" class="col-sm-2 control-label">设备名</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputrItemName" placeholder="" ng-model="record.itemName" required name="inputItemName" ng-disabled="isDisabled">
-                  <div ng-messages="form2['inputrItemName'].$touched && form2['inputrItemName'].$error">
+                  <input type="text" class="form-control" id="inputBorrowName" placeholder="" ng-model="record.itemName" required name="inputBorrowName" ng-disabled="isDisabled">
+                  <div ng-messages="borrowForm['inputBorrowName'].$touched && borrowForm['inputBorrowName'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="inputrItemNumber" class="col-sm-2 control-label">借用数量</label>
+                <label for="inputBorrowNumber" class="col-sm-2 control-label">借用数量</label>
                 <div class="col-sm-10">
-                  <input type="number" class="form-control" id="inputrItemNumber" placeholder="" ng-model="record.number" required name="inputrItemNumber" min="1" step="1">
-                  <div ng-messages="form2['inputrItemNumber'].$touched && form2['inputrItemNumber'].$error">
+                  <input type="number" class="form-control" id="inputBorrowNumber" placeholder="" ng-model="record.number" required name="inputBorrowNumber" min="1" step="1">
+                  <div ng-messages="borrowForm['inputBorrowNumber'].$touched && borrowForm['inputBorrowNumber'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="userrName" class="col-sm-2 control-label">姓名</label>
+                <label for="inputBrrowerName" class="col-sm-2 control-label">姓名</label>
                 <div class="col-sm-10">
-                  <input type="text" required class="form-control" id="userrName" placeholder="" ng-model="record.name" name="userrName">
-                  <div ng-messages="form2['userrName'].$touched && form2['userrName'].$error">
+                  <input type="text" required class="form-control" id="inputBrrowerName" placeholder="" ng-model="record.name" name="inputBrrowerName">
+                  <div ng-messages="borrowForm['inputBrrowerName'].$touched && borrowForm['inputBrrowerName'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="inputPhone" class="col-sm-2 control-label">联系电话</label>
+                <label for="inputBorrowPhone" class="col-sm-2 control-label">联系电话</label>
                 <div class="col-sm-10">
-                  <input type="text" required class="form-control" id="inputPhone" placeholder="" ng-model="record.phone" name="inputPhone" >
-                  <div ng-messages="form2['inputPhone'].$touched && form2['inputPhone'].$error">
+                  <input type="text" required class="form-control" id="inputBorrowPhone" placeholder="" ng-model="record.phone" name="inputBorrowPhone" >
+                  <div ng-messages="borrowForm['inputBorrowPhone'].$touched && borrowForm['inputBorrowPhone'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
+                <label for="inputBorrowEmail" class="col-sm-2 control-label">邮箱</label>
                 <div class="col-sm-10">
-                  <input type="email" required class="form-control" id="inputEmail" placeholder="" ng-model="record.email" name="inputEmail">
-                  <div ng-messages="form2['inputEmail'].$touched && form2['inputEmail'].$error">
+                  <input type="email" required class="form-control" id="inputBorrowEmail" placeholder="" ng-model="record.email" name="inputBorrowEmail">
+                  <div ng-messages="borrowForm['inputBorrowEmail'].$touched && borrowForm['inputBorrowEmail'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
                     <div ng-message="email" class="required-warn">请填写正确的邮箱</div>
                   </div>
@@ -275,7 +275,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button ng-disabled="!form2.$valid" type="button" class="btn btn-primary" ng-click="borrow_submit()">保存</button>
+            <button ng-disabled="!borrowForm.$valid" type="button" class="btn btn-primary" ng-click="borrow_submit()">保存</button>
           </div>
         </div>
       </form>
@@ -287,7 +287,7 @@
 <div class="modal fade" id="newUse" tabindex="-1" role="dialog" aria-labelledby="newUseLabel">
   <div class="modal-dialog" role="document">
     <div class="box box-info">
-      <form class="form-horizontal"  name="form3">
+      <form class="form-horizontal"  name="useForm">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -297,30 +297,30 @@
             <div>
 
               <div class="form-group">
-                <label for="inputrItemName2" class="col-sm-2 control-label">设备名</label>
+                <label for="inputUseName" class="col-sm-2 control-label">设备名</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputrItemName2" placeholder="" ng-model="use.itemName" required name="inputrItemName2" ng-disabled="isDisabled">
-                  <div ng-messages="form3['inputrItemName2'].$touched && form3['inputrItemName2'].$error">
+                  <input type="text" class="form-control" id="inputUseName" placeholder="" ng-model="use.itemName" required name="inputUseName" ng-disabled="isDisabled">
+                  <div ng-messages="useForm['inputUseName'].$touched && useForm['inputUseName'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="inputrItemNumber3" class="col-sm-2 control-label">分配数量</label>
+                <label for="inputUseNumber" class="col-sm-2 control-label">分配数量</label>
                 <div class="col-sm-10">
-                  <input type="number" class="form-control" id="inputrItemNumber3" placeholder="" ng-model="use.number" required name="inputrItemNumber3" min="1" step="1">
-                  <div ng-messages="form3['inputrItemNumber3'].$touched && form3['inputrItemNumber3'].$error">
+                  <input type="number" class="form-control" id="inputUseNumber" placeholder="" ng-model="use.number" required name="inputUseNumber" min="1" step="1">
+                  <div ng-messages="useForm['inputUseNumber'].$touched && useForm['inputUseNumber'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="inputrItemNumber2" class="col-sm-2 control-label">年级</label>
+                <label for="inputUseGrade" class="col-sm-2 control-label">年级</label>
                 <div class="col-sm-10">
-                  <input type="number" class="form-control" id="inputrItemNumber2" placeholder="" ng-change="searchStudent()" ng-model="use.studentNumber" required name="inputrItemNumber2" min="1" step="1">
-                  <div ng-messages="form3['inputrItemNumber2'].$touched && form3['inputrItemNumber2'].$error">
+                  <input type="number" class="form-control" id="inputUseGrade" placeholder="" ng-change="searchStudent()" ng-model="use.studentNumber" required name="inputUseGrade" min="1" step="1">
+                  <div ng-messages="useForm['inputUseGrade'].$touched && useForm['inputUseGrade'].$error">
                     <div ng-message="required" class="required-warn">必填项</div>
                   </div>
                 </div>
@@ -338,7 +338,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button ng-disabled="!form3.$valid" type="button" class="btn btn-primary" ng-click="use_submit()">保存</button>
+            <button ng-disabled="!useForm.$valid" type="button" class="btn btn-primary" ng-click="use_submit()">保存</button>
           </div>
         </div>
       </form>
@@ -346,3 +346,6 @@
 
   </div>
 </div>
+
+
+

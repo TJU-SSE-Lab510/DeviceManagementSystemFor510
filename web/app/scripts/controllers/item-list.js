@@ -277,7 +277,7 @@ labsystem.controller('ItemListCtrl',
           phone:'',
           email:''
         } ;
-        $scope.form2.$setUntouched()
+        $scope.borrowForm.$setUntouched()
       };
 
       $scope.borrow_submit = function () {
@@ -291,7 +291,7 @@ labsystem.controller('ItemListCtrl',
               NoticeSrv.success("新建成功");
               getItem();
               $('#newBorrow').modal('hide');
-              $scope.form2.$setUntouched()
+              $scope.borrowForm.$setUntouched()
             }
           },function (response) {
             NoticeSrv.error("新建借出错误,http状态码:"+response.status);
@@ -325,7 +325,7 @@ labsystem.controller('ItemListCtrl',
           studentNumber:'',
           number:''
         } ;
-        $scope.form3.$setUntouched()
+        $scope.useForm.$setUntouched()
       };
 
 
@@ -339,7 +339,7 @@ labsystem.controller('ItemListCtrl',
             NoticeSrv.success("新建成功");
             getItem();
             $('#newUse').modal('hide');
-            $scope.form3.$setUntouched();
+            $scope.useForm.$setUntouched();
           }
         },function (response) {
           NoticeSrv.error("新建分配错误,http状态码:"+response.status);
