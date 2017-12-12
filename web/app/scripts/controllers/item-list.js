@@ -237,7 +237,7 @@ labsystem.controller('ItemListCtrl',
             ItemSrv.upload().add(formData)
               .$promise.then(function(response){
               if(response.errCode === 0){
-                $scope.edit.url = response.data;
+                $scope.item.url = response.data;
               }
             },function (response) {
               NoticeSrv.error("上传图片错误,http状态码:"+response.status);
