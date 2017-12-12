@@ -1,8 +1,8 @@
 'use strict';
 
 labsystem.controller('UserDetailCtrl',
-      ['$scope', 'BackSrv','NoticeSrv', '$uibModal','$state','TokenSrv','$stateParams','BorrowSrv','UseSrv','ProfileSrv',
-    function($scope,BackSrv,NoticeSrv, $uibModal, $state,TokenSr,$stateParams,BorrowSrv,UseSrv,ProfileSrv)
+      ['$scope', 'BackSrv','NoticeSrv', '$uibModal','$state','TokenSrv','$stateParams','BorrowSrv','UseSrv','ProfileSrv','TokenSrv',
+    function($scope,BackSrv,NoticeSrv, $uibModal, $state,TokenSr,$stateParams,BorrowSrv,UseSrv,ProfileSrv,TokenSrv)
     {
       //
       // $scope.user ={
@@ -20,6 +20,11 @@ labsystem.controller('UserDetailCtrl',
         adminid : $stateParams.id
       };
 
+      if(userId.adminid == ''|| userId.adminid == null){
+        $scope.isEditDisabled =  false;
+      }else {
+        $scope.isEditDisabled = true;
+      }
       /**
        * @description:　获取记录
        * @param:
