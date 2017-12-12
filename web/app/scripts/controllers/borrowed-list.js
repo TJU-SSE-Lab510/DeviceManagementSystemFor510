@@ -126,7 +126,7 @@ labsystem.controller('BorrowListCtrl',
       $scope.return_submit = function () {
         var data = Object.assign({},$scope.return);
         data.returnTime =  Date.parse(new Date())+"";
-        UseSrv.returnItem().add(data)
+        BorrowSrv.returnItem().add(data)
           .$promise.then(function(response){
           if(response.errCode === 0){
             NoticeSrv.success("归还成功");
