@@ -39,6 +39,9 @@ public class FacilityService {
 
     @Transactional
     public Boolean add(JsonNode data) throws Exception{
+        if(data.get("itemQTY").intValue()<0){
+            throw new LabsException(ResultEnum.INPUT_ILLEGAL.getCode(),ResultEnum.INPUT_ILLEGAL.getMsg());
+        }
         Facility item = new Facility();
         item.setItemName(data.get("itemName").textValue());
         item.setDate(new Date(Long.valueOf(data.get("date").textValue())));
@@ -51,6 +54,9 @@ public class FacilityService {
 
     @Transactional
     public Boolean edit(JsonNode data) throws Exception{
+        if(data.get("itemQTY").intValue()<0){
+            throw new LabsException(ResultEnum.INPUT_ILLEGAL.getCode(),ResultEnum.INPUT_ILLEGAL.getMsg());
+        }
         Facility item =facilityRepository.findOne(data.get("id").intValue());
         if(item == null){
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
