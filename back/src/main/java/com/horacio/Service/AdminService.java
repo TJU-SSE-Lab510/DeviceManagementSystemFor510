@@ -122,12 +122,22 @@ public class AdminService {
     }
 
 
-    public Admin item(String userid) throws Exception{
+    public ObjectNode item(String userid) throws Exception{
         Admin user = adminRepository.findOne(Integer.valueOf(userid));
         if (user == null){
             throw new LabsException(ResultEnum.USER_NOT_FOUND.getCode(),ResultEnum.USER_NOT_FOUND.getMsg());
         }else {
-            return user;
+            ObjectNode node = mapper.createObjectNode();
+            node.put("id",user.getId());
+            node.put("name",user.getName());
+            node.put("password",user.getPassword());
+            node.put("phoneNumber",user.getPhoneNumber());
+            node.put("username",user.getUsername());
+            node.put("superuser",user.getSuperuser());
+            node.put("url",fileProperties.getUserUrl()+"/"+user.getUrl());
+            node.put("email",user.getEmail());
+            node.put("studentNumber",user.getStudentNumber());
+            return  node;
         }
     }
 

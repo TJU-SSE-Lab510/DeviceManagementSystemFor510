@@ -34,6 +34,9 @@ public class UseController {
     @Autowired
     AdminService adminService;
 
+    @Autowired
+    AdminRepository adminRepository;
+
 
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -46,7 +49,10 @@ public class UseController {
             throw new LabsException(ResultEnum.INPUT_ILLEGAL.getCode(),ResultEnum.INPUT_ILLEGAL.getMsg());
         }
         Integer id = request.containsKey("adminid")?(Integer)request.get("adminid"):null;
-        Admin admin = adminService.item(String.valueOf(id));
+        Admin admin = adminRepository.findOne(id);
+        if (admin == null){
+            throw new LabsException(ResultEnum.USER_NOT_FOUND.getCode(),ResultEnum.USER_NOT_FOUND.getMsg());
+        }
         String name = admin.getName();
         String phone = admin.getPhoneNumber();
         String email = admin.getEmail();
@@ -63,7 +69,10 @@ public class UseController {
         if(number<=0){
             throw new LabsException(ResultEnum.INPUT_ILLEGAL.getCode(),ResultEnum.INPUT_ILLEGAL.getMsg());
         }
-        Admin admin = adminService.item(String.valueOf(adminid));
+        Admin admin = adminRepository.findOne(adminid);
+        if (admin == null){
+            throw new LabsException(ResultEnum.USER_NOT_FOUND.getCode(),ResultEnum.USER_NOT_FOUND.getMsg());
+        }
         String name = admin.getName();
         String phone = admin.getPhoneNumber();
         String email = admin.getEmail();
