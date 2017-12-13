@@ -76,6 +76,8 @@ labsystem.controller('BackuserCtrl',
           username: item.username,
           name : item.name,
           phoneNumber: item.phoneNumber,
+          studentNumber:item.studentNumber,
+          email:item.email,
           password: '',
           cpassword:'',
           superuser:item.superuser+''
