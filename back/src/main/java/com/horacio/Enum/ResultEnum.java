@@ -25,6 +25,7 @@ public enum ResultEnum {
     OPERATE_NOT_ALLOW(701,"操作请求不合法"),
     STATUS_NOT_AVAILABLE(702,"操作业务状态不合法"),
     INPUT_ILLEGAL(703,"输入参数不合法"),
+    ALREADY_RETURN(704,"设备已经归还"),
     ;
 
 

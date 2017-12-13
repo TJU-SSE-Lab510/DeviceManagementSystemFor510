@@ -1,8 +1,6 @@
 package com.horacio.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 
@@ -20,24 +18,31 @@ public class Record {
     private String itemName;
     private Date borrowedTime ;
     private Date returnTime ;
-    private String borrowOperator;
-    private String returnOperator;
+
+    @OneToOne
+    @JoinColumn(name = "borrowOperator")
+    private Admin borrowOperator;
+
+    @OneToOne
+    @JoinColumn(name = "returnOperator")
+    private Admin returnOperator;
+
     private int number;
     private int type;// 1 内部使用 2借出
 
-    public String getBorrowOperator() {
+    public Admin getBorrowOperator() {
         return borrowOperator;
     }
 
-    public void setBorrowOperator(String borrowOperator) {
+    public void setBorrowOperator(Admin borrowOperator) {
         this.borrowOperator = borrowOperator;
     }
 
-    public String getReturnOperator() {
+    public Admin getReturnOperator() {
         return returnOperator;
     }
 
-    public void setReturnOperator(String returnOperator) {
+    public void setReturnOperator(Admin returnOperator) {
         this.returnOperator = returnOperator;
     }
 

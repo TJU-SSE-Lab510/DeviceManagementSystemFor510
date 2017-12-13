@@ -73,7 +73,7 @@ public class RecordService {
             record.setName(name);
             record.setPhone(phone);
             record.setEmail(email);
-            record.setBorrowOperator(user.getName());
+            record.setBorrowOperator(user);
             record.setNumber(number);
             record.setType(type);
             recordRepository.save(record);
@@ -117,6 +117,9 @@ public class RecordService {
         if(record == null){
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
         }
+        if(record.getReturnTime()!=null){
+            throw new LabsException(ResultEnum.ALREADY_RETURN.getCode(),ResultEnum.ALREADY_RETURN.getMsg());
+        }
         Facility item =facilityRepository.findOneByItemName(record.getItemName());
         if(item == null){
             throw new LabsException(ResultEnum.OBJECT_NOT_FOUND.getCode(),ResultEnum.OBJECT_NOT_FOUND.getMsg());
@@ -139,7 +142,7 @@ public class RecordService {
         }
         Admin user = adminRepository.findOne(Integer.valueOf(userid));
         record.setReturnTime(new Date(Long.valueOf(return_time)));
-        record.setReturnOperator(user.getName());
+        record.setReturnOperator(user);
         record.setNumber(number);
         recordRepository.save(record);
         int remianNum = item.getRemainNum();
@@ -153,6 +156,7 @@ public class RecordService {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Record.class,"record");
+        criteria.createAlias("borrowOperator","borrowOperator",JoinType.LEFT_OUTER_JOIN);
         criteria.add(Restrictions.eq("record.type",type));
         if(type == 1){//分配
             if(name!=null){//若name存在则搜索出分配给该管理员的设备列表
@@ -160,7 +164,7 @@ public class RecordService {
             }
         }else{//借出
             if(name!=null){//若name存在则搜索出该管理员的借出的设备列表
-                criteria.add(Restrictions.eq("record.borrowOperator",name));
+                criteria.add(Restrictions.eq("borrowOperator.name",name));
             }
         }
         criteria.addOrder(Order.desc("record.id"));
@@ -169,18 +173,21 @@ public class RecordService {
         for(Record item: datas){
             ObjectNode node = mapper.createObjectNode();
             node.put("id",item.getId());
-            node.put("borrow_operator",item.getBorrowOperator());
+            node.put("borrow_operator",item.getBorrowOperator().getName());
             node.put("borrowed_time",format.format(item.getBorrowedTime()));
             node.put("item_name",item.getItemName());
             node.put("name",item.getName());
             node.put("number",item.getNumber());
             node.put("phone",item.getPhone());
             node.put("email",item.getEmail());
+            if(type == 1){
+                node.put("studentNumber",item.getBorrowOperator().getStudentNumber());
+            }
             if(item.getReturnTime() == null){
                 node.put("return_operator","");
                 node.put("return_time","未归还");
             }else{
-                node.put("return_operator",item.getReturnOperator());
+                node.put("return_operator",item.getReturnOperator().getName());
                 node.put("return_time",format.format(item.getReturnTime()));
             }
             array.addPOJO(node);
