@@ -58,6 +58,7 @@ labsystem.controller('UserDetailCtrl',
           .$promise.then(function(response){
           if(response.errCode === 0){
             $scope.borrowCollection = response.data;
+            var number = 0
             for(var i=0;i<$scope.borrowCollection.length;i++){
               if($scope.borrowCollection[i].return_time != "未归还"){
                 number++
