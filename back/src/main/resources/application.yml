@@ -24,7 +24,7 @@ file:
   imagePath: /var/www/images
   facility: facility
   user: user
-  imageUrl: http://100.64.208.218:82/
+  imageUrl: http://100.64.236.97:80/images/
 email:
   host: smtp.163.com
   username: tjsse510@163.com

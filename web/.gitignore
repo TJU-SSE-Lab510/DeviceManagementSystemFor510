@@ -5,5 +5,5 @@
 /.tmp
 /.sass-cache
 /bower_components
-.idea/
+.idea/*
 /git-bash.exe.lnk
