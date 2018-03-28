@@ -58,7 +58,12 @@ labsystem.controller('UserDetailCtrl',
           .$promise.then(function(response){
           if(response.errCode === 0){
             $scope.borrowCollection = response.data;
-            $scope.lendNumber = $scope.borrowCollection.length;
+            for(var i=0;i<$scope.borrowCollection.length;i++){
+              if($scope.borrowCollection[i].return_time != "未归还"){
+                number++
+              }
+            }
+            $scope.lendNumber = number;
           }
         },function (response) {
           NoticeSrv.error("获取记录列表错误,http状态码:"+response.status);
@@ -76,7 +81,13 @@ labsystem.controller('UserDetailCtrl',
           .$promise.then(function(response){
           if(response.errCode === 0){
             $scope.useCollection = response.data;
-            $scope.useNumber = $scope.useCollection.length;
+            var number = 0
+            for(var i=0;i<$scope.useCollection.length;i++){
+              if($scope.useCollection[i].return_time != "未归还"){
+                number++
+              }
+            }
+            $scope.useNumber = number;
           }
         },function (response) {
           NoticeSrv.error("获取记录列表错误,http状态码:"+response.status);
