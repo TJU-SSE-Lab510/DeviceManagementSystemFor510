@@ -60,7 +60,7 @@ labsystem.controller('UserDetailCtrl',
             $scope.borrowCollection = response.data;
             var number = 0
             for(var i=0;i<$scope.borrowCollection.length;i++){
-              if($scope.borrowCollection[i].return_time != "未归还"){
+              if($scope.borrowCollection[i].return_time == "未归还"){
                 number++
               }
             }
@@ -84,7 +84,7 @@ labsystem.controller('UserDetailCtrl',
             $scope.useCollection = response.data;
             var number = 0
             for(var i=0;i<$scope.useCollection.length;i++){
-              if($scope.useCollection[i].return_time != "未归还"){
+              if($scope.useCollection[i].return_time == "未归还"){
                 number++
               }
             }
